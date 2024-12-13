@@ -16,5 +16,6 @@ import Header from "@/components/Header.vue";
 :root {
   font-family: "Manrope", serif;
   font-optical-sizing: auto;
+  color: #0d0c16;
 }
 </style>
