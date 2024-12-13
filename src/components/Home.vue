@@ -26,33 +26,69 @@
         </button>
       </nav>
 
-      <div class="m-2 flex justify-start items-center gap-1">
-        <div class="hover:bg-gray-700/10 transition">
-          <div
-            class="size-40 bg-gray-700/10 border-gray-700/20 border relative"
-          >
+      <div class="m-2">
+        <h1 class="text-md font-semibold my-2">Top Items</h1>
+        <div class="flex justify-start items-center gap-1">
+          <div class="hover:bg-gray-700/10 transition">
             <div
-              class="absolute top-0 right-0 w-14 bg-gray-700 text-white font-medium text-center text-sm"
+              class="size-40 bg-gray-700/10 border-gray-700/20 border relative"
             >
-              50%
+              <div
+                class="absolute top-0 right-0 w-14 bg-gray-700 text-white font-medium text-center text-sm"
+              >
+                50%
+              </div>
+            </div>
+            <div class="p-1">
+              <h1 class="text-sm font-semibold">Shoes</h1>
             </div>
           </div>
-          <div class="p-1">
-            <h1 class="text-sm font-semibold">Shoes</h1>
+          <div class="hover:bg-gray-700/10 transition">
+            <div
+              class="size-40 bg-gray-700/10 border-gray-700/20 border relative"
+            >
+              <div
+                class="absolute top-0 right-0 w-14 bg-gray-700 text-white font-medium text-center text-sm"
+              >
+                50%
+              </div>
+            </div>
+            <div class="p-1">
+              <h1 class="text-sm font-semibold">Shoes</h1>
+            </div>
           </div>
         </div>
-        <div class="hover:bg-gray-700/10 transition">
-          <div
-            class="size-40 bg-gray-700/10 border-gray-700/20 border relative"
-          >
+      </div>
+      <div class="m-2">
+        <h1 class="text-md font-semibold my-2">Recommendations</h1>
+        <div class="flex justify-start items-center gap-1">
+          <div class="hover:bg-gray-700/10 transition">
             <div
-              class="absolute top-0 right-0 w-14 bg-gray-700 text-white font-medium text-center text-sm"
+              class="size-40 bg-gray-700/10 border-gray-700/20 border relative"
             >
-              50%
+              <div
+                class="absolute top-0 right-0 w-14 bg-gray-700 text-white font-medium text-center text-sm"
+              >
+                50%
+              </div>
+            </div>
+            <div class="p-1">
+              <h1 class="text-sm font-semibold">Shoes</h1>
             </div>
           </div>
-          <div class="p-1">
-            <h1 class="text-sm font-semibold">Shoes</h1>
+          <div class="hover:bg-gray-700/10 transition">
+            <div
+              class="size-40 bg-gray-700/10 border-gray-700/20 border relative"
+            >
+              <div
+                class="absolute top-0 right-0 w-14 bg-gray-700 text-white font-medium text-center text-sm"
+              >
+                50%
+              </div>
+            </div>
+            <div class="p-1">
+              <h1 class="text-sm font-semibold">Shoes</h1>
+            </div>
           </div>
         </div>
       </div>
