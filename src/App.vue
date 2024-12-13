@@ -11,4 +11,10 @@ import Header from "@/components/Header.vue";
   <RouterView />
 </template>
 
-<style scoped></style>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+:root {
+  font-family: "Manrope", serif;
+  font-optical-sizing: auto;
+}
+</style>

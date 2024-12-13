@@ -1,5 +1,5 @@
+<script setup></script>
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <h1 class="ml-72 fixed top-14 left-0 w-full h-full">About view</h1>
 </template>
