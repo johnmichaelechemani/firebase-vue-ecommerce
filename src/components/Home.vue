@@ -8,7 +8,9 @@ import Dummy from "../assets/dummyImages/dummy.jpg";
     class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
     <div class="py-2">
-      <nav class="p-2 flex flex-wrap gap-2 shadow-sm">
+      <nav
+        class="p-2 no-scrollbar flex overflow-x-auto gap-2 shadow-sm whitespace-nowrap"
+      >
         <button
           class="px-2 py-1 text-sm font-semibold text-white bg-gray-700 border border-gray-700"
         >
