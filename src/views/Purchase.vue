@@ -1,3 +1,9 @@
+<script setup></script>
+
 <template>
-  <div class="ml-72 fixed top-14 left-0 w-full h-full">your Purchase</div>
+  <div
+    class="sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
+  >
+    <div class="p-2">Purchase view</div>
+  </div>
 </template>

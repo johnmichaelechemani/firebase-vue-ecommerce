@@ -31,7 +31,7 @@ const logout = () => {
         </h1>
       </div>
       <div
-        class="border border-gray-700/50 py-1.5 px-1 text-sm sm:w-1/3 flex"
+        class="border border-gray-700/50 py-1.5 px-1 ml-2 text-sm sm:w-1/3 flex"
       >
         <div class="px-1">
           <Icon icon="material-symbols-light:search" width="20" height="20" />
