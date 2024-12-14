@@ -64,11 +64,15 @@ const showModal = () => {
           height="20"
         />
       </div>
-      <h1 class="text-sm font-medium truncate whitespace-break-spaces max-w-32">
+      <h1
+        class="sm:text-sm text-xs font-medium truncate whitespace-break-spaces max-w-28"
+      >
         {{ item.name }}
       </h1>
       <div class="flex justify-start gap-1 items-center">
-        <p class="text-lg text-gray-800 font-bold">${{ item.price }}</p>
+        <p class="sm:text-lg text-sm text-gray-800 font-bold">
+          ${{ item.price }}
+        </p>
         <p class="text-xs text-gray-700 font-semibold">{{ item.sold }} Sold</p>
       </div>
     </div>

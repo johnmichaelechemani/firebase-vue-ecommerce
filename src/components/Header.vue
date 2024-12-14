@@ -24,19 +24,21 @@ const logout = () => {
   <nav
     class="ml-20 sm:ml-72 border-b border-gray-800/50 fixed top-0 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)]"
   >
-    <div class="relative flex justify-between items-center">
-      <div class="ml-2 hidden sm:flex">
-        <h1 class="font-extrabold text-lg text-gray-800 drop-shadow-md ">Jm's Shops</h1>
+    <div class="relative flex justify-between px-1 gap-1 items-center">
+      <div class=" hidden sm:flex">
+        <h1 class="font-extrabold text-lg text-gray-800 drop-shadow-md">
+          Jm's Shops
+        </h1>
       </div>
       <div
-        class="border ml-2 border-gray-700/50 py-1.5 px-1 text-sm w-full sm:w-1/3 flex"
+        class="border border-gray-700/50 py-1.5 px-1 text-sm sm:w-1/3 flex"
       >
         <div class="px-1">
           <Icon icon="material-symbols-light:search" width="20" height="20" />
         </div>
         <input
           type="text"
-          class="w-full outline-none placeholder:text-sm placeholder:text-gray-700"
+          class="w-full outline-none hidden sm:flex placeholder:text-sm placeholder:text-gray-700"
           placeholder="Search.."
         />
       </div>

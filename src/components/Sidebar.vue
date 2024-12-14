@@ -4,7 +4,11 @@
   >
     <div>
       <div class="w-full h-28 bg-gray-700/20">
-        <img :src="Shop" alt="" class="w-full h-full object-center object-cover" />
+        <img
+          :src="Shop"
+          alt=""
+          class="w-full h-full object-center object-cover"
+        />
       </div>
     </div>
     <div class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32">
