@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed } from "vue";
+import { ref } from "vue";
 import { Icon } from "@iconify/vue";
 const cartProducts = ref([
   {
@@ -20,52 +20,20 @@ const cartProducts = ref([
   },
 ]);
 
-const selected = ref([]);
-const selectAll = ref(false);
-watch(selectAll, (newValue) => {
-  if (newValue) {
-    selected.value = cartProducts.value.map((product) => product.id);
-  } else {
-    selected.value = [];
-  }
-});
-const toggleSelection = (productId) => {
-  if (selected.value.includes(productId)) {
-    selected.value = selected.value.filter((id) => id !== productId);
-  } else {
-    selected.value.push(productId);
-  }
-};
-const isBuyDisabled = computed(() => {
-  return selected.value.length === 0;
-});
-
-const purchase = () => {
-  console.log("You have purchased the selected items", selected.value);
-};
 </script>
 
 <template>
   <div class="">
-    <p class="text-xs font-semibold text-gray-500">My Cart</p>
+    <p class="text-xs font-semibold text-gray-500">My Favorites</p>
     <div class="my-2">
-      <div class="flex justify-start items-center gap-2 mb-1">
-        <input type="checkbox" class="accent-gray-700" v-model="selectAll" />
-        <p class="text-xs font-semibold text-gray-700">Select All</p>
-      </div>
-      <hr />
+      
       <div
         v-for="product in cartProducts"
         :key="product.id"
         class="flex justify-between items-start gap-2 my-2"
       >
         <div class="flex justify-start items-start gap-2">
-          <input
-            type="checkbox"
-            class="accent-gray-700"
-            :checked="selected.includes(product.id)"
-            @change="toggleSelection(product.id)"
-          />
+        
           <div class="size-10">
             <img
               :src="product.image"
@@ -95,20 +63,6 @@ const purchase = () => {
         </div>
       </div>
       <hr />
-    </div>
-    <div>
-      <button
-        @click="purchase"
-        :class="[
-          isBuyDisabled
-            ? 'bg-gray-300 text-gray-500'
-            : 'bg-gray-800 text-white',
-          ' w-full text-sm py-2 font-semibold shadow',
-        ]"
-        :disabled="isBuyDisabled"
-      >
-        BUY
-      </button>
     </div>
   </div>
 </template>

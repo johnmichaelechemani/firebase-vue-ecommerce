@@ -4,26 +4,16 @@ import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 import Settings from "@/views/Settings.vue";
 import Cart from "@/views/Cart.vue";
+import Favorite from "@/views/Favorite.vue";
+const openPanel = ref(null); // This will hold the name of the currently open panel
 
-const isShowSetting = ref(false);
-const isShowCart = ref(false);
-const showSetting = () => {
-  isShowSetting.value = !isShowSetting.value;
+const showPanel = (panel) => {
+  openPanel.value = openPanel.value === panel ? null : panel; // Toggle the panel
 };
-const showCart = () => {
-  isShowCart.value = !isShowCart.value;
-};
-const hideSetting = () => {
-  isShowSetting.value = false;
-};
-const hideCart = () => {
-  isShowCart.value = false;
-};
-
 const isLoggedIn = ref(true);
 const logout = () => {
   isLoggedIn.value = false;
-  isShowSetting.value = false;
+  openPanel.value = null;
 };
 </script>
 <template>
@@ -64,7 +54,15 @@ const logout = () => {
               />
             </button>
           </RouterLink>
-          <button class="p-2 rounded-full hover:bg-gray-700/20">
+          <button
+            @click="showPanel('favorite')"
+            :class="[
+              openPanel === 'favorite'
+                ? 'bg-gray-800 text-white'
+                : 'hover:bg-gray-700/20 ',
+              'p-2 rounded-full ',
+            ]"
+          >
             <Icon
               icon="material-symbols-light:favorite-outline"
               width="24"
@@ -72,14 +70,13 @@ const logout = () => {
             />
           </button>
           <button
-            @click="showCart"
+            @click="showPanel('cart')"
             :class="[
-               isShowCart
-                  ? 'bg-gray-800 text-white'
-                  : 'hover:bg-gray-700/20 ',
-                'p-2 rounded-full ',
-              ]"
-           
+              openPanel === 'cart'
+                ? 'bg-gray-800 text-white'
+                : 'hover:bg-gray-700/20 ',
+              'p-2 rounded-full ',
+            ]"
           >
             <Icon icon="mdi-light:cart" width="24" height="24" />
           </button>
@@ -99,7 +96,10 @@ const logout = () => {
               />
             </button>
           </RouterLink>
-          <button @click="showSetting" class="size-10 rounded-full bg-gray-800">
+          <button
+            @click="showPanel('settings')"
+            class="size-10 rounded-full bg-gray-800"
+          >
             <img
               :src="User"
               alt=""
@@ -132,10 +132,10 @@ const logout = () => {
 
   <!-- cart side -->
   <aside
-    v-if="isShowCart"
+    v-if="openPanel === 'cart'"
     class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
   >
-    <button @click="hideCart">
+    <button @click="showPanel(null)">
       <Icon
         icon="material-symbols-light:close-small-outline"
         width="24"
@@ -147,12 +147,29 @@ const logout = () => {
     </div>
   </aside>
 
-  <!-- settings side -->
+  <!-- favorite side -->
   <aside
-    v-if="isShowSetting"
+    v-if="openPanel === 'favorite'"
     class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
   >
-    <button @click="hideSetting">
+    <button @click="showPanel(null)">
+      <Icon
+        icon="material-symbols-light:close-small-outline"
+        width="24"
+        height="24"
+      />
+    </button>
+    <div class="mx-2 mb-2">
+      <Favorite />
+    </div>
+  </aside>
+
+  <!-- settings side -->
+  <aside
+    v-if="openPanel === 'settings'"
+    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
+  >
+    <button @click="showPanel(null)">
       <Icon
         icon="material-symbols-light:close-small-outline"
         width="24"
