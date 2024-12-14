@@ -33,10 +33,14 @@ const hideSetting = () => {
       </div>
       <div class="flex justify-end items-center gap-1 m-2">
         <RouterLink to="/chats">
-          <button   :class="[
-              $route.path === '/chats' ? 'bg-gray-800 text-white' : '',
+          <button
+            :class="[
+              $route.path === '/chats'
+                ? 'bg-gray-800 text-white'
+                : 'hover:bg-gray-700/20',
               'p-2 rounded-full ',
-            ]">
+            ]"
+          >
             <Icon
               icon="material-symbols-light:chat-outline"
               width="24"
@@ -57,7 +61,9 @@ const hideSetting = () => {
         <RouterLink to="/notifications">
           <button
             :class="[
-              $route.path === '/notifications' ? 'bg-gray-800 text-white' : '',
+              $route.path === '/notifications'
+                ? 'bg-gray-800 text-white'
+                : 'hover:bg-gray-700/20',
               'p-2 rounded-full ',
             ]"
           >
