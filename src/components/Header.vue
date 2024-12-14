@@ -3,13 +3,21 @@ import User from "../assets/dummyImages/user.jpg";
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 import Settings from "@/views/Settings.vue";
+import Cart from "@/views/Cart.vue";
 
 const isShowSetting = ref(false);
+const isShowCart = ref(false);
 const showSetting = () => {
   isShowSetting.value = !isShowSetting.value;
 };
+const showCart = () => {
+  isShowCart.value = !isShowCart.value;
+};
 const hideSetting = () => {
   isShowSetting.value = false;
+};
+const hideCart = () => {
+  isShowCart.value = false;
 };
 
 const isLoggedIn = ref(true);
@@ -63,7 +71,16 @@ const logout = () => {
               height="24"
             />
           </button>
-          <button class="p-2 rounded-full hover:bg-gray-700/20">
+          <button
+            @click="showCart"
+            :class="[
+               isShowCart
+                  ? 'bg-gray-800 text-white'
+                  : 'hover:bg-gray-700/20 ',
+                'p-2 rounded-full ',
+              ]"
+           
+          >
             <Icon icon="mdi-light:cart" width="24" height="24" />
           </button>
           <RouterLink to="/notifications">
@@ -112,9 +129,28 @@ const logout = () => {
       </div>
     </div>
   </nav>
+
+  <!-- cart side -->
+  <aside
+    v-if="isShowCart"
+    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
+  >
+    <button @click="hideCart">
+      <Icon
+        icon="material-symbols-light:close-small-outline"
+        width="24"
+        height="24"
+      />
+    </button>
+    <div class="mx-2 mb-2">
+      <Cart />
+    </div>
+  </aside>
+
+  <!-- settings side -->
   <aside
     v-if="isShowSetting"
-    class="w-52 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
+    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
   >
     <button @click="hideSetting">
       <Icon
