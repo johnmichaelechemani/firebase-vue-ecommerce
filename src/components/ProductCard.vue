@@ -6,6 +6,17 @@ const props = defineProps({
   products: Object,
   require: true,
 });
+const getStarIcons = (ratings) => {
+  const fullStars = Math.floor(ratings);
+  const halfStar = ratings % 1 >= 0.5 ? 1 : 0;
+  const emptyStars = 5 - fullStars - halfStar;
+
+  return [
+    ...Array(fullStars).fill("material-symbols-light:star"),
+    ...Array(halfStar).fill("material-symbols-light:star-half"),
+    ...Array(emptyStars).fill("material-symbols-light:star-outline"),
+  ];
+};
 </script>
 
 <template>
@@ -32,22 +43,12 @@ const props = defineProps({
     <div class="p-1">
       <div class="flex">
         <Icon
-          icon="material-symbols-light:star-outline"
+          v-for="(icon, index) in getStarIcons(item.ratings)"
+          :key="index"
+          :icon="icon"
           width="20"
           height="20"
         />
-        <Icon
-          icon="material-symbols-light:star-outline"
-          width="20"
-          height="20"
-        />
-        <Icon
-          icon="material-symbols-light:star-outline"
-          width="20"
-          height="20"
-        />
-        <Icon icon="material-symbols-light:star-half" width="20" height="20" />
-        <Icon icon="material-symbols-light:star" width="20" height="20" />
       </div>
       <h1 class="text-sm font-medium truncate whitespace-break-spaces max-w-32">
         {{ item.name }}
