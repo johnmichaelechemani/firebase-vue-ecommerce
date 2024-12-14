@@ -3,7 +3,9 @@
     class="w-20 sm:w-72 border-r border-gray-800/50 fixed top-0 left-0 h-full"
   >
     <div>
-      <div class="w-full h-28 bg-gray-700/20"></div>
+      <div class="w-full h-28 bg-gray-700/20">
+        <img :src="Shop" alt="" class="w-full h-full object-center object-cover" />
+      </div>
     </div>
     <div class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32">
       <p
@@ -80,4 +82,5 @@
 import { RouterLink } from "vue-router";
 import { Icon } from "@iconify/vue";
 import router from "@/router";
+import Shop from "../assets/dummyImages/shop.jpg";
 </script>

@@ -26,7 +26,7 @@ const logout = () => {
   >
     <div class="relative flex justify-between items-center">
       <div class="ml-2 hidden sm:flex">
-        <h1 class="font-semibold text-lg">Jm's Shops</h1>
+        <h1 class="font-extrabold text-lg text-gray-800 drop-shadow-md ">Jm's Shops</h1>
       </div>
       <div
         class="border ml-2 border-gray-700/50 py-1.5 px-1 text-sm w-full sm:w-1/3 flex"
