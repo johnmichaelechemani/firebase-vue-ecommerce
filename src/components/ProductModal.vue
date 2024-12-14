@@ -1,8 +1,10 @@
 <script setup>
-import Shoes from "../assets/dummyImages/shoes.jpg";
+import { isLoggedIn } from "../store.js";
 import { Icon } from "@iconify/vue";
 import { ref, computed, defineProps } from "vue";
+import { useRouter } from "vue-router";
 
+const route = useRouter();
 const quantity = ref(1);
 const selectedSize = ref("");
 
@@ -19,7 +21,15 @@ const decrement = () => {
   }
 };
 const addToCart = () => {
-  console.log("Added to cart", quantity, selectedSize);
+  if (isLoggedIn.value === false) {
+    route.push("/login");
+  }
+  console.log(
+    "Added to cart",
+    quantity.value,
+    selectedSize.value,
+    isLoggedIn.value
+  );
 };
 
 const isAddToCartDisabled = computed(() => {
