@@ -1,0 +1,1 @@
+import{_ as s}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c,a as l,o}from"./index-DX8UjhEY.js";const t={},a={class:"sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"};function r(m,e){return o(),c("div",a,e[0]||(e[0]=[l("div",{class:"p-2"}," Malls view ",-1)]))}const i=s(t,[["render",r]]);export{i as default};

@@ -1,0 +1,1 @@
+import{_ as s}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as t,a as c,o}from"./index-DX8UjhEY.js";const a={},r={class:"sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"};function l(m,e){return o(),t("div",r,e[0]||(e[0]=[c("div",{class:"p-2"},"Chats view",-1)]))}const i=s(a,[["render",l]]);export{i as default};

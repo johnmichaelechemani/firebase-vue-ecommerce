@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as s,a as t,o as c}from"./index-DX8UjhEY.js";const a={},r={class:"sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"};function i(l,e){return c(),s("div",r,e[0]||(e[0]=[t("div",{class:"p-2"},"Notifications view",-1)]))}const m=o(a,[["render",i]]);export{m as default};
