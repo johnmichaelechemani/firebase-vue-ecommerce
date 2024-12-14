@@ -12,7 +12,7 @@
       <RouterLink to="/">
         <div
           class="flex sm:justify-start my-2 justify-center items-center gap-1"
-        > 
+        >
           <div class="place-items-center p-1 border shadow">
             <Icon
               icon="material-symbols-light:home-outline"
@@ -23,7 +23,7 @@
           <p class="text-sm font-semibold text-gray-700 hidden sm:flex">HOME</p>
         </div>
       </RouterLink>
-      <RouterLink to="/about">
+      <RouterLink to="/malls">
         <div class="flex sm:justify-start justify-center items-center gap-1">
           <div class="place-items-center p-1 border shadow">
             <Icon
@@ -42,48 +42,50 @@
       >
         MY PURCHASE
       </p>
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-        <div>
-          <div class="p-1 border place-items-center">
-            <Icon
-              icon="material-symbols-light:payments-outline-sharp"
-              width="24"
-              height="24"
-            />
+      <RouterLink to="/purchase">
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+          <div>
+            <div class="p-1 border place-items-center">
+              <Icon
+                icon="material-symbols-light:payments-outline-sharp"
+                width="24"
+                height="24"
+              />
+            </div>
+            <p class="text-xs py-1 text-center">To pay</p>
           </div>
-          <p class="text-xs py-1 text-center">To pay</p>
-        </div>
-        <div>
-          <div class="p-1 border place-items-center">
-            <Icon
-              icon="material-symbols-light:payments-outline-sharp"
-              width="24"
-              height="24"
-            />
+          <div>
+            <div class="p-1 border place-items-center">
+              <Icon
+                icon="material-symbols-light:payments-outline-sharp"
+                width="24"
+                height="24"
+              />
+            </div>
+            <p class="text-xs py-1 text-center">To ship</p>
           </div>
-          <p class="text-xs py-1 text-center">To ship</p>
-        </div>
-        <div>
-          <div class="p-1 border place-items-center">
-            <Icon
-              icon="material-symbols-light:payments-outline-sharp"
-              width="24"
-              height="24"
-            />
+          <div>
+            <div class="p-1 border place-items-center">
+              <Icon
+                icon="material-symbols-light:payments-outline-sharp"
+                width="24"
+                height="24"
+              />
+            </div>
+            <p class="text-xs py-1 text-center">To recieve</p>
           </div>
-          <p class="text-xs py-1 text-center">To recieve</p>
-        </div>
-        <div>
-          <div class="p-1 border place-items-center">
-            <Icon
-              icon="material-symbols-light:payments-outline-sharp"
-              width="24"
-              height="24"
-            />
+          <div>
+            <div class="p-1 border place-items-center">
+              <Icon
+                icon="material-symbols-light:payments-outline-sharp"
+                width="24"
+                height="24"
+              />
+            </div>
+            <p class="text-xs py-1 text-center">To rate</p>
           </div>
-          <p class="text-xs py-1 text-center">To rate</p>
         </div>
-      </div>
+      </RouterLink>
     </div>
   </aside>
 </template>
