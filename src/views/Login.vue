@@ -1,5 +1,12 @@
 <script setup>
-import { isLoggedIn } from "../store.js";
+import { ref } from "vue";
+import { loginErrorMessage } from "../store.js";
+
+if (loginErrorMessage) {
+  setTimeout(() => {
+    loginErrorMessage.value = "";
+  }, 2000);
+}
 </script>
 
 <template>
@@ -8,7 +15,12 @@ import { isLoggedIn } from "../store.js";
   >
     <div class="flex justify-center items-center h-[calc(100%-5rem)]">
       <div class="border p-5">
-        {{ isLoggedIn }}
+        <div
+          v-if="loginErrorMessage"
+          class="w-full border border-red-500/50 text-red-500 text-sm font-semibold py-2 px-2"
+        >
+          {{ loginErrorMessage }}
+        </div>
         <h1 class="text-lg font-bold my-3">Login</h1>
         <div class="my-2">
           <p class="text-sm font-semibold text-gray-700">Email</p>

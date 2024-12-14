@@ -1,5 +1,5 @@
 <script setup>
-import { isLoggedIn } from "../store.js";
+import { isLoggedIn, loginErrorMessage } from "../store.js";
 import { Icon } from "@iconify/vue";
 import { ref, computed, defineProps } from "vue";
 import { useRouter } from "vue-router";
@@ -22,6 +22,7 @@ const decrement = () => {
 };
 const addToCart = () => {
   if (isLoggedIn.value === false) {
+    loginErrorMessage.value = "Please login before you shop!";
     route.push("/login");
   }
   console.log(
