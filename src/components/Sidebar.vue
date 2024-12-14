@@ -7,6 +7,7 @@
         <img
           :src="Shop"
           alt=""
+          loading="lazy"
           class="w-full h-full object-center object-cover"
         />
       </div>
