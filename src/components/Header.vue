@@ -1,6 +1,15 @@
 <script setup>
 import User from "../assets/dummyImages/user.jpg";
 import { Icon } from "@iconify/vue";
+import { ref } from "vue";
+
+const isShowSetting = ref(false);
+const showSetting = () => {
+  isShowSetting.value = !isShowSetting.value;
+};
+const hideSetting = () => {
+  isShowSetting.value = false;
+};
 </script>
 <template>
   <nav
@@ -40,14 +49,85 @@ import { Icon } from "@iconify/vue";
         <button class="p-2 rounded-full hover:bg-gray-700/20">
           <Icon icon="mdi-light:cart" width="24" height="24" />
         </button>
-        <div class="size-10 rounded-full bg-gray-800">
+        <button @click="showSetting" class="size-10 rounded-full bg-gray-800">
           <img
             :src="User"
             alt=""
             class="h-full w-full object-cover rounded-full object-center"
           />
-        </div>
+        </button>
       </div>
     </div>
   </nav>
+  <aside
+    v-if="isShowSetting"
+    class="w-52 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
+  >
+    <button @click="hideSetting">
+      <Icon
+        icon="material-symbols-light:close-small-outline"
+        width="24"
+        height="24"
+      />
+    </button>
+    <div class="mx-2 mb-2">
+      <p class="text-xs font-semibold text-gray-500">My Account</p>
+      <button class="flex justify-center items-center gap-2 my-2">
+        <div class="border p-1 shadow place-items-center">
+          <Icon
+            icon="material-symbols-light:edit-outline"
+            width="24"
+            height="24"
+          />
+        </div>
+        <p class="text-sm font-semibold text-gray-700">Account</p>
+      </button>
+      <button class="flex justify-center items-center gap-2 my-2">
+        <div class="border p-1 shadow place-items-center">
+          <Icon
+            icon="material-symbols-light:location-on-outline"
+            width="24"
+            height="24"
+          />
+        </div>
+        <p class="text-sm font-semibold text-gray-700">Addresses</p>
+      </button>
+      <p class="text-xs font-semibold text-gray-500">Support</p>
+      <button class="flex justify-center items-center gap-2 my-2">
+        <div class="border p-1 shadow place-items-center">
+          <Icon
+            icon="material-symbols-light:help-outline"
+            width="24"
+            height="24"
+          />
+        </div>
+        <p class="text-sm font-semibold text-gray-700">Help Centre</p>
+      </button>
+      <button class="flex justify-center items-center gap-2 my-2">
+        <div class="border p-1 shadow place-items-center">
+          <Icon
+            icon="material-symbols-light:info-outline"
+            width="24"
+            height="24"
+          />
+        </div>
+        <p class="text-sm font-semibold text-gray-700">About</p>
+      </button>
+      <button class="flex justify-center items-center gap-2 my-2">
+        <div class="border p-1 shadow place-items-center">
+          <Icon
+            icon="fluent:people-community-32-light"
+            width="24"
+            height="24"
+          />
+        </div>
+        <p class="text-sm font-semibold text-gray-700">Community Rules</p>
+      </button>
+      <button
+        class="border p-2 my-4 border-gray-700/50 shadow-sm w-full text-gray-800 text-sm font-semibold place-items-center"
+      >
+        Logout
+      </button>
+    </div>
+  </aside>
 </template>
