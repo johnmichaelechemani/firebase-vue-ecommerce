@@ -33,7 +33,10 @@ const hideSetting = () => {
       </div>
       <div class="flex justify-end items-center gap-1 m-2">
         <RouterLink to="/chats">
-          <button class="p-2 rounded-full hover:bg-gray-700/20">
+          <button   :class="[
+              $route.path === '/chats' ? 'bg-gray-800 text-white' : '',
+              'p-2 rounded-full ',
+            ]">
             <Icon
               icon="material-symbols-light:chat-outline"
               width="24"
@@ -52,7 +55,12 @@ const hideSetting = () => {
           <Icon icon="mdi-light:cart" width="24" height="24" />
         </button>
         <RouterLink to="/notifications">
-          <button class="p-2 rounded-full hover:bg-gray-700/20">
+          <button
+            :class="[
+              $route.path === '/notifications' ? 'bg-gray-800 text-white' : '',
+              'p-2 rounded-full ',
+            ]"
+          >
             <Icon
               icon="material-symbols-light:notification-important-outline-sharp"
               width="24"
