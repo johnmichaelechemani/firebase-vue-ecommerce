@@ -1,7 +1,7 @@
 <script setup>
 import { isLoggedIn, loginErrorMessage } from "../store.js";
 import { Icon } from "@iconify/vue";
-import { ref, computed, defineProps } from "vue";
+import { ref, computed, defineProps, Transition } from "vue";
 import { useRouter } from "vue-router";
 
 const route = useRouter();
@@ -20,11 +20,19 @@ const decrement = () => {
     quantity.value -= 1;
   }
 };
+
+const showSuccessMessage = ref(false);
 const addToCart = () => {
   if (isLoggedIn.value === false) {
     loginErrorMessage.value = "Please login before you shop!";
     route.push("/login");
   }
+
+  showSuccessMessage.value = true;
+  setTimeout(() => {
+    showSuccessMessage.value = false;
+  }, 2000);
+
   console.log(
     "Added to cart",
     quantity.value,
@@ -79,7 +87,7 @@ const getStarIcons = (ratings) => {
           <div
             class="absolute top-0 right-0 py-0.5 px-1 bg-gray-700 text-white font-medium text-center text-xs"
           >
-            <span>{{ product.discount }} </span>
+            <span>{{ product.discount }} %</span>
             <p>OFF</p>
           </div>
         </div>
@@ -165,4 +173,24 @@ const getStarIcons = (ratings) => {
       </div>
     </div>
   </div>
+
+  <transition>
+    <div
+      v-if="showSuccessMessage"
+      class="absolute bottom-0 right-0 text-sm text-green-500 font-semibold border border-green-500/50 px-4 py-2"
+    >
+      Added to Cart!
+    </div>
+  </transition>
 </template>
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
