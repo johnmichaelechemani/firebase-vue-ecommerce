@@ -5,13 +5,17 @@ import { ref } from "vue";
 import Settings from "@/views/Settings.vue";
 import Cart from "@/views/Cart.vue";
 import Favorite from "@/views/Favorite.vue";
-const openPanel = ref(null); // This will hold the name of the currently open panel
+import { useRouter } from "vue-router";
+
+const route = useRouter();
+const openPanel = ref(null);
 
 const showPanel = (panel) => {
-  openPanel.value = openPanel.value === panel ? null : panel; // Toggle the panel
+  openPanel.value = openPanel.value === panel ? null : panel;
 };
 const isLoggedIn = ref(true);
 const logout = () => {
+  route.push("/");
   isLoggedIn.value = false;
   openPanel.value = null;
 };
