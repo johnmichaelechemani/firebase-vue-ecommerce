@@ -11,9 +11,14 @@
       </p>
       <RouterLink to="/">
         <div
-          class="flex sm:justify-start my-2 justify-center items-center gap-1"
+          class="flex sm:justify-start my-2 justify-center items-center gap-1 hover:bg-gray-700/10 transition"
         >
-          <div class="place-items-center p-1 border shadow">
+          <div
+            :class="[
+              $route.path === '/' ? 'bg-gray-800 text-white' : '',
+              'place-items-center p-1 border shadow',
+            ]"
+          >
             <Icon
               icon="material-symbols-light:home-outline"
               width="30"
@@ -24,8 +29,15 @@
         </div>
       </RouterLink>
       <RouterLink to="/malls">
-        <div class="flex sm:justify-start justify-center items-center gap-1">
-          <div class="place-items-center p-1 border shadow">
+        <div
+          class="flex sm:justify-start justify-center items-center gap-1 hover:bg-gray-700/10 transition"
+        >
+          <div
+            :class="[
+              $route.path === '/malls' ? 'bg-gray-800 text-white' : '',
+              'place-items-center p-1 border shadow ',
+            ]"
+          >
             <Icon
               icon="material-symbols-light:shopping-basket-outline"
               width="30"
@@ -92,4 +104,5 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { Icon } from "@iconify/vue";
+import router from "@/router";
 </script>

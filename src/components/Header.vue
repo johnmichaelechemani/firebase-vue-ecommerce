@@ -32,13 +32,15 @@ const hideSetting = () => {
         />
       </div>
       <div class="flex justify-end items-center gap-1 m-2">
-        <button class="p-2 rounded-full hover:bg-gray-700/20">
-          <Icon
-            icon="material-symbols-light:notification-important-outline-sharp"
-            width="24"
-            height="24"
-          />
-        </button>
+        <RouterLink to="/chats">
+          <button class="p-2 rounded-full hover:bg-gray-700/20">
+            <Icon
+              icon="material-symbols-light:chat-outline"
+              width="24"
+              height="24"
+            />
+          </button>
+        </RouterLink>
         <button class="p-2 rounded-full hover:bg-gray-700/20">
           <Icon
             icon="material-symbols-light:favorite-outline"
@@ -49,6 +51,15 @@ const hideSetting = () => {
         <button class="p-2 rounded-full hover:bg-gray-700/20">
           <Icon icon="mdi-light:cart" width="24" height="24" />
         </button>
+        <RouterLink to="/notifications">
+          <button class="p-2 rounded-full hover:bg-gray-700/20">
+            <Icon
+              icon="material-symbols-light:notification-important-outline-sharp"
+              width="24"
+              height="24"
+            />
+          </button>
+        </RouterLink>
         <button @click="showSetting" class="size-10 rounded-full bg-gray-800">
           <img
             :src="User"
