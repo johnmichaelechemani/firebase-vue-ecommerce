@@ -6,14 +6,14 @@ import Settings from "@/views/Settings.vue";
 import Cart from "@/views/Cart.vue";
 import Favorite from "@/views/Favorite.vue";
 import { useRouter } from "vue-router";
-
+import { isLoggedIn, cartItems, messages, notifications } from "../store.js";
 const route = useRouter();
 const openPanel = ref(null);
 
 const showPanel = (panel) => {
   openPanel.value = openPanel.value === panel ? null : panel;
 };
-const isLoggedIn = ref(true);
+
 const logout = () => {
   route.push("/");
   isLoggedIn.value = false;
@@ -48,7 +48,7 @@ const logout = () => {
                 $route.path === '/chats'
                   ? 'bg-gray-800 text-white'
                   : 'hover:bg-gray-700/20',
-                'p-2 rounded-full ',
+                'p-2 rounded-full relative',
               ]"
             >
               <Icon
@@ -56,6 +56,12 @@ const logout = () => {
                 width="24"
                 height="24"
               />
+              <div class="absolute -top-1 right-0">
+                <span
+                  class="text-[9px] font-medium bg-gray-700 px-1.5 py-0.5 text-white rounded-full"
+                  >{{ messages }}</span
+                >
+              </div>
             </button>
           </RouterLink>
           <button
@@ -79,9 +85,15 @@ const logout = () => {
               openPanel === 'cart'
                 ? 'bg-gray-800 text-white'
                 : 'hover:bg-gray-700/20 ',
-              'p-2 rounded-full ',
+              'p-2 rounded-full relative ',
             ]"
           >
+            <div class="absolute -top-1 right-0">
+              <span
+                class="text-[9px] font-medium bg-gray-700 px-1.5 py-0.5 text-white rounded-full"
+                >{{ cartItems }}</span
+              >
+            </div>
             <Icon icon="mdi-light:cart" width="24" height="24" />
           </button>
           <RouterLink to="/notifications" @click.native="showPanel(null)">
@@ -90,7 +102,7 @@ const logout = () => {
                 $route.path === '/notifications'
                   ? 'bg-gray-800 text-white'
                   : 'hover:bg-gray-700/20',
-                'p-2 rounded-full ',
+                'p-2 rounded-full relative ',
               ]"
             >
               <Icon
@@ -98,6 +110,12 @@ const logout = () => {
                 width="24"
                 height="24"
               />
+              <div class="absolute -top-1 right-0">
+                <span
+                  class="text-[9px] font-medium bg-gray-700 px-1.5 py-0.5 text-white rounded-full"
+                  >{{ notifications }}</span
+                >
+              </div>
             </button>
           </RouterLink>
           <button
@@ -113,22 +131,26 @@ const logout = () => {
         </div>
 
         <div v-else class="m-2 flex justify-center items-center gap-2">
-          <button
-            class="px-4 py-1 bg-gray-800 text-white font-semibold text-sm"
-          >
-            <div class="sm:hidden">
-              <Icon icon="mdi:login" width="24" height="24" />
-            </div>
-            <span class="hidden sm:flex py-1"> Log in</span>
-          </button>
-          <button
-            class="px-4 py-1 border hover:bg-gray-700/20 transition font-semibold text-sm"
-          >
-            <div class="sm:hidden">
-              <Icon icon="mdi:register-outline" width="24" height="24" />
-            </div>
-            <span class="hidden sm:flex py-1">Sign Up</span>
-          </button>
+          <RouterLink to="/login">
+            <button
+              class="px-4 py-1 bg-gray-800 text-white font-semibold text-sm"
+            >
+              <div class="sm:hidden">
+                <Icon icon="mdi:login" width="24" height="24" />
+              </div>
+              <span class="hidden sm:flex py-1"> Log in</span>
+            </button>
+          </RouterLink>
+          <RouterLink to="/register">
+            <button
+              class="px-4 py-1 border hover:bg-gray-700/20 transition font-semibold text-sm"
+            >
+              <div class="sm:hidden">
+                <Icon icon="mdi:register-outline" width="24" height="24" />
+              </div>
+              <span class="hidden sm:flex py-1">Sign Up</span>
+            </button>
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -184,7 +206,7 @@ const logout = () => {
       <Settings />
       <button
         @click="logout"
-        class="border p-2 my-4 border-gray-700/50 shadow-sm w-full text-gray-800 text-sm font-semibold place-items-center"
+        class="border p-2 my-4 bg-gray-800 shadow-sm w-full text-white text-sm font-semibold place-items-center"
       >
         Logout
       </button>

@@ -1,8 +1,11 @@
 <script setup>
-import Shoes from "../assets/dummyImages/shoes.jpg";
 import ProductCard from "./ProductCard.vue";
 import { useRouter, useRoute } from "vue-router";
 import { ref, computed } from "vue";
+import Rep from "../assets/dummyImages/ref.png";
+import Computer from "../assets/dummyImages/computer.jpg";
+import Shirt from "../assets/dummyImages/shirt.jpg";
+import Shoes from "../assets/dummyImages/shoes.jpg";
 const router = useRouter();
 const route = useRoute();
 const queryForCategories = (query) => {
@@ -24,7 +27,7 @@ const Products = ref([
     name: "Shoes ni Mike",
     category: "shoes",
     price: Math.floor(Math.random() * 500) + 50,
-    image: "https://via.placeholder.com/150?text=Shoes",
+    image: Shoes,
     ratings: Math.floor(Math.random() * 5) + 1,
     discount: Math.floor(Math.random() * 50),
     sold: Math.floor(Math.random() * 1000) + 100,
@@ -34,7 +37,7 @@ const Products = ref([
     name: "Home Appliances Pro",
     category: "home-appliances",
     price: Math.floor(Math.random() * 500) + 200,
-    image: "https://via.placeholder.com/150?text=Home+Appliances",
+    image: Rep,
     ratings: Math.floor(Math.random() * 5) + 1,
     discount: Math.floor(Math.random() * 70),
     sold: Math.floor(Math.random() * 2000) + 500,
@@ -44,7 +47,7 @@ const Products = ref([
     name: "Casual Apparel",
     category: "mens-womens-apparel",
     price: Math.floor(Math.random() * 300) + 50,
-    image: "https://via.placeholder.com/150?text=Apparel",
+    image: Shirt,
     ratings: Math.floor(Math.random() * 5) + 1,
     discount: Math.floor(Math.random() * 40),
     sold: Math.floor(Math.random() * 1500) + 200,
@@ -54,7 +57,7 @@ const Products = ref([
     name: "High-Performance Laptop",
     category: "computers",
     price: Math.floor(Math.random() * 2000) + 500,
-    image: "https://via.placeholder.com/150?text=Computers",
+    image: Computer,
     ratings: Math.floor(Math.random() * 5) + 1,
     discount: Math.floor(Math.random() * 30),
     sold: Math.floor(Math.random() * 1000) + 100,
@@ -144,7 +147,9 @@ const Category = ref([
         </button>
       </nav>
 
-      <div class="relative overflow-y-scroll h-[calc(100vh-0rem)] pb-32">
+      <div
+        class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32"
+      >
         <div class="m-2">
           <h1 class="text-md font-semibold my-2">Products</h1>
           <div class="flex flex-wrap gap-1">

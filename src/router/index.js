@@ -10,6 +10,16 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: "/login",
+      name: "login",
+      component: () => import("../views/Login.vue"),
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: () => import("../views/Register.vue"),
+    },
+    {
       path: "/malls",
       name: "malls",
       component: () => import("../views/Malls.vue"),
@@ -28,6 +38,12 @@ const router = createRouter({
       path: "/notifications",
       name: "notifications",
       component: () => import("../views/Notifications.vue"),
+    },
+
+    {
+      path: "/:catchAll(.*)",
+      name: "NotFound",
+      component: () => import("../views/NotFound.vue"),
     },
   ],
 });

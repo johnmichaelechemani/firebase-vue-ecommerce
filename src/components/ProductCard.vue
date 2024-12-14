@@ -1,6 +1,7 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { defineProps } from "vue";
+import { defineProps, ref, Transition } from "vue";
+import ProductModal from "./ProductModal.vue";
 
 const props = defineProps({
   products: Object,
@@ -17,12 +18,24 @@ const getStarIcons = (ratings) => {
     ...Array(emptyStars).fill("material-symbols-light:star-outline"),
   ];
 };
+
+const selected = ref([]);
+const isShowModal = ref(false);
+const selectedProduct = (item) => {
+  isShowModal.value = true;
+  selected.value = item;
+};
+const showModal = () => {
+  isShowModal.value = false;
+  selected.value = null;
+};
 </script>
 
 <template>
   <div
     v-for="item in products"
     :key="item.id"
+    @click="selectedProduct(item)"
     class="hover:bg-gray-700/10 transition"
   >
     <div
@@ -59,4 +72,37 @@ const getStarIcons = (ratings) => {
       </div>
     </div>
   </div>
+
+  <transition>
+    <div
+      v-if="isShowModal"
+      class="fixed inset-0 z-50 bg-gray-800/30 backdrop-blur"
+    >
+      <div class="relative flex justify-center items-center h-full">
+        <div class="relative">
+          <div class="absolute top-0 right-0">
+            <button @click="showModal">
+              <Icon
+                icon="material-symbols-light:close-small-outline"
+                width="24"
+                height="24"
+              />
+            </button>
+          </div>
+          <ProductModal :product="selected" />
+        </div>
+      </div>
+    </div>
+  </transition>
 </template>
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
