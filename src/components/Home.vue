@@ -5,7 +5,7 @@ import Dummy from "../assets/dummyImages/dummy.jpg";
 
 <template>
   <div
-    class="sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
+    class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
     <div class="py-2">
       <nav class="p-2 flex flex-wrap gap-2 shadow-sm">

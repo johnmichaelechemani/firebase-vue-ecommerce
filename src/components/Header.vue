@@ -10,10 +10,15 @@ const showSetting = () => {
 const hideSetting = () => {
   isShowSetting.value = false;
 };
+
+const isLoggedIn = ref(true);
+const logout = () => {
+  isLoggedIn.value = false;
+};
 </script>
 <template>
   <nav
-    class="ml-20 sm:ml-72 border-b border-gray-800/50 fixed top-0 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-14"
+    class="ml-20 sm:ml-72 border-b border-gray-800/50 fixed top-0 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)]"
   >
     <div class="relative flex justify-between items-center">
       <div class="ml-2 hidden sm:flex">
@@ -31,56 +36,77 @@ const hideSetting = () => {
           placeholder="Search.."
         />
       </div>
-      <div class="flex justify-end items-center gap-1 m-2">
-        <RouterLink to="/chats">
-          <button
-            :class="[
-              $route.path === '/chats'
-                ? 'bg-gray-800 text-white'
-                : 'hover:bg-gray-700/20',
-              'p-2 rounded-full ',
-            ]"
-          >
+      <div class="flex justify-end items-center gap-1">
+        <div v-if="isLoggedIn" class="flex justify-end items-center gap-1 m-2">
+          <RouterLink to="/chats">
+            <button
+              :class="[
+                $route.path === '/chats'
+                  ? 'bg-gray-800 text-white'
+                  : 'hover:bg-gray-700/20',
+                'p-2 rounded-full ',
+              ]"
+            >
+              <Icon
+                icon="material-symbols-light:chat-outline"
+                width="24"
+                height="24"
+              />
+            </button>
+          </RouterLink>
+          <button class="p-2 rounded-full hover:bg-gray-700/20">
             <Icon
-              icon="material-symbols-light:chat-outline"
+              icon="material-symbols-light:favorite-outline"
               width="24"
               height="24"
             />
           </button>
-        </RouterLink>
-        <button class="p-2 rounded-full hover:bg-gray-700/20">
-          <Icon
-            icon="material-symbols-light:favorite-outline"
-            width="24"
-            height="24"
-          />
-        </button>
-        <button class="p-2 rounded-full hover:bg-gray-700/20">
-          <Icon icon="mdi-light:cart" width="24" height="24" />
-        </button>
-        <RouterLink to="/notifications">
-          <button
-            :class="[
-              $route.path === '/notifications'
-                ? 'bg-gray-800 text-white'
-                : 'hover:bg-gray-700/20',
-              'p-2 rounded-full ',
-            ]"
-          >
-            <Icon
-              icon="material-symbols-light:notification-important-outline-sharp"
-              width="24"
-              height="24"
+          <button class="p-2 rounded-full hover:bg-gray-700/20">
+            <Icon icon="mdi-light:cart" width="24" height="24" />
+          </button>
+          <RouterLink to="/notifications">
+            <button
+              :class="[
+                $route.path === '/notifications'
+                  ? 'bg-gray-800 text-white'
+                  : 'hover:bg-gray-700/20',
+                'p-2 rounded-full ',
+              ]"
+            >
+              <Icon
+                icon="material-symbols-light:notification-important-outline-sharp"
+                width="24"
+                height="24"
+              />
+            </button>
+          </RouterLink>
+          <button @click="showSetting" class="size-10 rounded-full bg-gray-800">
+            <img
+              :src="User"
+              alt=""
+              class="h-full w-full object-cover rounded-full object-center"
             />
           </button>
-        </RouterLink>
-        <button @click="showSetting" class="size-10 rounded-full bg-gray-800">
-          <img
-            :src="User"
-            alt=""
-            class="h-full w-full object-cover rounded-full object-center"
-          />
-        </button>
+        </div>
+
+        <div v-else class="m-2 flex justify-center items-center gap-2">
+          <button
+            class="px-4 py-1 bg-gray-800 text-white font-semibold text-sm"
+          >
+            <div class="sm:hidden">
+              <Icon icon="mdi:login" width="24" height="24" />
+            </div>
+            <span class="hidden sm:flex py-1"> Log in</span>
+          </button>
+          <button
+            class="px-4 py-1 border hover:bg-gray-700/20 transition font-semibold text-sm"
+          >
+            <div class="sm:hidden">
+              <Icon icon="mdi:register-outline" width="24" height="24" />
+            </div>
+            <span class="hidden sm:flex py-1">Sign Up</span>
+          </button>
+        </div>
       </div>
     </div>
   </nav>
@@ -149,6 +175,7 @@ const hideSetting = () => {
         <p class="text-sm font-semibold text-gray-700">Community Rules</p>
       </button>
       <button
+        @click="logout"
         class="border p-2 my-4 border-gray-700/50 shadow-sm w-full text-gray-800 text-sm font-semibold place-items-center"
       >
         Logout
