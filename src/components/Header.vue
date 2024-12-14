@@ -38,7 +38,7 @@ const logout = () => {
       </div>
       <div class="flex justify-end items-center gap-1">
         <div v-if="isLoggedIn" class="flex justify-end items-center gap-1 m-2">
-          <RouterLink to="/chats">
+          <RouterLink to="/chats" @click.native="showPanel(null)">
             <button
               :class="[
                 $route.path === '/chats'
@@ -80,7 +80,7 @@ const logout = () => {
           >
             <Icon icon="mdi-light:cart" width="24" height="24" />
           </button>
-          <RouterLink to="/notifications">
+          <RouterLink to="/notifications" @click.native="showPanel(null)">
             <button
               :class="[
                 $route.path === '/notifications'
