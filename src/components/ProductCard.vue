@@ -43,6 +43,7 @@ const showModal = () => {
     >
       <img
         :src="item.image"
+        loading="lazy"
         alt=""
         class="object-center h-full w-full object-cover"
       />

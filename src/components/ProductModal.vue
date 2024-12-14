@@ -81,6 +81,7 @@ const getStarIcons = (ratings) => {
         >
           <img
             :src="product.image"
+            loading="lazy"
             alt=""
             class="object-center h-full w-full object-cover"
           />
