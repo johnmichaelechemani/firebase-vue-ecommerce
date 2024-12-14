@@ -5,7 +5,7 @@
     <div>
       <div class="w-full h-28 bg-gray-700/20"></div>
     </div>
-    <div class="m-2 overflow-y-scroll h-[calc(100vh-0rem)] pb-32">
+    <div class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32">
       <p
         class="text-xs my-2 font-semibold text-gray-500 text-center sm:text-start"
       >
