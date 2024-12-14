@@ -8,26 +8,36 @@ import Dummy from "../assets/dummyImages/dummy.jpg";
     class="sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
     <div class="py-2">
-      <nav class="m-2 flex justify-start items-center gap-2">
+      <nav class="m-2 flex flex-wrap gap-2">
         <button
           class="px-2 py-1 text-sm font-semibold text-white bg-gray-700 border border-gray-700"
         >
-          ITEMS
+          All
         </button>
         <button
           class="px-2 py-1 text-sm font-semibold border hover:bg-gray-700/10 transition border-gray-700/50"
         >
-          ITEMS
+          HOME APPLIANCES
         </button>
         <button
           class="px-2 py-1 text-sm font-semibold border hover:bg-gray-700/10 transition border-gray-700/50"
         >
-          ITEMS
+          MENS & WEMEN APPARELS
         </button>
         <button
           class="px-2 py-1 text-sm font-semibold border hover:bg-gray-700/10 transition border-gray-700/50"
         >
-          ITEMS
+          COMPUTERS
+        </button>
+        <button
+          class="px-2 py-1 text-sm font-semibold border hover:bg-gray-700/10 transition border-gray-700/50"
+        >
+          KIDS APPARELS
+        </button>
+        <button
+          class="px-2 py-1 text-sm font-semibold border hover:bg-gray-700/10 transition border-gray-700/50"
+        >
+          KITCHEN TOOLS
         </button>
       </nav>
 
