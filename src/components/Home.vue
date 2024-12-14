@@ -148,7 +148,7 @@ const Category = ref([
       </nav>
 
       <div
-        class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32"
+        class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-48"
       >
         <div class="m-2">
           <h1 class="text-md font-semibold my-2">Products</h1>
