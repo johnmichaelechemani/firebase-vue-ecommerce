@@ -1,4 +1,3 @@
 <template>
-    <div>Pay</div>
-  </template>
-  
+  <div>Pay na day</div>
+</template>
