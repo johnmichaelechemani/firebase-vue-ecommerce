@@ -28,28 +28,7 @@ const router = createRouter({
       path: "/purchase",
       name: "purchase",
       component: () => import("../views/Purchase.vue"),
-      children: [
-        {
-          path: "to-ship",
-          name: "ship",
-          component: () => import("../views/Purchase/ToShip.vue"),
-        },
-        {
-          path: "to-pay",
-          name: "pay",
-          component: () => import("../views/Purchase/ToPay.vue"),
-        },
-        {
-          path: "to-recieve",
-          name: "recieve",
-          component: () => import("../views/Purchase/ToRecieve.vue"),
-        },
-        {
-          path: "to-rate",
-          name: "rate",
-          component: () => import("../views/Purchase/ToRate.vue"),
-        },
-      ],
+     
     },
     {
       path: "/chats",
