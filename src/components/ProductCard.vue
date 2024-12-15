@@ -36,7 +36,7 @@ const showModal = () => {
     v-for="item in products"
     :key="item.id"
     @click="selectedProduct(item)"
-    class="hover:bg-gray-700/10 transition "
+    class="hover:bg-gray-700/10 transition"
   >
     <div
       class="sm:size-40 size-32 bg-gray-700/10 border-gray-700/20 border relative"
@@ -67,6 +67,7 @@ const showModal = () => {
       <h1
         class="sm:text-sm text-xs font-medium truncate whitespace-break-spaces max-w-28"
       >
+        <span v-if="item.mall" class="text-[9px] bg-gray-800 text-white px-1">Mall</span>
         {{ item.name }}
       </h1>
       <div class="flex justify-start gap-1 items-center">

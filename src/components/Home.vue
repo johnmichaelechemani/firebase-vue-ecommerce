@@ -26,6 +26,7 @@ const Products = ref([
     id: 1,
     name: "Shoes ni Mike",
     category: "shoes",
+    mall: true,
     price: Math.floor(Math.random() * 500) + 50,
     image: Shoes,
     ratings: Math.floor(Math.random() * 5) + 1,
