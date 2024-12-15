@@ -120,7 +120,7 @@ const filteredStats = computed(() => {
   >
     <div class="p-2">
       <p class="text-sm font-semibold">My Purchase</p>
-      <div class="mt-4 flex justify-start items-center gap-8">
+      <div class="mt-4 flex no-scrollbar overflow-x-auto gap-8">
         <div
           class="place-items-center"
           v-for="item in purchasesStatus"
@@ -200,7 +200,7 @@ const filteredStats = computed(() => {
         v-if="filteredStats.length === 0"
         class="text-sm font-semibold flex justify-start items-center gap-2"
       >
-        <span class="p-2 border shadow"
+        <span class="p-2 border shadow-sm"
           ><Icon icon="mdi:cup-empty" width="24" height="24" /></span
         >No Orders Yet
       </div>
