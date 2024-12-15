@@ -14,7 +14,7 @@ import Shoes from "../assets/dummyImages/shoes.jpg";
         <div
           class="my-2 border-r border-gray-700/50 w-16 sm:w-72 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)]"
         >
-          <div class="flex gap-2 justify-start items-center  my-2">
+          <div class="flex gap-2 justify-start items-center my-2">
             <div class="p-2 bg-gray-800 text-white shadow">
               <Icon
                 icon="material-symbols-light:money-bag-outline-rounded"
@@ -26,7 +26,9 @@ import Shoes from "../assets/dummyImages/shoes.jpg";
             <p class="text-sm hidden sm:flex font-semibold">Promotions</p>
           </div>
 
-          <div class="flex gap-2 justify-start items-center hover:bg-gray-700/10 my-2">
+          <div
+            class="flex gap-2 justify-start items-center hover:bg-gray-700/10 my-2"
+          >
             <div class="p-2 border shadow">
               <Icon
                 icon="material-symbols-light:social-leaderboard-outline-rounded"
@@ -37,7 +39,9 @@ import Shoes from "../assets/dummyImages/shoes.jpg";
 
             <p class="text-sm hidden sm:flex font-semibold">Social Update</p>
           </div>
-          <div class="flex gap-2 justify-start items-center hover:bg-gray-700/10 my-2">
+          <div
+            class="flex gap-2 justify-start items-center hover:bg-gray-700/10 my-2"
+          >
             <div class="p-2 border shadow">
               <Icon
                 icon="material-symbols-light:finance"
@@ -48,7 +52,9 @@ import Shoes from "../assets/dummyImages/shoes.jpg";
 
             <p class="text-sm hidden sm:flex font-semibold">Finance Update</p>
           </div>
-          <div class="flex gap-2 justify-start items-center hover:bg-gray-700/10 my-2">
+          <div
+            class="flex gap-2 justify-start items-center hover:bg-gray-700/10 my-2"
+          >
             <div class="p-2 border shadow">
               <Icon
                 icon="material-symbols-light:settings-outline"
