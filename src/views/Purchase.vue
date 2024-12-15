@@ -235,7 +235,7 @@ const getButtonConfig = (status) => {
           </div>
           <div class="flex justify-end" v-if="getButtonConfig(item.status)">
             <button
-              class="border text-sm border-gray-700/50 font-semibold px-4 py-2"
+              class="border text-sm border-gray-700/50 hover:bg-gray-800 transition hover:text-white font-semibold px-4 py-2"
               @click="getButtonConfig(item.status).action"
             >
               {{ getButtonConfig(item.status).text }}
