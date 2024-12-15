@@ -168,7 +168,18 @@ const getStarIcons = (ratings) => {
           </div>
         </div>
       </div>
-      <div class="my-3">
+
+      <button
+        class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
+      >
+        <Icon
+          icon="material-symbols-light:favorite-outline"
+          width="24"
+          height="24"
+        />
+      </button>
+
+      <div class="my-1">
         <div class="text-sm font-semibold">Decription:</div>
         <div class="text-sm font-semibold">Reviews:</div>
       </div>
