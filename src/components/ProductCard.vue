@@ -36,7 +36,7 @@ const showModal = () => {
     v-for="item in products"
     :key="item.id"
     @click="selectedProduct(item)"
-    class="hover:bg-gray-700/10 transition"
+    class="hover:bg-gray-700/10 transition "
   >
     <div
       class="sm:size-40 size-32 bg-gray-700/10 border-gray-700/20 border relative"

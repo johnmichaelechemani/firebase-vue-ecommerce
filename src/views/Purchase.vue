@@ -205,7 +205,7 @@ const getButtonConfig = (status) => {
 
           <div class="flex justify-start items-start gap-2">
             <div
-              class="sm:size-20 size-10 bg-gray-700/10 border-gray-700/20 border relative"
+              class="sm:size-20 size-16 bg-gray-700/10 border-gray-700/20 border relative"
             >
               <img
                 :src="item.image"
