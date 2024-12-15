@@ -91,7 +91,7 @@ import Shoes from "../assets/dummyImages/shoes.jpg";
                 Catch the BIG PRICE DROP!
               </div>
               <div>
-                <p class="text-[9px] font-medium">
+                <p class="text-[9px] sm:text-xs font-medium">
                   Kids who have never seen peace and kids who have never seen
                   wars have different values.
                 </p>
