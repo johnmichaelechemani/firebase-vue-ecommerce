@@ -132,6 +132,23 @@ const malls = ref([
   {
     id: 2,
     name: "ELECTRONICS",
+    price: [
+      {
+        id: 1,
+        lowestPrice: 500,
+        action: () => sortProducts(500),
+      },
+      {
+        id: 2,
+        lowestPrice: 700,
+        action: () => sortProducts(700),
+      },
+      {
+        id: 3,
+        lowestPrice: 1500,
+        action: () => sortProducts(1500),
+      },
+    ],
     mallLogo: [
       {
         id: 1,
@@ -240,6 +257,23 @@ const malls = ref([
   {
     id: 3,
     name: " HOME & OUTDORS",
+    price: [
+      {
+        id: 1,
+        lowestPrice: 500,
+        action: () => sortProducts(500),
+      },
+      {
+        id: 2,
+        lowestPrice: 700,
+        action: () => sortProducts(700),
+      },
+      {
+        id: 3,
+        lowestPrice: 1500,
+        action: () => sortProducts(1500),
+      },
+    ],
     mallLogo: [
       {
         id: 1,
@@ -348,6 +382,23 @@ const malls = ref([
   {
     id: 4,
     name: " ESSENTIALS",
+    price: [
+      {
+        id: 1,
+        lowestPrice: 500,
+        action: () => sortProducts(500, 4),
+      },
+      {
+        id: 2,
+        lowestPrice: 700,
+        action: () => sortProducts(700),
+      },
+      {
+        id: 3,
+        lowestPrice: 1500,
+        action: () => sortProducts(1500),
+      },
+    ],
     mallLogo: [
       {
         id: 1,
@@ -454,13 +505,25 @@ const malls = ref([
     ],
   },
 ]);
+const selectedPrice = ref(500);
+const originalProducts = ref([]);
+
+malls.value.forEach((mall) => {
+  originalProducts.value.push({
+    ...mall,
+    mallProducts: [...mall.mallProducts],
+  });
+});
 
 const sortProducts = (maxPrice) => {
-  malls.value.forEach((mall) => {
-    mall.mallProducts = mall.mallProducts.filter(
+  malls.value.forEach((mall, index) => {
+    const originalProductsForMall = originalProducts.value[index].mallProducts;
+
+    mall.mallProducts = originalProductsForMall.filter(
       (product) => product.price <= maxPrice
     );
   });
+  selectedPrice.value = maxPrice;
 };
 </script>
 
@@ -490,8 +553,13 @@ const sortProducts = (maxPrice) => {
         <div class="flex justify-start items-center my-2">
           <div v-for="sortButton in mall.price" :key="sortButton.id">
             <button
-              @click="sortButton.action"
-              class="px-4 py-1 bg-gray-800 text-white text-xs font-semibold"
+              @click="sortButton.action(sortButton.lowestPrice, mall.id)"
+              :class="[
+                selectedPrice === sortButton.lowestPrice
+                  ? 'bg-gray-800 border text-white'
+                  : 'border ',
+                'px-4 py-1 text-xs font-semibold',
+              ]"
             >
               {{ sortButton.lowestPrice }} & BELOW
             </button>
