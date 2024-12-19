@@ -32,7 +32,10 @@ const purchase = () => {
   <div class="">
     <p class="text-xs font-semibold text-gray-500">My Cart</p>
     <div class="my-2">
-      <div class="flex justify-start items-center gap-2 mb-1">
+      <div
+        class="flex justify-start items-center gap-2 mb-1"
+        v-if="cartItems.length !== 0"
+      >
         <input type="checkbox" class="accent-gray-700" v-model="selectAll" />
         <p class="text-xs font-semibold text-gray-700">Select All</p>
       </div>
@@ -79,8 +82,15 @@ const purchase = () => {
       </div>
       <hr />
     </div>
+    <div
+      v-if="cartItems.length === 0"
+      class="text-sm font-semibold text-gray-600 px-3 text-center py-3 m-2 border"
+    >
+      No items added to cart.
+    </div>
     <div>
       <button
+        v-if="cartItems.length !== 0"
         @click="purchase"
         :class="[
           isBuyDisabled
