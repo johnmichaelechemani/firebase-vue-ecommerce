@@ -25,7 +25,7 @@ const logout = () => {
     class="ml-20 sm:ml-72 border-b border-gray-800/50 fixed top-0 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)]"
   >
     <div class="relative flex justify-between px-1 gap-1 items-center">
-      <div class=" hidden sm:flex">
+      <div class="hidden sm:flex">
         <h1 class="font-extrabold text-lg text-gray-800 drop-shadow-md">
           Jm's Shops
         </h1>
@@ -90,10 +90,10 @@ const logout = () => {
               'p-2 rounded-full relative ',
             ]"
           >
-            <div class="absolute -top-1 right-0">
+            <div v-if="cartItems.length > 0" class="absolute -top-1 right-0">
               <span
                 class="text-[9px] font-medium bg-gray-700 px-1.5 py-0.5 text-white rounded-full"
-                >{{ cartItems }}</span
+                >{{ cartItems.length }}</span
               >
             </div>
             <Icon icon="mdi-light:cart" width="24" height="24" />

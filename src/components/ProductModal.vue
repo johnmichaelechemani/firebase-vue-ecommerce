@@ -1,5 +1,5 @@
 <script setup>
-import { isLoggedIn, loginErrorMessage } from "../store.js";
+import { isLoggedIn, loginErrorMessage, cartItems } from "../store.js";
 import { Icon } from "@iconify/vue";
 import { ref, computed, defineProps, Transition } from "vue";
 import { useRouter } from "vue-router";
@@ -7,6 +7,11 @@ import { useRouter } from "vue-router";
 const route = useRouter();
 const quantity = ref(1);
 const selectedSize = ref("");
+
+const props = defineProps({
+  product: Object,
+  require: true,
+});
 
 const changeSize = (size) => {
   selectedSize.value = size;
@@ -27,28 +32,32 @@ const addToCart = () => {
     loginErrorMessage.value = "Please login before you shop!";
     route.push("/login");
   }
+  const productToAdd = {
+    id: props.product.id,
+    name: props.product.name,
+    store: "Mike Store",
+    price: props.product.price,
+    size: selectedSize.value,
+    quantity: quantity.value,
+    image: props.product.image,
+    discount: props.product.discount,
+  };
+
+  // Push the product object to cartItems
+  cartItems.value.push(productToAdd);
 
   showSuccessMessage.value = true;
   setTimeout(() => {
     showSuccessMessage.value = false;
   }, 2000);
 
-  console.log(
-    "Added to cart",
-    quantity.value,
-    selectedSize.value,
-    isLoggedIn.value
-  );
+  console.log("Added to cart", productToAdd);
 };
 
 const isAddToCartDisabled = computed(() => {
   return quantity.value === 0 || selectedSize.value === "";
 });
 
-const props = defineProps({
-  product: Object,
-  require: true,
-});
 const getStarIcons = (ratings) => {
   const fullStars = Math.floor(ratings);
   const halfStar = ratings % 1 >= 0.5 ? 1 : 0;

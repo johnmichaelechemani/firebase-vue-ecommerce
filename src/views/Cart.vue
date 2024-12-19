@@ -1,30 +1,13 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import { Icon } from "@iconify/vue";
-const cartProducts = ref([
-  {
-    id: 1,
-    store: "Mike Store",
-    name: "Shoes",
-    price: 100,
-    quantity: 1,
-    image: "https://via.placeholder.com/150?text=Kids+Apparel",
-  },
-  {
-    id: 2,
-    store: "Mike Store",
-    name: "Shoes",
-    price: 100,
-    quantity: 1,
-    image: "https://via.placeholder.com/150?text=Kids+Apparel",
-  },
-]);
+import { cartItems } from "../store.js";
 
 const selected = ref([]);
 const selectAll = ref(false);
 watch(selectAll, (newValue) => {
   if (newValue) {
-    selected.value = cartProducts.value.map((product) => product.id);
+    selected.value = cartItems.value.map((product) => product.id);
   } else {
     selected.value = [];
   }
@@ -55,7 +38,7 @@ const purchase = () => {
       </div>
       <hr />
       <div
-        v-for="product in cartProducts"
+        v-for="product in cartItems"
         :key="product.id"
         class="flex justify-between items-start gap-2 my-2"
       >
