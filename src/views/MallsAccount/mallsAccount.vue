@@ -1,9 +1,47 @@
 <script setup>
 import ProductCard from "@/components/ProductCard.vue";
 import { products } from "@/store";
-import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
 import { Icon } from "@iconify/vue";
+
+const router = useRouter();
+const route = useRoute();
 const activeTab = ref("shop");
+
+const queryForCategories = (query, id) => {
+  router.push({
+    path: `/malls/${id}/`,
+    query: { category: query },
+  });
+};
+
+onMounted(() => {
+  queryForCategories("popular", route.params.id);
+});
+
+const productTags = ref([
+  {
+    id: 1,
+    name: "Popular",
+    category: "popular",
+  },
+  {
+    id: 2,
+    name: "Latest",
+    category: "latest",
+  },
+  {
+    id: 3,
+    name: "Top Sales",
+    category: "top_sales",
+  },
+  {
+    id: 4,
+    name: "Price",
+    category: "price",
+  },
+]);
 </script>
 
 <template>
@@ -17,7 +55,11 @@ const activeTab = ref("shop");
     <div class="mb-3 flex justify-start items-center gap-2">
       <h1 class="font-semibold text-lg drop-shadow-lg">Store ni Mike</h1>
       <div class="p-1 shadow border hover:bg-gray-500/10">
-        <Icon icon="material-symbols-light:chat-outline" width="24" height="24" />
+        <Icon
+          icon="material-symbols-light:chat-outline"
+          width="24"
+          height="24"
+        />
       </div>
     </div>
     <div class="flex justify-start items-center gap-4">
@@ -41,28 +83,30 @@ const activeTab = ref("shop");
       >
         Products
       </button>
-      <button
-        class="px-4 py-1 text-sm font-semibold"
-        :class="{
-          'bg-gray-800 text-white': activeTab === 'categories',
-          'text-gray-800': activeTab !== 'categories',
-        }"
-        @click="activeTab = 'categories'"
-      >
-        Categories
-      </button>
     </div>
     <hr />
     <div class="my-2">
-      <p class="font-semibold text-sm my-2">Recommended For You</p>
-      <div class="flex flex-wrap gap-1">
-        <ProductCard v-if="activeTab === 'shop'" :products="products" />
+      <div v-if="activeTab === 'shop'">
+        <p class="font-semibold text-sm my-2">Recommended For You</p>
+        <div class="flex flex-wrap gap-1">
+          <ProductCard :products="products" />
+        </div>
       </div>
-      <div v-if="activeTab === 'products'">
-        <p>Products content goes here.</p>
-      </div>
-      <div v-if="activeTab === 'categories'">
-        <p>Categories content goes here.</p>
+
+      <div class="flex gap-2" v-if="activeTab === 'products'">
+        <button
+          v-for="item in productTags"
+          :key="item.id"
+          @click="queryForCategories(item.category, $route.params.id)"
+          :class="[
+            $route.query.category === item.category
+              ? 'border-b-4 border-gray-800 font-semibold '
+              : 'hover:bg-gray-700/10 border font-medium',
+            'px-2 py-1 text-sm  transition ',
+          ]"
+        >
+          {{ item.name }}
+        </button>
       </div>
     </div>
   </div>
