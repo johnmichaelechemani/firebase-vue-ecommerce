@@ -37,6 +37,7 @@ export const useAuth = () => {
         userId: res.user.uid,
         userPhotoURL: res.user.photoURL,
         userOnline: true,
+        role: "customer",
       });
 
       isLoggedIn.value = true;
@@ -45,6 +46,7 @@ export const useAuth = () => {
         userName: res.user.displayName,
         userId: res.user.uid,
         userPhotoURL: res.user.photoURL,
+        role: "customer",
       };
       router.push("/");
     } catch (error) {
@@ -63,6 +65,7 @@ export const useAuth = () => {
         userId: res.user.uid,
         userOnline: true,
         anonymous: true,
+        role: "customer",
       });
 
       isLoggedIn.value = true;

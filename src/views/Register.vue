@@ -9,7 +9,7 @@
         <h1 class="text-lg font-bold my-3">Sign Up</h1>
         <div class="my-2">
           <p class="text-sm font-semibold text-gray-700">
-            Name:<span title="important">*</span>
+            Name: <span title="important">*</span>
           </p>
           <input
             type="text"
@@ -18,7 +18,7 @@
         </div>
         <div class="my-2">
           <p class="text-sm font-semibold text-gray-700">
-            Email:<span title="important">*</span>
+            Email: <span title="important">*</span>
           </p>
           <input
             type="email"
