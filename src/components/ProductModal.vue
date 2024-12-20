@@ -131,32 +131,32 @@ const addToFavorites = () => {
             <span
               @click="changeSize('sm')"
               :class="[
-                selectedSize === 'sm' ? 'bg-gray-700 text-white' : '',
-                'border px-2 shadow cursor-pointer  transition text-sm',
+                selectedSize === 'sm' ? 'bg-gray-700 text-white' : 'border',
+                ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
               ]"
               >sm</span
             >
             <span
               @click="changeSize('md')"
               :class="[
-                selectedSize === 'md' ? 'bg-gray-700 text-white' : '',
-                'border px-2 shadow cursor-pointer  transition text-sm',
+                selectedSize === 'md' ? 'bg-gray-700 text-white' : 'border',
+                ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
               ]"
               >md</span
             >
             <span
               @click="changeSize('lg')"
               :class="[
-                selectedSize === 'lg' ? 'bg-gray-700 text-white' : '',
-                'border px-2 shadow cursor-pointer  transition text-sm',
+                selectedSize === 'lg' ? 'bg-gray-700 text-white' : 'border',
+                ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
               ]"
               >lg</span
             >
             <span
               @click="changeSize('xl')"
               :class="[
-                selectedSize === 'xl' ? 'bg-gray-700 text-white' : '',
-                'border px-2 shadow cursor-pointer  transition text-sm',
+                selectedSize === 'xl' ? 'bg-gray-700 text-white' : 'border',
+                ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
               ]"
               >xl</span
             >

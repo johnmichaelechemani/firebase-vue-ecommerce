@@ -2,6 +2,7 @@
 import ProductCard from "@/components/ProductCard.vue";
 import { products } from "@/store";
 import { ref } from "vue";
+import { Icon } from "@iconify/vue";
 const activeTab = ref("shop");
 </script>
 
@@ -13,8 +14,11 @@ const activeTab = ref("shop");
         class="size-20 bg-gray-700 absolute -bottom-10 left-2 shadow-xl"
       ></div>
     </div>
-    <div class="mb-3">
-      <h1 class="font-semibold text-lg">Store ni Mike</h1>
+    <div class="mb-3 flex justify-start items-center gap-2">
+      <h1 class="font-semibold text-lg drop-shadow-lg">Store ni Mike</h1>
+      <div class="p-1 shadow border hover:bg-gray-500/10">
+        <Icon icon="material-symbols-light:chat-outline" width="24" height="24" />
+      </div>
     </div>
     <div class="flex justify-start items-center gap-4">
       <button
