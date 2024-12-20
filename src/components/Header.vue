@@ -5,12 +5,10 @@ import { ref } from "vue";
 import Settings from "@/views/Settings.vue";
 import Cart from "@/views/Cart.vue";
 import Favorite from "@/views/Favorite.vue";
-import { useRouter } from "vue-router";
 import { isLoggedIn, cartItems, messages, notifications } from "../store.js";
 import { useAuth } from "@/firebase.auth";
 
 const { logoutAccount } = useAuth();
-const route = useRouter();
 const openPanel = ref(null);
 
 const showPanel = (panel) => {
@@ -19,7 +17,7 @@ const showPanel = (panel) => {
 
 const logout = () => {
   logoutAccount();
-  route.push("/");
+
   isLoggedIn.value = false;
   openPanel.value = null;
 };
@@ -135,13 +133,10 @@ const logout = () => {
             />
           </button>
         </div>
-        <div v-else class="flex gap-2 justify-start items-center px-4 py-1">
-          <div class="bg-gray-700/30 size-6 rounded-full"></div>
-          <div class="bg-gray-700/30 size-6 rounded-full"></div>
-          <div class="bg-gray-700/30 size-6 rounded-full"></div>
-          <div class="bg-gray-700/30 size-6 rounded-full"></div>
-          <div class="bg-gray-700/50 size-10 rounded-full"></div>
-        </div>
+        <div
+          v-else
+          class="flex gap-2 h-11 justify-start items-center px-4 py-1"
+        ></div>
 
         <div
           v-if="isLoggedIn === false"
