@@ -49,7 +49,7 @@ if (loginErrorMessage) {
 
         <div class="my-2">
           <button
-            class="w-full bg-gray-800 text-white text-sm font-semibold py-2.5"
+            class="w-full bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold py-2.5"
           >
             Login
           </button>
