@@ -4,6 +4,7 @@ import {
   onAuthStateChanged,
   getAuth,
   GoogleAuthProvider,
+  signInAnonymously,
 } from "firebase/auth";
 import {
   collection,
@@ -48,6 +49,27 @@ export const useAuth = () => {
       router.push("/");
     } catch (error) {
       console.error("Error signing in with Google:", error);
+    }
+  };
+  const loginAnonymously = async () => {
+    try {
+      const res = await signInAnonymously(auth);
+      const usersCollection = collection(firestore, "users");
+      const userDocRef = doc(usersCollection, res.user.uid);
+
+      await setDoc(userDocRef, {
+        userName: "Anonymous User",
+        userPhotoURL: "https://via.placeholder.com/150",
+        userId: res.user.uid,
+        userOnline: true,
+        anonymous: true,
+      });
+
+      isLoggedIn.value = true;
+      user.value = res.user;
+      router.push("/");
+    } catch (error) {
+      console.error("Error during anonymous login:", error);
     }
   };
 
@@ -104,6 +126,7 @@ export const useAuth = () => {
 
   return {
     signInWithGoogle,
+    loginAnonymously,
     logoutAccount,
     user,
   };

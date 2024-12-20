@@ -1,9 +1,4 @@
-<script setup>
-import { Icon } from "@iconify/vue";
-import { useAuth } from "@/firebase.auth";
-
-const { signInWithGoogle } = useAuth();
-</script>
+<script setup></script>
 
 <template>
   <div
@@ -34,31 +29,12 @@ const { signInWithGoogle } = useAuth();
           />
         </div>
 
-        <div class="my-2">
+        <div class="mt-4">
           <button
             class="w-full bg-gray-800 text-white text-sm font-semibold py-2.5"
           >
             Sign Up
           </button>
-        </div>
-
-        <div>
-          <p class="text-sm text-gray-600 text-center">or</p>
-          <div class="my-2 flex justify-center items-center gap-2">
-            <button
-              @click="signInWithGoogle"
-              class="w-full flex justify-between items-center px-4 hover:bg-gray-800 hover:text-white transition border py-2.5"
-            >
-              <Icon icon="mdi:google" width="20" height="20" />
-              <span class="text-sm font-semibold"> Google</span>
-            </button>
-            <button
-              title="Sign in a anonymous"
-              class="hover:bg-gray-800 hover:text-white transition border text-sm font-semibold py-2.5 px-4"
-            >
-              <Icon icon="mdi:anonymous" width="20" height="20" />
-            </button>
-          </div>
         </div>
 
         <p
