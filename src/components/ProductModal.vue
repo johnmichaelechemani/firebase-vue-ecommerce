@@ -90,7 +90,12 @@ const addToFavorites = () => {
 <template>
   <div>
     <div class="p-2 bg-gray-100 min-w-80">
-      <p class="text-xl font-semibold mt-2">Mike Store</p>
+      <router-link :to="{ name: 'mallStore', params: { id: product.mallId } }">
+        <p class="text-xl font-semibold mt-2 hover:underline">
+          {{ product.mallName }}
+        </p>
+      </router-link>
+
       <div class="flex my-2">
         <Icon
           v-for="(icon, index) in getStarIcons(product.ratings)"

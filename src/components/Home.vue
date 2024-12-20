@@ -24,6 +24,8 @@ const filteredProducts = computed(() => {
 const Products = ref([
   {
     id: 1,
+    mallId: 123,
+    mallName: "Store ni Michael",
     name: "Shoes ni Mike",
     category: "shoes",
     mall: true,

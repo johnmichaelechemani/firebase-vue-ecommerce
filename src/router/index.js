@@ -23,12 +23,23 @@ const router = createRouter({
       path: "/malls",
       name: "malls",
       component: () => import("../views/Malls.vue"),
+      children: [
+        {
+          path: "",
+          name: "mallsHome",
+          component: () => import("../views/MallsAccount/mallsHome.vue"),
+        },
+        {
+          path: ":id",
+          name: "mallStore",
+          component: () => import("../views/MallsAccount/mallsAccount.vue"),
+        },
+      ],
     },
     {
       path: "/purchase",
       name: "purchase",
       component: () => import("../views/Purchase.vue"),
-     
     },
     {
       path: "/chats",
