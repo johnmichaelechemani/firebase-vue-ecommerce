@@ -1,5 +1,10 @@
 <script setup>
-import { isLoggedIn, loginErrorMessage, cartItems } from "../store.js";
+import {
+  isLoggedIn,
+  loginErrorMessage,
+  cartItems,
+  favoritesItem,
+} from "../store.js";
 import { Icon } from "@iconify/vue";
 import { ref, computed, defineProps, Transition } from "vue";
 import { useRouter } from "vue-router";
@@ -68,6 +73,17 @@ const getStarIcons = (ratings) => {
     ...Array(halfStar).fill("material-symbols-light:star-half"),
     ...Array(emptyStars).fill("material-symbols-light:star-outline"),
   ];
+};
+
+const addToFavorites = () => {
+  const productToAdd = {
+    id: props.product.id,
+    name: props.product.name,
+    store: "Mike Store",
+    price: props.product.price,
+    image: props.product.image,
+  };
+  favoritesItem.value.push(productToAdd);
 };
 </script>
 
@@ -179,6 +195,7 @@ const getStarIcons = (ratings) => {
       </div>
 
       <button
+        @click="addToFavorites"
         class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
       >
         <Icon

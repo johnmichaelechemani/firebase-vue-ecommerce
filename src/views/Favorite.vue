@@ -1,39 +1,19 @@
 <script setup>
 import { ref } from "vue";
 import { Icon } from "@iconify/vue";
-const cartProducts = ref([
-  {
-    id: 1,
-    store: "Mike Store",
-    name: "Shoes",
-    price: 100,
-    quantity: 1,
-    image: "https://via.placeholder.com/150?text=Kids+Apparel",
-  },
-  {
-    id: 2,
-    store: "Mike Store",
-    name: "Shoes",
-    price: 100,
-    quantity: 1,
-    image: "https://via.placeholder.com/150?text=Kids+Apparel",
-  },
-]);
-
+import { favoritesItem } from "@/store";
 </script>
 
 <template>
   <div class="">
     <p class="text-xs font-semibold text-gray-500">My Favorites</p>
     <div class="my-2">
-      
       <div
-        v-for="product in cartProducts"
+        v-for="product in favoritesItem"
         :key="product.id"
-        class="flex justify-between items-start gap-2 my-2"
+        class="flex justify-between items-start shadow p-1 border gap-2 my-2"
       >
         <div class="flex justify-start items-start gap-2">
-        
           <div class="size-10">
             <img
               :src="product.image"
@@ -48,7 +28,6 @@ const cartProducts = ref([
             </p>
             <div class="flex justify-start items-center gap-2">
               <p class="text-sm font-bold">${{ product.price }}</p>
-              <p class="text-xs font-semibold">qty: {{ product.quantity }}</p>
             </div>
           </div>
         </div>
@@ -62,7 +41,12 @@ const cartProducts = ref([
           />
         </div>
       </div>
-      <hr />
+      <div
+        v-if="favoritesItem.length === 0"
+        class="text-sm font-semibold text-gray-600 px-3 text-center py-3 m-2 border"
+      >
+        No items added to favorites.
+      </div>
     </div>
   </div>
 </template>

@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 export const cartItems = ref([]);
+export const favoritesItem = ref([]);
 export const messages = ref(5);
 export const notifications = ref(23);
 export const loginErrorMessage = ref("");
