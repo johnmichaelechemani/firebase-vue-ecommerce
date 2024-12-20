@@ -2,6 +2,14 @@
 import { ref } from "vue";
 import { Icon } from "@iconify/vue";
 import { favoritesItem } from "@/store";
+import ProductModal from "@/components/ProductModal.vue";
+
+const selected = ref([]);
+const isShowModal = ref(false);
+const selectedProduct = (item) => {
+  isShowModal.value = true;
+  selected.value = item;
+};
 </script>
 
 <template>
@@ -11,7 +19,8 @@ import { favoritesItem } from "@/store";
       <div
         v-for="product in favoritesItem"
         :key="product.id"
-        class="flex justify-between items-start shadow p-1 border gap-2 my-2"
+        @click="selectedProduct(product)"
+        class="flex justify-between cursor-pointer items-start shadow p-1 border gap-2 my-2"
       >
         <div class="flex justify-start items-start gap-2">
           <div class="size-10">
@@ -24,7 +33,9 @@ import { favoritesItem } from "@/store";
           <div>
             <p class="text-xs font-medium">
               {{ product.name }}
-              <span class="text-xs font-semibold">({{ product.store }})</span>
+              <span class="text-xs font-semibold"
+                >({{ product.mallName }})</span
+              >
             </p>
             <div class="flex justify-start items-center gap-2">
               <p class="text-sm font-bold">${{ product.price }}</p>
@@ -49,4 +60,10 @@ import { favoritesItem } from "@/store";
       </div>
     </div>
   </div>
+
+  <ProductModal
+    @closeModal="isShowModal = false"
+    :product="selected"
+    :isShowModal="isShowModal"
+  />
 </template>

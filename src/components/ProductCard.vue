@@ -25,10 +25,6 @@ const selectedProduct = (item) => {
   isShowModal.value = true;
   selected.value = item;
 };
-const showModal = () => {
-  isShowModal.value = false;
-  selected.value = null;
-};
 </script>
 
 <template>
@@ -67,7 +63,9 @@ const showModal = () => {
       <h1
         class="sm:text-sm text-xs font-medium truncate whitespace-break-spaces max-w-28"
       >
-        <span v-if="item.mall" class="text-[9px] bg-gray-800 text-white px-1">Mall</span>
+        <span v-if="item.mall" class="text-[9px] bg-gray-800 text-white px-1"
+          >Mall</span
+        >
         {{ item.name }}
       </h1>
       <div class="flex justify-start gap-1 items-center">
@@ -79,27 +77,11 @@ const showModal = () => {
     </div>
   </div>
 
-  <transition>
-    <div
-      v-if="isShowModal"
-      class="fixed inset-0 z-50 bg-gray-800/30 backdrop-blur"
-    >
-      <div class="relative flex justify-center items-center h-full">
-        <div class="relative">
-          <div class="absolute top-0 right-0">
-            <button @click="showModal">
-              <Icon
-                icon="material-symbols-light:close-small-outline"
-                width="24"
-                height="24"
-              />
-            </button>
-          </div>
-          <ProductModal :product="selected" />
-        </div>
-      </div>
-    </div>
-  </transition>
+  <ProductModal
+    @closeModal="isShowModal = false"
+    :product="selected"
+    :isShowModal="isShowModal"
+  />
 </template>
 <style>
 .v-enter-active,

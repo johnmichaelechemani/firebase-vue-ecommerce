@@ -31,6 +31,8 @@ export const products = ref([
   },
   {
     id: 2,
+    mallId: 124234243,
+    mallName: "Store ni Michael",
     name: "Home Appliances Pro",
     category: "home-appliances",
     price: Math.floor(Math.random() * 500) + 200,
@@ -41,6 +43,8 @@ export const products = ref([
   },
   {
     id: 3,
+    mallId: 122343,
+    mallName: "Store ni Michael",
     name: "Casual Apparel",
     category: "mens-womens-apparel",
     price: Math.floor(Math.random() * 300) + 50,
@@ -51,6 +55,8 @@ export const products = ref([
   },
   {
     id: 4,
+    mallId: 1243243,
+    mallName: "Store ni Michael",
     name: "High-Performance Laptop",
     category: "computers",
     price: Math.floor(Math.random() * 2000) + 500,
@@ -61,6 +67,8 @@ export const products = ref([
   },
   {
     id: 5,
+    mallId: 1243243,
+    mallName: "Store ni Michael",
     name: "Kids Fun Apparel",
     category: "kids-apparel",
     price: Math.floor(Math.random() * 200) + 30,
@@ -71,6 +79,8 @@ export const products = ref([
   },
   {
     id: 6,
+    mallId: 1233434,
+    mallName: "Store ni Michael",
     name: "Kitchen Essentials",
     category: "kitchen-tools",
     price: Math.floor(Math.random() * 100) + 20,

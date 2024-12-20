@@ -2,8 +2,8 @@
 import ProductCard from "./ProductCard.vue";
 import { useRouter, useRoute } from "vue-router";
 import { ref, computed } from "vue";
-
 import { products } from "@/store";
+
 const router = useRouter();
 const route = useRoute();
 const queryForCategories = (query) => {
