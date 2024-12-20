@@ -81,11 +81,16 @@ const getStarIcons = (ratings) => {
   ];
 };
 
+const showSuccessMessageFavorites = ref(false);
 const addToFavorites = () => {
   const productToAdd = {
     ...props.product,
   };
   favoritesItem.value.push(productToAdd);
+  showSuccessMessageFavorites.value = true;
+  setTimeout(() => {
+    showSuccessMessageFavorites.value = false;
+  }, 2000);
 };
 </script>
 
@@ -255,6 +260,14 @@ const addToFavorites = () => {
               class="absolute bottom-0 right-0 text-sm text-green-500 font-semibold border border-green-500/50 px-4 py-2"
             >
               Added to Cart!
+            </div>
+          </transition>
+          <transition>
+            <div
+              v-if="showSuccessMessageFavorites"
+              class="absolute bottom-0 right-0 text-sm text-green-500 font-semibold border border-green-500/50 px-4 py-2"
+            >
+              Added to Favorites!
             </div>
           </transition>
         </div>
