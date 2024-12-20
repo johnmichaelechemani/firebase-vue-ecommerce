@@ -16,6 +16,20 @@ const queryForCategories = (query, id) => {
   });
 };
 
+const isPriceUp = ref(true);
+const filteredProducts = ref(products);
+
+const filterProductsByPrice = () => {
+  isPriceUp.value = !isPriceUp.value;
+  filteredProducts.value = products.value.sort((a, b) => {
+    return isPriceUp.value ? b.price - a.price : a.price - b.price;
+  });
+};
+const handlePriceFilter = (id) => {
+  queryForCategories("price", id);
+  filterProductsByPrice();
+};
+
 onMounted(() => {
   queryForCategories("popular", route.params.id);
 });
@@ -40,6 +54,7 @@ const productTags = ref([
     id: 4,
     name: "Price",
     category: "price",
+    icon: true,
   },
 ]);
 </script>
@@ -94,19 +109,45 @@ const productTags = ref([
       </div>
 
       <div class="flex gap-2" v-if="activeTab === 'products'">
-        <button
-          v-for="item in productTags"
-          :key="item.id"
-          @click="queryForCategories(item.category, $route.params.id)"
-          :class="[
-            $route.query.category === item.category
-              ? 'border-b-4 border-gray-800 font-semibold '
-              : 'hover:bg-gray-700/10 border font-medium',
-            'px-2 py-1 text-sm  transition ',
-          ]"
-        >
-          {{ item.name }}
-        </button>
+        <div>
+          <div class="flex gap-2">
+            <button
+              v-for="item in productTags"
+              :key="item.id"
+              @click="
+                item.category === 'price'
+                  ? handlePriceFilter($route.params.id)
+                  : queryForCategories(item.category, $route.params.id)
+              "
+              :class="[
+                $route.query.category === item.category
+                  ? 'border-b-4 border-gray-800 font-semibold '
+                  : 'hover:bg-gray-700/10 border font-medium',
+                'px-2 py-1 text-sm flex justify-start items-center gap-1 transition ',
+              ]"
+            >
+              {{ item.name }}
+              <div v-if="item.icon">
+                <Icon
+                  v-if="isPriceUp"
+                  icon="mdi-light:arrow-up"
+                  width="16"
+                  height="16"
+                />
+                <Icon
+                  v-else
+                  icon="mdi-light:arrow-down"
+                  width="16"
+                  height="16"
+                />
+              </div>
+            </button>
+          </div>
+
+          <div class="flex flex-wrap gap-1 my-5">
+            <ProductCard :products="filteredProducts" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
