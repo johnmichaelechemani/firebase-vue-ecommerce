@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { defineProps, ref, Transition } from "vue";
+import { defineProps, ref } from "vue";
 import ProductModal from "./ProductModal.vue";
 
 const props = defineProps({

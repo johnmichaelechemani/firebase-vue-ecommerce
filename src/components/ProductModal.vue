@@ -55,7 +55,6 @@ const addToCart = () => {
     discount: props.product.discount,
   };
 
-  // Push the product object to cartItems
   cartItems.value.push(productToAdd);
 
   showSuccessMessage.value = true;
@@ -111,6 +110,7 @@ const addToFavorites = () => {
             <div class="p-2 bg-gray-100 min-w-80">
               <router-link
                 :to="{ name: 'mallStore', params: { id: product.mallId } }"
+                @click="showModal"
               >
                 <p class="text-xl font-semibold mt-2 hover:underline">
                   {{ product.mallName }}
