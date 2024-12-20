@@ -15,7 +15,7 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { isLoggedIn } from "./store";
+import { isLoggedIn, userData } from "./store";
 
 export const useAuth = () => {
   const auth = getAuth();
@@ -40,6 +40,11 @@ export const useAuth = () => {
 
       isLoggedIn.value = true;
       user.value = res.user;
+      userData.value = {
+        userName: res.user.displayName,
+        userId: res.user.uid,
+        userPhotoURL: res.user.photoURL,
+      };
       router.push("/");
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -74,12 +79,18 @@ export const useAuth = () => {
       const userDoc = await getDoc(userDocRef);
 
       if (userDoc.exists()) {
-        const userData = userDoc.data();
-        isLoggedIn.value = userData.userOnline;
+        const userDataFromFirestore = userDoc.data();
+        isLoggedIn.value = userDataFromFirestore.userOnline;
         user.value = currentUser;
+        userData.value = {
+          userName: userDataFromFirestore.userName,
+          userId: userDataFromFirestore.userId,
+          userPhotoURL: userDataFromFirestore.userPhotoURL,
+        };
       } else {
         isLoggedIn.value = false;
         user.value = null;
+        userData.value = null;
       }
     } else {
       isLoggedIn.value = false;

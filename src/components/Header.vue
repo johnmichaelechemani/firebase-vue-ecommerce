@@ -5,7 +5,13 @@ import { ref } from "vue";
 import Settings from "@/views/Settings.vue";
 import Cart from "@/views/Cart.vue";
 import Favorite from "@/views/Favorite.vue";
-import { isLoggedIn, cartItems, messages, notifications } from "../store.js";
+import {
+  isLoggedIn,
+  cartItems,
+  messages,
+  notifications,
+  userData,
+} from "../store.js";
 import { useAuth } from "@/firebase.auth";
 
 const { logoutAccount } = useAuth();
@@ -127,7 +133,7 @@ const logout = () => {
             class="size-10 rounded-full bg-gray-800"
           >
             <img
-              :src="User"
+              :src="userData.userPhotoURL"
               alt=""
               class="h-full w-full object-cover rounded-full object-center"
             />

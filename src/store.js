@@ -7,3 +7,4 @@ export const notifications = ref(23);
 export const loginErrorMessage = ref("");
 export const showSidebar = ref(false);
 export const isLoggedIn = ref(null);
+export const userData = ref(null);
