@@ -65,7 +65,7 @@
         >
           <div
             :class="[
-              $route.path === '/purchase' ? 'bg-gray-800 text-white' : '',
+              $route.path === '/purchase' ? 'bg-gray-800 text-white ' : '',
               'place-items-center p-1 border shadow ',
             ]"
           >
