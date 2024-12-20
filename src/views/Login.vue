@@ -47,7 +47,7 @@ if (loginErrorMessage) {
           Forgot Password?
         </a>
 
-        <div>
+        <div class="my-2">
           <button
             class="w-full bg-gray-800 text-white text-sm font-semibold py-2.5"
           >
