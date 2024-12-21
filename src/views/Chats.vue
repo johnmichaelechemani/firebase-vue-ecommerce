@@ -55,11 +55,11 @@ function toggleMenu() {
                   "
                   class="flex gap-2 justify-center sm:justify-start items-center my-2 sm:mx-2"
                 >
-                  <div class="size-8 sm:size-10 rounded-full">
+                  <div class="size-8 sm:size-10 ">
                     <img
                       :src="mall.image"
                       alt=""
-                      class="w-full h-full object-cover rounded-full object-center"
+                      class="w-full h-full object-cover  object-center"
                     />
                   </div>
 
