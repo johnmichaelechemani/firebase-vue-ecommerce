@@ -1,9 +1,24 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { ref } from "vue";
-import { RouterView } from "vue-router";
+import { ref, watch } from "vue";
+import { RouterView, useRoute } from "vue-router";
 import Shoes from "../assets/dummyImages/shoes.jpg";
 import { mallsAccount } from "@/store";
+
+const route = useRoute();
+const mallId = ref(Number(route.params.id));
+watch(
+  () => route.params.id,
+  (newId) => {
+    mallId.value = Number(newId);
+  }
+);
+
+const isMenuToggled = ref(true);
+
+function toggleMenu() {
+  isMenuToggled.value = !isMenuToggled.value;
+}
 </script>
 
 <template>
@@ -11,15 +26,26 @@ import { mallsAccount } from "@/store";
     class="sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
     <div class="p-2">
-      <p class="text-sm font-semibold">Chats</p>
+      <div class="text-sm font-semibold flex gap-1 justify-start items-center">
+        <div
+          @click="toggleMenu"
+          class="p-1 hover:bg-gray-800/10 rounded-full cursor-pointer"
+        >
+          <Icon
+            icon="material-symbols-light:menu-open-rounded"
+            width="24"
+            height="24"
+          />
+        </div>
+        Chats
+      </div>
       <div class="flex gap-4">
         <div
+          v-if="isMenuToggled"
           class="my-2 border-r border-gray-700/50 w-16 sm:w-72 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)]"
         >
           <div v-for="mall in mallsAccount" :key="mall.id">
-            <router-link
-              :to="{ name: 'mallsChat', params: { id: mall.id } }"
-            >
+            <router-link :to="{ name: 'mallsChat', params: { id: mall.id } }">
               <div
                 class="flex gap-2 justify-center sm:justify-start shadow-xl items-center border my-2 mr-2"
               >
@@ -65,11 +91,13 @@ import { mallsAccount } from "@/store";
         </div>
 
         <div class="my-2 border-gray-700/50 w-full">
-          <div class="text-sm font-semibold">Select Chat</div>
-          <div class="font-semibold text-sm flex justify-center items-center">
-            Nothings here!
+          <RouterView v-if="mallId" />
+          <div v-else>
+            <div class="text-sm font-semibold">Select Chat</div>
+            <div class="font-semibold text-sm flex justify-center items-center">
+              Nothings here!
+            </div>
           </div>
-          <RouterView />
         </div>
       </div>
     </div>

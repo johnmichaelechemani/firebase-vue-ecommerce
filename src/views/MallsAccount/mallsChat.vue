@@ -14,5 +14,7 @@ watch(
 </script>
 
 <template>
-  <div>Chats Page {{ mallId }}</div>
+  <div>
+    <div>Chats Page {{ mallId }}</div>
+  </div>
 </template>
