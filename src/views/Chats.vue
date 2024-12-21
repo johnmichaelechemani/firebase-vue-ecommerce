@@ -50,7 +50,7 @@ function toggleMenu() {
                 <div
                   :class="
                     mallId === mall.id
-                      ? 'border shadow-xl p-1'
+                      ? 'border border-gray-800/50 shadow-xl p-1'
                       : 'hover:bg-gray-700/10 transition p-1'
                   "
                   class="flex gap-2 justify-center sm:justify-start items-center my-2 sm:mx-2"
