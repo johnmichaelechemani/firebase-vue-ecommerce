@@ -17,11 +17,8 @@ import { useRoute } from "vue-router";
 
 export const chatFunctions = async () => {
   const { auth, firestore } = useAuth();
-
   const route = useRoute();
-
   const messages = ref([]);
-
   const user = ref(auth.currentUser);
 
   if (!user.value) {
