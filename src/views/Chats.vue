@@ -51,7 +51,10 @@ function toggleMenu() {
                   :class="mallId === mall.id ? 'border shadow-xl' : ''"
                   class="flex gap-2 justify-center sm:justify-start items-center my-2 sm:mx-2"
                 >
-                  <div class="size-10 sm:size-12 shadow-xl">
+                  <div
+                    :class="mallId === mall.id ? 'shadow-xl' : ''"
+                    class="size-10 sm:size-12"
+                  >
                     <img
                       :src="mall.image"
                       alt=""
