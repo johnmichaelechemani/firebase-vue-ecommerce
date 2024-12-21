@@ -32,7 +32,7 @@ export const products = ref([
   {
     id: 2,
     mallId: 124234243,
-    mallName: "Store ni Michael",
+    mallName: "Store ni John",
     name: "Home Appliances Pro",
     category: "home-appliances",
     price: Math.floor(Math.random() * 500) + 200,
@@ -88,5 +88,24 @@ export const products = ref([
     ratings: Math.floor(Math.random() * 5) + 1,
     discount: Math.floor(Math.random() * 25),
     sold: Math.floor(Math.random() * 1000) + 50,
+  },
+]);
+
+export const mallsAccount = ref([
+  {
+    id: 123,
+    name: "Store ni Michael",
+    address: "Mombasa Road, Nairobi",
+    image: Shoes,
+    phone: "+254 712 345 678",
+    email: "michael@michael.com",
+  },
+  {
+    id: 124234243,
+    name: "Store ni John",
+    address: "Mombasa Road, Nairobi",
+    image: Computer,
+    phone: "+254 712 345 678",
+    email: "michael@michael.com",
   },
 ]);

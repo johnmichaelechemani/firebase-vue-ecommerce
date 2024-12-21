@@ -1,13 +1,15 @@
 <script setup>
 import ProductCard from "@/components/ProductCard.vue";
-import { products } from "@/store";
+import { products, mallsAccount } from "@/store";
 import { useRouter, useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { Icon } from "@iconify/vue";
 
 const router = useRouter();
 const route = useRoute();
 const activeTab = ref("shop");
+const isPriceUp = ref(true);
+const filteredProducts = ref(products);
 
 const queryForCategories = (query, id) => {
   router.push({
@@ -15,9 +17,14 @@ const queryForCategories = (query, id) => {
     query: { category: query },
   });
 };
+const currentMall = computed(() => {
+  const mallId = Number(route.params.id);
+  return mallsAccount.value.find((mall) => mall.id === mallId);
+});
 
-const isPriceUp = ref(true);
-const filteredProducts = ref(products);
+const mallData = computed(() => {
+  return currentMall.value ? currentMall.value : "Unknown Mall";
+});
 
 const filterProductsByPrice = () => {
   isPriceUp.value = !isPriceUp.value;
@@ -63,12 +70,18 @@ const productTags = ref([
   <div class="">
     <div class="relative mb-14">
       <div class="w-full h-32 bg-gray-700/50"></div>
-      <div
-        class="size-20 bg-gray-700 absolute -bottom-10 left-2 shadow-xl"
-      ></div>
+      <div class="size-20 bg-gray-700 absolute -bottom-10 left-2 shadow-xl">
+        <img
+          :src="mallData.image"
+          alt=""
+          class="w-full h-full object-cover object-center"
+        />
+      </div>
     </div>
     <div class="mb-3 flex justify-start items-center gap-2">
-      <h1 class="font-semibold text-lg drop-shadow-lg">Store ni Mike</h1>
+      <h1 class="font-semibold text-lg drop-shadow-lg">
+        {{ mallData.name }}
+      </h1>
       <div class="p-1 shadow border hover:bg-gray-500/10">
         <Icon
           icon="material-symbols-light:chat-outline"
