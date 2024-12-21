@@ -23,7 +23,13 @@ const currentMall = computed(() => {
 });
 
 const mallData = computed(() => {
-  return currentMall.value ? currentMall.value : "Unknown Mall";
+  return (
+    currentMall.value || {
+      name: "Unknown Mall",
+      image: null,
+      bgImage: null,
+    }
+  );
 });
 
 const filterProductsByPrice = () => {
@@ -71,6 +77,7 @@ const productTags = ref([
     <div class="relative sm:mb-14 mb-5">
       <div class="w-full h-32 sm:h-52 bg-gray-700/50">
         <img
+          v-if="mallData.image"
           :src="mallData.bgImage"
           loading="lazy"
           alt="Background Image"
@@ -78,9 +85,10 @@ const productTags = ref([
         />
       </div>
       <div
-        class="sm:size-20 size-10 border-2 border-gray-700 bg-gray-700 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
+        class="sm:size-20 size-10 border-2 border-gray-700 bg-gray-700/90 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
       >
         <img
+          v-if="mallData.image"
           :src="mallData.image"
           alt="profile"
           loading="lazy"
