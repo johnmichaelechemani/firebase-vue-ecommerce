@@ -12,6 +12,12 @@ watch(
     mallId.value = Number(newId);
   }
 );
+
+const message = ref("");
+const sendMessage = () => {
+  console.log(message.value);
+  message.value = "";
+};
 </script>
 
 <template>
@@ -27,13 +33,21 @@ watch(
       </div>
       <div class="h-[calc(100vh-10rem)] mx-2 p-2">Main Layout</div>
       <div class="absolute bottom-0 left-0 w-full">
-        <div class="relative shadow-xl p-1 flex justify-between items-center border">
+        <div
+          class="relative shadow-xl p-1 flex justify-between items-center border"
+        >
           <input
             type="text"
+            v-model="message"
             class="w-full py-1 px-3 outline-none placeholder:text-sm"
             placeholder="Type a message"
           />
-          <button class="py-1 pl-2 pr-1 hover:bg-gray-800 hover:text-white transition border">
+          <button
+            @click="sendMessage"
+            :disabled="!message.trim()"
+            :class="!message.trim() ? 'cursor-not-allowed ' : 'cursor-pointer'"
+            class="py-1 pl-2 pr-1 hover:bg-gray-800 hover:text-white transition border"
+          >
             <Icon
               icon="material-symbols-light:send-rounded"
               width="32"
