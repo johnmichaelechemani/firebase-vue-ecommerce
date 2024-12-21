@@ -6,7 +6,7 @@ import {
   favoritesItem,
 } from "../store.js";
 import { Icon } from "@iconify/vue";
-import { ref, defineEmits, computed, defineProps, Transition } from "vue";
+import { ref, defineEmits, computed, defineProps } from "vue";
 import { useRouter } from "vue-router";
 
 const route = useRouter();
