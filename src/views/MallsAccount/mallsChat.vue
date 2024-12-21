@@ -31,24 +31,65 @@ const sendMessage = () => {
         ></div>
         <div><p class="text-sm font-semibold">Store ni Michael</p></div>
       </div>
-      <div class="h-[calc(100vh-10rem)] mx-2 p-2">
-        <div class="flex justify-start items-center">Reciever Message</div>
-        <div>
-          <div class="flex justify-center items-center">Tue 3, 10:30pm</div>
-         <div class="flex justify-end items-end font-medium text-gray-800 gap-2">
-          <div class="pl-3 pr-2 pb-1 pt-2 text-sm  bg-gray-700/10" >Sender Message</div>
-          <div class="size-6 bg-gray-800"></div>
-         </div>
+      <div class="h-[calc(100vh-10rem)] overflow-y-auto pb-14 mx-2 p-2">
+        <div class="my-2">
+          <div
+            class="flex justify-center items-center text-[9px] text-gray-500"
+          >
+            Tue 3, 10:30pm
+          </div>
+
+          <div
+            class="flex justify-start items-end font-medium text-gray-800 gap-2"
+          >
+            <div class="size-6 bg-gray-800"></div>
+            <div
+              class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
+            >
+              <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
+                Reciever Message
+              </div>
+              <div
+                class="flex justify-start items-center text-xs font-semibold text-gray-500"
+              >
+                Sending...
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="my-2">
+          <div
+            class="flex justify-center items-center text-[9px] text-gray-500"
+          >
+            Tue 3, 10:30pm
+          </div>
+          <div
+            class="flex justify-end items-end font-medium text-gray-800 gap-2"
+          >
+            <div
+              class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
+            >
+              <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
+                Sender Message
+              </div>
+              <div
+                class="flex justify-end items-center text-xs font-semibold text-gray-500"
+              >
+                Delivered
+              </div>
+            </div>
+            <div class="size-6 bg-gray-800"></div>
+          </div>
         </div>
       </div>
-      <div class="absolute bottom-0 left-0 w-full">
+      <div class="absolute bottom-0 left-0 z-10 w-full bg-gray-50">
         <div
           class="relative shadow-xl p-1 flex justify-between items-center border"
         >
           <input
             type="text"
             v-model="message"
-            class="w-full py-1 px-3 outline-none placeholder:text-sm"
+            class="w-full py-1 px-3 outline-none bg-transparent placeholder:text-sm"
             placeholder="Type a message"
           />
           <button
