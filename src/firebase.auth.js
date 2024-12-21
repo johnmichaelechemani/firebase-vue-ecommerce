@@ -7,6 +7,8 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 import {
   collection,
@@ -22,6 +24,7 @@ import { isLoggedIn, userData } from "./store";
 
 export const useAuth = () => {
   const auth = getAuth();
+  setPersistence(auth, browserLocalPersistence);
   const user = ref(auth.currentUser);
 
   auth.onAuthStateChanged((authUser) => {
@@ -144,8 +147,6 @@ export const useAuth = () => {
     }
   };
 
-  const isLoading = ref(true); // Add a loading state
-
   const checkUserStatus = async (currentUser) => {
     if (currentUser) {
       const userDocRef = doc(firestore, "users", currentUser.uid);
@@ -161,7 +162,6 @@ export const useAuth = () => {
           userPhotoURL: userDataFromFirestore.userPhotoURL,
         };
       } else {
-        await signOut(auth); // Sign out if no user doc exists
         isLoggedIn.value = false;
         user.value = null;
         userData.value = null;
@@ -171,8 +171,6 @@ export const useAuth = () => {
       user.value = null;
       userData.value = null;
     }
-
-    isLoading.value = false;
   };
   onAuthStateChanged(auth, (currentUser) => {
     checkUserStatus(currentUser);
@@ -189,7 +187,6 @@ export const useAuth = () => {
     password,
     role,
     loginAccount,
-    firestore,
     auth,
   };
 };

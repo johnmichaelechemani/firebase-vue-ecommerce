@@ -10,25 +10,37 @@ import {
   doc,
   serverTimestamp,
   count,
+  getFirestore,
 } from "firebase/firestore";
+
 import { ref } from "vue";
-import { useAuth } from "@/firebase.auth";
 import { useRoute } from "vue-router";
+import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "@/firebase.auth";
 
 export const chatFunctions = async () => {
-  const { firestore, user } = useAuth();
-  const route = useRoute();
+  const { user, auth } = useAuth();
+  const firestore = getFirestore();
+
+  await new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      user.value = currentUser;
+      unsubscribe();
+      resolve();
+    });
+  });
+
   const messages = ref([]);
 
-  const userId = user.uid;
+  const userId = user.value.uid;
 
   const getChatId = (userId1, userId2) => {
     return [userId1, userId2].sort().join("_");
-  };
+  }; 
 
-  const sendMessage = async (message) => {
+  const sendMessage = async (message, reciever) => {
     console.log("Message sent:", message);
-    const reciever = route.params.id;
+
     const chatId = getChatId(userId, reciever);
     console.log(reciever, userId);
 

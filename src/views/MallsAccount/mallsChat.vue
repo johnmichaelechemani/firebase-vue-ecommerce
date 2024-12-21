@@ -12,13 +12,6 @@ onMounted(async () => {
   chatService.value = await chatFunctions();
 });
 
-const handleSendMessage = async () => {
-  if (chatService.value && message.value) {
-    await chatService.value.sendMessage(message.value);
-    message.value = ""; // Clear message after sending
-  }
-};
-
 const message = ref("");
 
 watch(
@@ -27,6 +20,13 @@ watch(
     mallId.value = newId;
   }
 );
+
+const handleSendMessage = async () => {
+  if (chatService.value && message.value) {
+    await chatService.value.sendMessage(message.value, mallId.value);
+    message.value = "";
+  }
+};
 
 const currentMall = computed(() => {
   return mallsAccount.value.find((mall) => mall.userId === mallId.value);
