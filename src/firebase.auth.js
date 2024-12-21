@@ -22,9 +22,15 @@ import { isLoggedIn, userData } from "./store";
 
 export const useAuth = () => {
   const auth = getAuth();
+  const user = ref(auth.currentUser);
+
+  auth.onAuthStateChanged((authUser) => {
+    user.value = authUser;
+  });
+
   const router = useRouter();
   const firestore = getFirestore();
-  const user = ref(null);
+
   const usersCollection = collection(firestore, "users");
   const authGoogle = new GoogleAuthProvider();
   const email = ref("");
@@ -178,5 +184,7 @@ export const useAuth = () => {
     password,
     role,
     loginAccount,
+    firestore,
+    auth,
   };
 };

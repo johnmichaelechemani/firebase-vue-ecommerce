@@ -3,8 +3,23 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { mallsAccount, useMallsAccount } from "@/store";
+import { chatFunctions } from "@/scripts/chatFunctions";
 const route = useRoute();
 const mallId = ref(route.params.id);
+const chatService = ref(null);
+
+onMounted(async () => {
+  chatService.value = await chatFunctions();
+});
+
+const handleSendMessage = async () => {
+  if (chatService.value && message.value) {
+    await chatService.value.sendMessage(message.value);
+    message.value = ""; // Clear message after sending
+  }
+};
+
+const message = ref("");
 
 watch(
   () => route.params.id,
@@ -20,12 +35,6 @@ const currentMall = computed(() => {
 const mallData = computed(() => {
   return currentMall.value;
 });
-
-const message = ref("");
-const sendMessage = () => {
-  console.log(message.value);
-  message.value = "";
-};
 
 onMounted(async () => {
   await useMallsAccount();
@@ -114,9 +123,9 @@ onMounted(async () => {
             placeholder="Type a message"
           />
           <button
-            @click="sendMessage"
-            :disabled="!message.trim()"
-            :class="!message.trim() ? 'cursor-not-allowed ' : 'cursor-pointer'"
+            @click="handleSendMessage"
+            :disabled="!message"
+            :class="!message ? 'cursor-not-allowed ' : 'cursor-pointer'"
             class="py-1 pl-2 pr-1 hover:bg-gray-800 hover:text-white transition border"
           >
             <Icon
