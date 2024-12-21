@@ -16,15 +16,11 @@ import { useAuth } from "@/firebase.auth";
 import { useRoute } from "vue-router";
 
 export const chatFunctions = async () => {
-  const { auth, firestore } = useAuth();
+  const { firestore, user } = useAuth();
   const route = useRoute();
   const messages = ref([]);
-  const user = ref(auth.currentUser);
 
-  if (!user.value) {
-    throw new Error("User is not authenticated");
-  }
-  const userId = user.value.uid;
+  const userId = user.uid;
 
   const getChatId = (userId1, userId2) => {
     return [userId1, userId2].sort().join("_");

@@ -1,10 +1,10 @@
 import {
   signOut,
   signInWithPopup,
-  onAuthStateChanged,
   getAuth,
   GoogleAuthProvider,
   signInAnonymously,
+  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -144,6 +144,8 @@ export const useAuth = () => {
     }
   };
 
+  const isLoading = ref(true); // Add a loading state
+
   const checkUserStatus = async (currentUser) => {
     if (currentUser) {
       const userDocRef = doc(firestore, "users", currentUser.uid);
@@ -159,6 +161,7 @@ export const useAuth = () => {
           userPhotoURL: userDataFromFirestore.userPhotoURL,
         };
       } else {
+        await signOut(auth); // Sign out if no user doc exists
         isLoggedIn.value = false;
         user.value = null;
         userData.value = null;
@@ -166,9 +169,11 @@ export const useAuth = () => {
     } else {
       isLoggedIn.value = false;
       user.value = null;
+      userData.value = null;
     }
-  };
 
+    isLoading.value = false;
+  };
   onAuthStateChanged(auth, (currentUser) => {
     checkUserStatus(currentUser);
   });
