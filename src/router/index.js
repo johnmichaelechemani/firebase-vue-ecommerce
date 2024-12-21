@@ -45,6 +45,13 @@ const router = createRouter({
       path: "/chats",
       name: "chats",
       component: () => import("../views/Chats.vue"),
+      children: [
+        {
+          path: ":id",
+          name: "mallsChat",
+          component: () => import("../views/MallsAccount/mallsChat.vue"),
+        },
+      ],
     },
     {
       path: "/notifications",
