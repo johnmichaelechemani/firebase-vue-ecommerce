@@ -2,6 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
 import Shoes from "../assets/dummyImages/shoes.jpg";
+import { mallsAccount } from "@/store";
 </script>
 
 <template>
@@ -14,40 +15,46 @@ import Shoes from "../assets/dummyImages/shoes.jpg";
         <div
           class="my-2 border-r border-gray-700/50 w-16 sm:w-72 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)]"
         >
-          <div
-            class="flex gap-2 justify-center sm:justify-start shadow-xl items-center border my-2 mr-2"
-          >
-            <div class="border-2 border-gray-800 size-10 sm:size-12 shadow-xl">
-              <img
-                :src="Shoes"
-                alt=""
-                class="w-full h-full object-cover object-center"
-              />
-            </div>
+          <div v-for="mall in mallsAccount" :key="mall.id">
+            <div
+              class="flex gap-2 justify-center sm:justify-start shadow-xl items-center border my-2 mr-2"
+            >
+              <div
+                class="border-2 border-gray-800 size-10 sm:size-12 shadow-xl"
+              >
+                <img
+                  :src="mall.image"
+                  alt=""
+                  class="w-full h-full object-cover object-center"
+                />
+              </div>
 
-            <div class="hidden sm:block">
-              <p class="text-sm font-semibold">Mike Store</p>
-              <p class="text-xs truncate font-medium max-w-32">
-                Hey, select any of your like!
-              </p>
+              <div class="hidden sm:block">
+                <p class="text-sm font-semibold">{{ mall.name }}</p>
+                <p class="text-xs truncate font-medium max-w-32">
+                  Hey, select any of your like!
+                </p>
+              </div>
             </div>
-          </div>
-          <div
-            class="flex gap-2 justify-start shadow-sm items-center my-2 mr-2"
-          >
-            <div class="border size-10 sm:size-12">
-              <img
-                :src="Shoes"
-                alt=""
-                class="w-full h-full object-cover object-center"
-              />
-            </div>
+            <div
+              class="flex gap-2 justify-start shadow-sm items-center my-2 mr-2"
+            >
+              <div class="border size-10 sm:size-12">
+                <img
+                  :src="Shoes"
+                  alt=""
+                  class="w-full h-full object-cover object-center"
+                />
+              </div>
 
-            <div class="hidden sm:block">
-              <p class="text-sm hidden sm:flex font-semibold">Michael Store</p>
-              <p class="text-xs truncate font-medium max-w-32">
-                Yo! what do you like?
-              </p>
+              <div class="hidden sm:block">
+                <p class="text-sm hidden sm:flex font-semibold">
+                  Michael Store
+                </p>
+                <p class="text-xs truncate font-medium max-w-32">
+                  Yo! what do you like?
+                </p>
+              </div>
             </div>
           </div>
         </div>
