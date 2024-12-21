@@ -1,4 +1,9 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { useAuth } from "@/firebase.auth";
+
+const { registerAccount, name, email, password, role } = useAuth();
+</script>
 
 <template>
   <div
@@ -12,6 +17,7 @@
             Name: <span title="important">*</span>
           </p>
           <input
+            v-model="name"
             type="text"
             class="outline-none border p-2 min-w-52 sm:min-w-80"
           />
@@ -22,6 +28,7 @@
           </p>
           <input
             type="email"
+            v-model="email"
             class="outline-none border p-2 min-w-52 sm:min-w-80"
           />
         </div>
@@ -30,6 +37,7 @@
             Password: <span title="important">*</span>
           </p>
           <input
+            v-model="password"
             type="password"
             class="outline-none border p-2 min-w-52 sm:min-w-80"
           />
@@ -39,8 +47,7 @@
             Select Account Type: <span title="important">*</span>
           </p>
           <select
-            name=""
-            id=""
+            v-model="role"
             class="border w-full text-sm font-semibold text-gray-700 py-2 my-1"
           >
             <option selected hidden>Choose a type</option>
@@ -54,6 +61,7 @@
 
         <div class="mt-4">
           <button
+            @click="registerAccount"
             class="w-full bg-gray-800 text-white text-sm font-semibold py-2.5"
           >
             Sign Up

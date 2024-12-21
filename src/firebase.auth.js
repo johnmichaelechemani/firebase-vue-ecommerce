@@ -5,6 +5,7 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInAnonymously,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import {
   collection,
@@ -23,13 +24,16 @@ export const useAuth = () => {
   const router = useRouter();
   const firestore = getFirestore();
   const user = ref(null);
-
+  const usersCollection = collection(firestore, "users");
   const authGoogle = new GoogleAuthProvider();
+  const email = ref("");
+  const password = ref("");
+  const name = ref("");
+  const role = ref("");
 
   const signInWithGoogle = async () => {
     try {
       const res = await signInWithPopup(auth, authGoogle);
-      const usersCollection = collection(firestore, "users");
       const userDocRef = doc(usersCollection, res.user.uid);
 
       await setDoc(userDocRef, {
@@ -56,7 +60,7 @@ export const useAuth = () => {
   const loginAnonymously = async () => {
     try {
       const res = await signInAnonymously(auth);
-      const usersCollection = collection(firestore, "users");
+
       const userDocRef = doc(usersCollection, res.user.uid);
 
       await setDoc(userDocRef, {
@@ -74,6 +78,30 @@ export const useAuth = () => {
     } catch (error) {
       console.error("Error during anonymous login:", error);
     }
+  };
+
+  const registerAccount = async () => {
+    await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value,
+      name.value,
+      role.value
+    )
+      .then((res) => {
+        const userDocRef = doc(usersCollection, res.user.uid);
+
+        setDoc(userDocRef, {
+          userName: name.value,
+          userId: res.user.uid,
+          userPhotoURL: null,
+          userOnline: false,
+          role: role.value,
+        });
+
+        router.push("/login");
+      })
+      .catch(() => {});
   };
 
   const logoutAccount = async () => {
@@ -132,5 +160,10 @@ export const useAuth = () => {
     loginAnonymously,
     logoutAccount,
     user,
+    registerAccount,
+    name,
+    email,
+    password,
+    role,
   };
 };
