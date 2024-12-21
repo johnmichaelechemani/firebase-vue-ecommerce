@@ -67,26 +67,6 @@ function toggleMenu() {
                   </div>
                 </div></router-link
               >
-              <div
-                class="flex gap-2 justify-center sm:justify-start hover:bg-gray-700/5 transition items-center my-2 sm:mx-2"
-              >
-                <div class="border size-10 sm:size-12">
-                  <img
-                    :src="Shoes"
-                    alt=""
-                    class="w-full h-full object-cover object-center"
-                  />
-                </div>
-
-                <div class="hidden sm:block">
-                  <p class="text-sm hidden sm:flex font-semibold">
-                    Michael Store
-                  </p>
-                  <p class="text-xs truncate font-medium max-w-32">
-                    Yo! what do you like?
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </transition>
