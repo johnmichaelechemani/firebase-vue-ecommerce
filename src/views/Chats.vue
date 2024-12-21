@@ -48,7 +48,11 @@ function toggleMenu() {
             <div v-for="mall in mallsAccount" :key="mall.id">
               <router-link :to="{ name: 'mallsChat', params: { id: mall.id } }">
                 <div
-                  :class="mallId === mall.id ? 'border shadow-xl p-1' : ''"
+                  :class="
+                    mallId === mall.id
+                      ? 'border shadow-xl p-1'
+                      : 'hover:bg-gray-700/10 transition p-1'
+                  "
                   class="flex gap-2 justify-center sm:justify-start items-center my-2 sm:mx-2"
                 >
                   <div class="size-8 sm:size-10 rounded-full">
