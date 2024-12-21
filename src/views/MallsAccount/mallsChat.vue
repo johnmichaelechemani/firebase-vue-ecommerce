@@ -14,7 +14,9 @@ watch(
 </script>
 
 <template>
-  <div>
+  <div
+    class="bg-gray-400/5 border shadow-xl overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] p-2"
+  >
     <div>Chats Page {{ mallId }}</div>
   </div>
 </template>
