@@ -14,6 +14,7 @@ import Rep from "./assets/dummyImages/ref.png";
 import Computer from "./assets/dummyImages/computer.jpg";
 import Shirt from "./assets/dummyImages/shirt.jpg";
 import Shoes from "./assets/dummyImages/shoes.jpg";
+import Shop from "./assets/dummyImages/shop.jpg";
 
 export const products = ref([
   {
@@ -97,6 +98,7 @@ export const mallsAccount = ref([
     name: "Store ni Michael",
     address: "Mombasa Road, Nairobi",
     image: Shoes,
+    bgImage: Shop,
     phone: "+254 712 345 678",
     email: "michael@michael.com",
   },
@@ -105,6 +107,7 @@ export const mallsAccount = ref([
     name: "Store ni John",
     address: "Mombasa Road, Nairobi",
     image: Computer,
+    bgImage: Shop,
     phone: "+254 712 345 678",
     email: "michael@michael.com",
   },

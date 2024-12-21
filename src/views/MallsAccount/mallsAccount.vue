@@ -68,12 +68,22 @@ const productTags = ref([
 
 <template>
   <div class="">
-    <div class="relative mb-14">
-      <div class="w-full h-32 bg-gray-700/50"></div>
-      <div class="size-20 bg-gray-700 absolute -bottom-10 left-2 shadow-xl">
+    <div class="relative sm:mb-14 mb-5">
+      <div class="w-full h-32 sm:h-52 bg-gray-700/50">
+        <img
+          :src="mallData.bgImage"
+          loading="lazy"
+          alt="Background Image"
+          class="w-full h-full object-cover object-center"
+        />
+      </div>
+      <div
+        class="sm:size-20 size-10 border-2 border-gray-700 bg-gray-700 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
+      >
         <img
           :src="mallData.image"
-          alt=""
+          alt="profile"
+          loading="lazy"
           class="w-full h-full object-cover object-center"
         />
       </div>
