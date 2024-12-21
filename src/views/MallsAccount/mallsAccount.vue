@@ -1,6 +1,6 @@
 <script setup>
 import ProductCard from "@/components/ProductCard.vue";
-import { products, mallsAccount } from "@/store";
+import { products, mallsAccount, useMallsAccount } from "@/store";
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import { Icon } from "@iconify/vue";
@@ -11,6 +11,10 @@ const activeTab = ref("shop");
 const isPriceUp = ref(true);
 const filteredProducts = ref(products);
 
+onMounted(async () => {
+  await useMallsAccount();
+});
+
 const queryForCategories = (query, id) => {
   router.push({
     path: `/malls/${id}/`,
@@ -18,14 +22,14 @@ const queryForCategories = (query, id) => {
   });
 };
 const currentMall = computed(() => {
-  const mallId = Number(route.params.id);
-  return mallsAccount.value.find((mall) => mall.id === mallId);
+  const mallId = route.params.id;
+  return mallsAccount.value.find((mall) => mall.userId === mallId);
 });
 
 const mallData = computed(() => {
   return (
     currentMall.value || {
-      name: "Unknown Mall",
+      userName: "Unknown Mall",
       image: null,
       bgImage: null,
     }
@@ -98,7 +102,7 @@ const productTags = ref([
     </div>
     <div class="mb-3 flex justify-start items-center gap-2">
       <h1 class="font-semibold text-lg drop-shadow-lg">
-        {{ mallData.name }}
+        {{ mallData.userName }}
       </h1>
       <div class="p-1 shadow border hover:bg-gray-500/10">
         <Icon

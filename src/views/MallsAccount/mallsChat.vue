@@ -1,20 +1,20 @@
 <script setup>
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { Icon } from "@iconify/vue";
-import { mallsAccount } from "@/store";
+import { mallsAccount, useMallsAccount } from "@/store";
 const route = useRoute();
-const mallId = ref(Number(route.params.id));
+const mallId = ref(route.params.id);
 
 watch(
   () => route.params.id,
   (newId) => {
-    mallId.value = Number(newId);
+    mallId.value = newId;
   }
 );
 
 const currentMall = computed(() => {
-  return mallsAccount.value.find((mall) => mall.id === mallId.value);
+  return mallsAccount.value.find((mall) => mall.userId === mallId.value);
 });
 
 const mallData = computed(() => {
@@ -26,6 +26,10 @@ const sendMessage = () => {
   console.log(message.value);
   message.value = "";
 };
+
+onMounted(async () => {
+  await useMallsAccount();
+});
 </script>
 
 <template>
@@ -36,13 +40,16 @@ const sendMessage = () => {
       <div class="flex gap-2 justify-start items-center shadow-sm p-2 border-b">
         <div class="flex justify-between bg-gray-700/20 size-8 items-center">
           <img
-            :src="mallData.image"
+            v-if="mallData && mallData.userPhotoURL"
+            :src="mallData.userPhotoURL"
             alt="mall profile"
             class="w-full h-full object-center object-cover"
           />
         </div>
         <div>
-          <p class="text-sm font-semibold">{{ mallData.name }}</p>
+          <p class="text-sm font-semibold capitalize" v-if="mallData">
+            {{ mallData.userName }}
+          </p>
         </div>
       </div>
       <div class="h-[calc(100vh-10rem)] overflow-y-auto pb-14 mx-2 py-2">

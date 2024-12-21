@@ -1,5 +1,12 @@
 // store.js
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 export const cartItems = ref([]);
 export const favoritesItem = ref([]);
@@ -9,17 +16,17 @@ export const loginErrorMessage = ref("");
 export const showSidebar = ref(false);
 export const isLoggedIn = ref(null);
 export const userData = ref(null);
+export const mallsAccount = ref([]);
 
 import Rep from "./assets/dummyImages/ref.png";
 import Computer from "./assets/dummyImages/computer.jpg";
 import Shirt from "./assets/dummyImages/shirt.jpg";
 import Shoes from "./assets/dummyImages/shoes.jpg";
-import Shop from "./assets/dummyImages/shop.jpg";
 
 export const products = ref([
   {
     id: 1,
-    mallId: 123,
+    mallId: "9YhScvvQvWdciOHb2kPrs4vv8N82",
     mallName: "Store ni Michael",
     name: "Shoes ni Mike",
     category: "shoes",
@@ -92,23 +99,27 @@ export const products = ref([
   },
 ]);
 
-export const mallsAccount = ref([
-  {
-    id: 123,
-    name: "Store ni Michael",
-    address: "Mombasa Road, Nairobi",
-    image: Shoes,
-    bgImage: Shop,
-    phone: "+254 712 345 678",
-    email: "michael@michael.com",
-  },
-  {
-    id: 124234243,
-    name: "Store ni John",
-    address: "Mombasa Road, Nairobi",
-    image: Computer,
-    bgImage: Shop,
-    phone: "+254 712 345 678",
-    email: "michael@michael.com",
-  },
-]);
+export const useMallsAccount = async () => {
+  const db = getFirestore();
+  try {
+    const sellersQuery = query(
+      collection(db, "users"),
+      where("role", "==", "seller")
+    );
+
+    const querySnapshot = await getDocs(sellersQuery);
+
+    const sellers = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    // Update the mallsAccount store with sellers
+    mallsAccount.value = sellers;
+
+    return sellers;
+  } catch (error) {
+    console.error("Error fetching sellers: ", error);
+    return [];
+  }
+};

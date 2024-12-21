@@ -1,18 +1,21 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { ref, watch, Transition } from "vue";
+import { ref, watch, Transition, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
-import Shoes from "../assets/dummyImages/shoes.jpg";
-import { mallsAccount } from "@/store";
+import { mallsAccount, useMallsAccount } from "@/store";
+
+onMounted(async () => {
+  await useMallsAccount();
+});
 
 const route = useRoute();
 const isMenuToggled = ref(true);
-const mallId = ref(Number(route.params.id));
+const mallId = ref(route.params.id);
 
 watch(
   () => route.params.id,
   (newId) => {
-    mallId.value = Number(newId);
+    mallId.value = newId;
   }
 );
 
@@ -45,26 +48,31 @@ function toggleMenu() {
             v-if="isMenuToggled"
             class="my-2 bg-gray-400/5 border shadow-xl w-16 sm:w-72 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)]"
           >
-            <div v-for="mall in mallsAccount" :key="mall.id">
-              <router-link :to="{ name: 'mallsChat', params: { id: mall.id } }">
+            <div v-for="mall in mallsAccount" :key="mall.userId">
+              <router-link
+                :to="{ name: 'mallsChat', params: { id: mall.userId } }"
+              >
                 <div
                   :class="
-                    mallId === mall.id
+                    mallId === mall.userId
                       ? 'border border-gray-800/50 shadow-xl p-1'
                       : 'hover:bg-gray-700/10 transition p-1'
                   "
                   class="flex gap-2 justify-center sm:justify-start items-center my-2 sm:mx-2"
                 >
-                  <div class="size-8 sm:size-10 ">
+                  <div class="size-8 sm:size-10">
                     <img
-                      :src="mall.image"
+                      v-if="mall.userPhotoURL"
+                      :src="mall.userPhotoURL"
                       alt=""
-                      class="w-full h-full object-cover  object-center"
+                      class="w-full h-full object-cover object-center"
                     />
                   </div>
 
                   <div class="hidden sm:block">
-                    <p class="text-sm font-semibold">{{ mall.name }}</p>
+                    <p class="text-sm font-semibold capitalize">
+                      {{ mall.userName }}
+                    </p>
                     <p class="text-xs truncate font-medium max-w-32">
                       Hey, select any of your like!
                     </p>
