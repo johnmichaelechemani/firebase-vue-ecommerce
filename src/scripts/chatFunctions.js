@@ -36,7 +36,7 @@ export const chatFunctions = async () => {
 
   const getChatId = (userId1, userId2) => {
     return [userId1, userId2].sort().join("_");
-  }; 
+  };
 
   const sendMessage = async (message, reciever) => {
     console.log("Message sent:", message);
@@ -48,7 +48,7 @@ export const chatFunctions = async () => {
       id: `temp_${Date.now()}`,
       senderId: userId,
       recipientId: reciever,
-      message: message.value,
+      message: message,
       isSending: true,
       timestamp: new Date(),
     };
@@ -62,7 +62,7 @@ export const chatFunctions = async () => {
             [userId]: true,
             [reciever]: true,
           },
-          lastMessage: message.value,
+          lastMessage: message,
           sender: userId,
           timestamp: serverTimestamp(),
         },
@@ -74,7 +74,7 @@ export const chatFunctions = async () => {
         {
           senderId: userId,
           recipientId: reciever,
-          message: message.value,
+          message: message,
           timestamp: serverTimestamp(),
         }
       );
@@ -92,7 +92,9 @@ export const chatFunctions = async () => {
         `messages_${chatId}`,
         JSON.stringify(messages.value)
       );
-    } catch (e) {}
+    } catch (e) {
+      console.error("Firebase message send error:", e);
+    }
   };
   return {
     sendMessage,
