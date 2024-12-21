@@ -93,9 +93,12 @@ function toggleMenu() {
 
         <div class="my-2 border-gray-700/50 w-full">
           <RouterView v-if="mallId" />
-          <div v-else class="bg-gray-400/5 border shadow-xl overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] p-2">
+          <div
+            v-else
+            class="bg-gray-400/5 border shadow-xl overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] p-2"
+          >
             <div class="text-sm font-semibold">Select Chat</div>
-            <div class="font-semibold text-sm flex justify-center items-center">
+            <div class="font-semibold text-sm border p-2 my-2 text-gray-600">
               Nothings here!
             </div>
           </div>
