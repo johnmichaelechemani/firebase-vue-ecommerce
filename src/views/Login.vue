@@ -4,7 +4,8 @@ import { loginErrorMessage } from "../store.js";
 import { Icon } from "@iconify/vue";
 import { useAuth } from "@/firebase.auth";
 
-const { signInWithGoogle, loginAnonymously } = useAuth();
+const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
+  useAuth();
 
 if (loginErrorMessage) {
   setTimeout(() => {
@@ -29,6 +30,7 @@ if (loginErrorMessage) {
         <div class="my-2">
           <p class="text-sm font-semibold text-gray-700">Email</p>
           <input
+            v-model="email"
             type="text"
             class="outline-none border p-2 min-w-52 sm:min-w-80"
           />
@@ -36,6 +38,7 @@ if (loginErrorMessage) {
         <div class="my-2">
           <p class="text-sm font-semibold text-gray-700">Password</p>
           <input
+            v-model="password"
             type="password"
             class="outline-none border p-2 min-w-52 sm:min-w-80"
           />
@@ -49,6 +52,7 @@ if (loginErrorMessage) {
 
         <div class="my-2">
           <button
+            @click="loginAccount"
             class="w-full bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold py-2.5"
           >
             Login

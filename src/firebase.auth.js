@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signInAnonymously,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import {
   collection,
@@ -78,6 +79,17 @@ export const useAuth = () => {
     } catch (error) {
       console.error("Error during anonymous login:", error);
     }
+  };
+  const loginAccount = () => {
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then((res) => {
+        const userDocRef = doc(usersCollection, res.user.uid);
+        updateDoc(userDocRef, {
+          userOnline: true,
+        });
+        router.push("/");
+      })
+      .catch(() => {});
   };
 
   const registerAccount = async () => {
@@ -165,5 +177,6 @@ export const useAuth = () => {
     email,
     password,
     role,
+    loginAccount,
   };
 };
