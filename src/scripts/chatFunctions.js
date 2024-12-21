@@ -31,7 +31,6 @@ export const chatFunctions = async () => {
   });
 
   const messages = ref([]);
-
   const userId = user.value.uid;
 
   const getChatId = (userId1, userId2) => {
@@ -39,11 +38,8 @@ export const chatFunctions = async () => {
   };
 
   const sendMessage = async (message, reciever) => {
-    console.log("Message sent:", message);
 
     const chatId = getChatId(userId, reciever);
-    console.log(reciever, userId);
-
     const tempMessage = {
       id: `temp_${Date.now()}`,
       senderId: userId,
