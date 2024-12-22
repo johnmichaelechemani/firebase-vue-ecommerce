@@ -91,22 +91,15 @@ export const useAuth = () => {
   };
   const loginAccount = async () => {
     try {
-      // Perform email/password sign-in
       const res = await signInWithEmailAndPassword(
         auth,
         email.value,
         password.value
       );
-
-      // Get user document reference
       const userDocRef = doc(usersCollection, res.user.uid);
-
-      // Update user online status
       await updateDoc(userDocRef, {
         userOnline: true,
       });
-
-      // Fetch user document to get role
       const userDoc = await getDoc(userDocRef);
       const userDataFromFirestore = userDoc.data();
       const isValidSellerRole =
@@ -120,7 +113,6 @@ export const useAuth = () => {
         router.push("/login");
       }
     } catch (error) {
-      // Handle login errors
       console.error("Login error:", error);
     }
   };
@@ -135,7 +127,6 @@ export const useAuth = () => {
     )
       .then((res) => {
         const userDocRef = doc(usersCollection, res.user.uid);
-
         setDoc(userDocRef, {
           userName: name.value,
           userId: res.user.uid,
@@ -143,7 +134,6 @@ export const useAuth = () => {
           userOnline: false,
           role: role.value,
         });
-
         router.push("/login");
       })
       .catch(() => {});
@@ -152,11 +142,9 @@ export const useAuth = () => {
   const logoutAccount = async () => {
     if (user.value) {
       const userDocRef = doc(firestore, "users", user.value.uid);
-
       try {
         await updateDoc(userDocRef, { userOnline: false });
         await signOut(auth);
-
         isLoggedIn.value = false;
         user.value = null;
         router.push("/");

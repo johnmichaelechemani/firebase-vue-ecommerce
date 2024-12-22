@@ -66,6 +66,8 @@ const router = createRouter({
       component: () => import("../views/MallsViews/mallDashboard.vue"),
     },
 
+    // 404
+
     {
       path: "/:catchAll(.*)",
       name: "NotFound",
@@ -75,16 +77,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // Debugging logs
-  console.log("Is Logged In:", isLoggedIn.value);
-  console.log("User Data:", userData.value);
-  console.log("Current Route:", to.name);
-
   // Enhanced login check
   if (to.name === "mallDashboard") {
-    // More robust login verification
     if (!isLoggedIn.value || !userData.value) {
-      console.warn("Redirecting to login - not authenticated");
+      // console.warn("Redirecting to login - not authenticated");
       next("/login");
       return;
     }
@@ -92,8 +88,8 @@ router.beforeEach((to, from, next) => {
     // Case-insensitive role check
     const userRole = userData.value.role?.toLowerCase();
     if (userRole !== "seller") {
-      console.warn("Unauthorized access - not a seller");
-      next("/"); // Redirect to home if not a seller
+      // console.warn("Unauthorized access - not a seller");
+      next("/");
       return;
     }
   }
