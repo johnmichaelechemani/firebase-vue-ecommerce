@@ -120,7 +120,10 @@ onMounted(async () => {
           />
           <button
             @click="sendMessage(route.params.id)"
-            :class="message === '' ? 'cursor-not-allowed ' : 'cursor-pointer'"
+            :disabled="message.trim() === ''"
+            :class="
+              message.trim() === '' ? 'cursor-not-allowed ' : 'cursor-pointer'
+            "
             class="py-1 pl-2 pr-1 hover:bg-gray-800 hover:text-white transition border"
           >
             <Icon

@@ -24,7 +24,7 @@ function toggleMenu() {
 
 onMounted(async () => {
   await useMallsAccount();
-  await selectedMall(route.params.id);
+  selectedMall(route.params.id);
 });
 </script>
 

@@ -91,6 +91,7 @@ export const chatFunctions = () => {
         `messages_${chatId}`,
         JSON.stringify(messages.value)
       );
+      message.value = "";
     } catch (e) {
       console.error("Firebase message send error:", e);
     } finally {
