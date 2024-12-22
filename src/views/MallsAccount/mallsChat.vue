@@ -35,6 +35,7 @@ const mallData = computed(() => {
 
 onMounted(async () => {
   await useMallsAccount();
+  console.log("messages", messages.value);
 });
 </script>
 
@@ -60,6 +61,9 @@ onMounted(async () => {
       </div>
       <div class="h-[calc(100vh-10rem)] overflow-y-auto pb-14 mx-2 py-2">
         <div class="my-2">
+          <div>
+            {{ messages.value }}
+          </div>
           <div
             class="flex justify-center items-center text-[9px] text-gray-500"
           >
@@ -75,9 +79,6 @@ onMounted(async () => {
             >
               <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
                 Reciever Message
-                <div>
-                  {{ messages.value }}
-                </div>
               </div>
               <div
                 class="flex justify-start items-center text-xs font-semibold text-gray-500"

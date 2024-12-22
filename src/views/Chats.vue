@@ -7,7 +7,7 @@ import { chatFunctions } from "@/scripts/chatFunctions";
 
 const chatService = ref(null);
 onMounted(async () => {
-  chatService.value = await chatFunctions();
+  chatService.value = chatFunctions();
 });
 
 const route = useRoute();
@@ -33,7 +33,9 @@ function toggleMenu() {
 
 onMounted(async () => {
   await useMallsAccount();
-  handleLoadMessage();
+  if (route.params.id) {
+    handleLoadMessage(route.params.id);
+  }
 });
 </script>
 

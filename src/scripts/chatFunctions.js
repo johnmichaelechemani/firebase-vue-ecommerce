@@ -41,6 +41,7 @@ export const chatFunctions = () => {
 
   const selectedMall = (mallId) => {
     console.log("🔍 Selected Mall:", mallId);
+    console.log("🔍 messages in Mall:", messages.value);
     loadMessages(mallId);
   };
 
