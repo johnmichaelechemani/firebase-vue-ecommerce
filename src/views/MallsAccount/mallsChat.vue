@@ -3,8 +3,8 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { mallsAccount, useMallsAccount } from "@/store";
-import { messages } from "@/store";
-import { chatFunctions } from "@/scripts/chatFunctions";
+
+import { chatFunctions, messages } from "@/scripts/chatFunctions";
 import { useAuth } from "@/firebase.auth";
 
 const { user } = useAuth();

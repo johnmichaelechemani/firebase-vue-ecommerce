@@ -5,10 +5,7 @@ import { RouterView, useRoute } from "vue-router";
 import { mallsAccount, useMallsAccount } from "@/store";
 import { chatFunctions } from "@/scripts/chatFunctions";
 
-const chatService = ref(null);
-onMounted(async () => {
-  chatService.value = chatFunctions();
-});
+const { selectedMall } = chatFunctions();
 
 const route = useRoute();
 const isMenuToggled = ref(true);
@@ -21,21 +18,13 @@ watch(
   }
 );
 
-const handleLoadMessage = async (id) => {
-  if (chatService.value) {
-    await chatService.value.selectedMall(id);
-  }
-};
-
 function toggleMenu() {
   isMenuToggled.value = !isMenuToggled.value;
 }
 
 onMounted(async () => {
   await useMallsAccount();
-  if (route.params.id) {
-    handleLoadMessage(route.params.id);
-  }
+  await selectedMall(route.params.id);
 });
 </script>
 
@@ -63,9 +52,12 @@ onMounted(async () => {
             v-if="isMenuToggled"
             class="my-2 bg-gray-400/5 border shadow-xl w-16 sm:w-72 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)]"
           >
-            <div v-for="mall in mallsAccount" :key="mall.userId">
+            <div
+              v-for="mall in mallsAccount"
+              :key="mall.userId"
+              @click="selectedMall(mall.userId)"
+            >
               <router-link
-                @click="handleLoadMessage(mall.userId)"
                 :to="{ name: 'mallsChat', params: { id: mall.userId } }"
               >
                 <div

@@ -16,7 +16,6 @@ import {
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "@/firebase.auth";
-import { messages } from "@/store";
 
 // global
 const { user, auth } = useAuth();
@@ -32,7 +31,8 @@ await new Promise((resolve) => {
 });
 
 const firestore = getFirestore();
-export const userId = user.value.uid;
+const userId = user.value.uid;
+export const messages = ref([]);
 
 //-----------------below is the functions-----------------------------
 export const chatFunctions = () => {
