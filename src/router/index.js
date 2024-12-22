@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+import { isLoggedIn, userData } from "@/store";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -59,12 +59,46 @@ const router = createRouter({
       component: () => import("../views/Notifications.vue"),
     },
 
+    // mall views
+    {
+      path: "/dashboard",
+      name: "mallDashboard",
+      component: () => import("../views/MallsViews/mallDashboard.vue"),
+    },
+
     {
       path: "/:catchAll(.*)",
       name: "NotFound",
       component: () => import("../views/NotFound.vue"),
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  // Debugging logs
+  console.log("Is Logged In:", isLoggedIn.value);
+  console.log("User Data:", userData.value);
+  console.log("Current Route:", to.name);
+
+  // Enhanced login check
+  if (to.name === "mallDashboard") {
+    // More robust login verification
+    if (!isLoggedIn.value || !userData.value) {
+      console.warn("Redirecting to login - not authenticated");
+      next("/login");
+      return;
+    }
+
+    // Case-insensitive role check
+    const userRole = userData.value.role?.toLowerCase();
+    if (userRole !== "seller") {
+      console.warn("Unauthorized access - not a seller");
+      next("/"); // Redirect to home if not a seller
+      return;
+    }
+  }
+
+  next();
 });
 
 export default router;

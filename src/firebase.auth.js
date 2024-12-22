@@ -89,16 +89,40 @@ export const useAuth = () => {
       console.error("Error during anonymous login:", error);
     }
   };
-  const loginAccount = () => {
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then((res) => {
-        const userDocRef = doc(usersCollection, res.user.uid);
-        updateDoc(userDocRef, {
-          userOnline: true,
-        });
-        router.push("/");
-      })
-      .catch(() => {});
+  const loginAccount = async () => {
+    try {
+      // Perform email/password sign-in
+      const res = await signInWithEmailAndPassword(
+        auth,
+        email.value,
+        password.value
+      );
+
+      // Get user document reference
+      const userDocRef = doc(usersCollection, res.user.uid);
+
+      // Update user online status
+      await updateDoc(userDocRef, {
+        userOnline: true,
+      });
+
+      // Fetch user document to get role
+      const userDoc = await getDoc(userDocRef);
+      const userDataFromFirestore = userDoc.data();
+      const isValidSellerRole =
+        userDataFromFirestore &&
+        userDataFromFirestore.role &&
+        userDataFromFirestore.role.toLowerCase() === "seller";
+      console.log(isValidSellerRole);
+      if (isValidSellerRole) {
+        router.push("/dashboard");
+      } else {
+        router.push("/login");
+      }
+    } catch (error) {
+      // Handle login errors
+      console.error("Login error:", error);
+    }
   };
 
   const registerAccount = async () => {
@@ -160,6 +184,7 @@ export const useAuth = () => {
           userName: userDataFromFirestore.userName,
           userId: userDataFromFirestore.userId,
           userPhotoURL: userDataFromFirestore.userPhotoURL,
+          role: userDataFromFirestore.role,
         };
       } else {
         isLoggedIn.value = false;
