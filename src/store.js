@@ -8,6 +8,8 @@ import {
   where,
 } from "firebase/firestore";
 
+// global variables and storages
+
 export const cartItems = ref([]);
 export const favoritesItem = ref([]);
 export const messages = ref([]);
@@ -99,6 +101,7 @@ export const products = ref([
   },
 ]);
 
+// fetch global data
 export const useMallsAccount = async () => {
   const db = getFirestore();
   try {
@@ -114,7 +117,6 @@ export const useMallsAccount = async () => {
       ...doc.data(),
     }));
 
-    // Update the mallsAccount store with sellers
     mallsAccount.value = sellers;
 
     return sellers;

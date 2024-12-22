@@ -32,7 +32,6 @@ const mallData = computed(() => {
 
 onMounted(async () => {
   await useMallsAccount();
-  console.log("messages", messages.value);
 });
 </script>
 
@@ -92,10 +91,8 @@ onMounted(async () => {
             <div
               class="flex justify-end items-end font-medium text-gray-800 gap-2"
             >
-              <div
-                class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
-              >
-                <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
+              <div class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)]">
+                <div class="pl-3 pr-2 py-1.5 text-sm bg-gray-700/10">
                   {{ message.message }}
                 </div>
                 <div

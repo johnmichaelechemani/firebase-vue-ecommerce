@@ -93,14 +93,14 @@ export const chatFunctions = () => {
       );
     } catch (e) {
       console.error("Firebase message send error:", e);
+    } finally {
+      message.value = "";
     }
   };
 
   const loadMessages = (reciever) => {
     try {
-      // Generate unique chat ID
       const chatId = getChatId(userId, reciever);
-
       // 🔍 Cached Messages Retrieval
       const cachedMessages = localStorage.getItem(`messages_${chatId}`);
       messages.value = cachedMessages ? JSON.parse(cachedMessages) : [];
@@ -120,7 +120,6 @@ export const chatFunctions = () => {
         messagesQuery,
         (snapshot) => {
           try {
-            // Transform snapshot to messages array
             const liveMessages = snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
@@ -173,7 +172,6 @@ export const chatFunctions = () => {
   // 🚀 Auto-trigger message loading
   onMounted(() => {
     loadMessages();
-    console.log("🔍 Messages Loading Initiated");
   });
   return {
     sendMessage,
