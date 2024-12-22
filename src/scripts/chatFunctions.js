@@ -13,32 +13,31 @@ import {
   getFirestore,
 } from "firebase/firestore";
 
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "@/firebase.auth";
 
-export const chatFunctions = async () => {
-  const { user, auth } = useAuth();
-  const firestore = getFirestore();
-
-  await new Promise((resolve) => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      user.value = currentUser;
-      unsubscribe();
-      resolve();
-    });
+// global
+const { user, auth } = useAuth();
+const getChatId = (userId1, userId2) => {
+  return [userId1, userId2].sort().join("_");
+};
+await new Promise((resolve) => {
+  const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    user.value = currentUser;
+    unsubscribe();
+    resolve();
   });
-
-  const messages = ref([]);
-  const userId = user.value.uid;
-
-  const getChatId = (userId1, userId2) => {
-    return [userId1, userId2].sort().join("_");
-  };
-
+});
+const firestore = getFirestore();
+const userId = user.value.uid;
+const receiverId = ref("");
+const messages = ref([]);
+//-----------------below is the functions-----------------------------
+export const chatFunctions = async () => {
   const sendMessage = async (message, reciever) => {
-
+    receiverId.value = reciever;
     const chatId = getChatId(userId, reciever);
     const tempMessage = {
       id: `temp_${Date.now()}`,
@@ -95,4 +94,27 @@ export const chatFunctions = async () => {
   return {
     sendMessage,
   };
+};
+
+export const getMessages = async () => {
+  const loadMessages = () => {
+    const chatId = getChatId(userId, receiverId);
+
+    // Check for cached messages
+    const cachedMessages = localStorage.getItem(`messages_${chatId}`);
+    if (cachedMessages) {
+      messages.value = JSON.parse(cachedMessages);
+    }
+    console.log(cachedMessages);
+
+    // Query for messages
+    const messagesQuery = query(
+      collection(firestore, `chats/${chatId}/messages`),
+      orderBy("timestamp", "asc")
+    );
+  };
+
+  onMounted(() => {
+    loadMessages();
+  });
 };
