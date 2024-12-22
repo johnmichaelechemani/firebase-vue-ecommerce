@@ -7,10 +7,7 @@ import { chatFunctions } from "@/scripts/chatFunctions";
 const route = useRoute();
 const mallId = ref(route.params.id);
 const chatService = ref(null);
-
-onMounted(async () => {
-  chatService.value = await chatFunctions();
-});
+const { messages } = chatFunctions();
 
 const message = ref("");
 
@@ -78,6 +75,9 @@ onMounted(async () => {
             >
               <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
                 Reciever Message
+                <div>
+                  {{ messages.value }}
+                </div>
               </div>
               <div
                 class="flex justify-start items-center text-xs font-semibold text-gray-500"
