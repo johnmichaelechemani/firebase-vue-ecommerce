@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { userData } from "../store.js";
+import { userData } from "../../store.js";
 </script>
 
 <template>

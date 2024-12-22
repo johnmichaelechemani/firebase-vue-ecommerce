@@ -1,9 +1,9 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
-import Settings from "@/views/Settings.vue";
-import Cart from "@/views/Cart.vue";
-import Favorite from "@/views/Favorite.vue";
+import Settings from "@/views/CustomerViews/Settings.vue";
+import Cart from "@/views/CustomerViews/Cart.vue";
+import Favorite from "@/views/CustomerViews/Favorite.vue";
 import { isLoggedIn, messages, notifications, userData } from "@/store";
 import { useAuth } from "@/firebase.auth";
 

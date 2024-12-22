@@ -1,7 +1,7 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
-import Shoes from "../assets/dummyImages/shoes.jpg";
+import Shoes from "../../assets/dummyImages/shoes.jpg";
 </script>
 
 <template>

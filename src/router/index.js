@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import HomeView from "../views/CustomerViews/HomeView.vue";
 import CustomerLayout from "../layouts/customerLayout.vue";
 import SellerLayout from "../layouts/sellerLayout.vue";
 import { isLoggedIn, userData } from "@/store";
@@ -20,51 +20,54 @@ const router = createRouter({
         {
           path: "/login",
           name: "login",
-          component: () => import("../views/Login.vue"),
+          component: () => import("../views/CustomerViews/Login.vue"),
         },
         {
           path: "/register",
           name: "register",
-          component: () => import("../views/Register.vue"),
+          component: () => import("../views/CustomerViews/Register.vue"),
         },
         {
           path: "/malls",
           name: "malls",
-          component: () => import("../views/Malls.vue"),
+          component: () => import("../views/CustomerViews/Malls.vue"),
           children: [
             {
               path: "",
               name: "mallsHome",
-              component: () => import("../views/MallsAccount/mallsHome.vue"),
+              component: () =>
+                import("../views/CustomerViews/MallsAccount/mallsHome.vue"),
             },
             {
               path: ":id",
               name: "mallStore",
-              component: () => import("../views/MallsAccount/mallsAccount.vue"),
+              component: () =>
+                import("../views/CustomerViews/MallsAccount/mallsAccount.vue"),
             },
           ],
         },
         {
           path: "/purchase",
           name: "purchase",
-          component: () => import("../views/Purchase.vue"),
+          component: () => import("../views/CustomerViews/Purchase.vue"),
         },
         {
           path: "/chats",
           name: "chats",
-          component: () => import("../views/Chats.vue"),
+          component: () => import("../views/CustomerViews/Chats.vue"),
           children: [
             {
               path: ":id",
               name: "mallsChat",
-              component: () => import("../views/MallsAccount/mallsChat.vue"),
+              component: () =>
+                import("../views/CustomerViews/MallsAccount/mallsChat.vue"),
             },
           ],
         },
         {
           path: "/notifications",
           name: "notifications",
-          component: () => import("../views/Notifications.vue"),
+          component: () => import("../views/CustomerViews/Notifications.vue"),
         },
       ],
     },

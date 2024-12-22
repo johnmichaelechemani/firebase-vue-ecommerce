@@ -2,7 +2,7 @@
 import { Icon } from "@iconify/vue";
 import { ref, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import Shoes from "../assets/dummyImages/shoes.jpg";
+import Shoes from "../../assets/dummyImages/shoes.jpg";
 const router = useRouter();
 const route = useRoute();
 const queryForStat = (query) => {

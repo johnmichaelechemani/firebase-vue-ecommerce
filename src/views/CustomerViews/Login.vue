@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { loginErrorMessage } from "../store.js";
+import { loginErrorMessage } from "../../store.js";
 import { Icon } from "@iconify/vue";
 import { useAuth } from "@/firebase.auth";
 

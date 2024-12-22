@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, computed } from "vue";
 import { Icon } from "@iconify/vue";
-import { cartItems } from "../store.js";
+import { cartItems } from "../../store.js";
 
 const selected = ref([]);
 const selectAll = ref(false);
