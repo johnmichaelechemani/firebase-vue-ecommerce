@@ -10,7 +10,7 @@ import {
 
 export const cartItems = ref([]);
 export const favoritesItem = ref([]);
-export const messages = ref(5);
+export const messages = ref([]);
 export const notifications = ref(23);
 export const loginErrorMessage = ref("");
 export const showSidebar = ref(false);

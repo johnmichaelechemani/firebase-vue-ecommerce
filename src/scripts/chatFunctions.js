@@ -14,9 +14,9 @@ import {
 } from "firebase/firestore";
 
 import { ref, onMounted, onUnmounted, watch } from "vue";
-import { useRoute } from "vue-router";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "@/firebase.auth";
+import { messages } from "@/store";
 
 // global
 const { user, auth } = useAuth();
@@ -31,27 +31,23 @@ await new Promise((resolve) => {
   });
 });
 
-const route = useRoute();
 const firestore = getFirestore();
 const userId = user.value.uid;
 
 //-----------------below is the functions-----------------------------
 export const chatFunctions = () => {
-  const messages = ref([]);
-
   const selectedMall = (mallId) => {
-    console.log("🔍 Selected Mall:", mallId);
-    console.log("🔍 messages in Mall:", messages.value);
     loadMessages(mallId);
   };
+  const message = ref("");
 
-  const sendMessage = async (message, reciever) => {
+  const sendMessage = async (reciever) => {
     const chatId = getChatId(userId, reciever);
     const tempMessage = {
       id: `temp_${Date.now()}`,
       senderId: userId,
       recipientId: reciever,
-      message: message,
+      message: message.value,
       isSending: true,
       timestamp: new Date(),
     };
@@ -63,9 +59,9 @@ export const chatFunctions = () => {
         {
           participants: {
             [userId]: true,
-            [reciever]: true,
+            [reciever.value]: true,
           },
-          lastMessage: message,
+          lastMessage: message.value,
           sender: userId,
           timestamp: serverTimestamp(),
         },
@@ -77,7 +73,7 @@ export const chatFunctions = () => {
         {
           senderId: userId,
           recipientId: reciever,
-          message: message,
+          message: message.value,
           timestamp: serverTimestamp(),
         }
       );
@@ -101,15 +97,13 @@ export const chatFunctions = () => {
   };
 
   const loadMessages = (reciever) => {
-    console.log("🔍 Loading reciever:", reciever);
     try {
       // Generate unique chat ID
       const chatId = getChatId(userId, reciever);
 
       // 🔍 Cached Messages Retrieval
       const cachedMessages = localStorage.getItem(`messages_${chatId}`);
-
-      messages.value = JSON.parse(cachedMessages);
+      messages.value = cachedMessages ? JSON.parse(cachedMessages) : [];
       console.log("✅ Cached Messages Retrieved:", {
         count: messages.value.length,
         messages: messages.value,
@@ -184,6 +178,7 @@ export const chatFunctions = () => {
   return {
     sendMessage,
     messages,
+    message,
     selectedMall,
   };
 };

@@ -69,7 +69,7 @@ const logout = () => {
               <div class="absolute -top-1 right-0">
                 <span
                   class="text-[9px] font-medium bg-gray-700 px-1.5 py-0.5 text-white rounded-full"
-                  >{{ messages }}</span
+                  >{{ messages.length }}</span
                 >
               </div>
             </button>

@@ -3,13 +3,12 @@ import { ref, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { mallsAccount, useMallsAccount } from "@/store";
+import { messages } from "@/store";
 import { chatFunctions } from "@/scripts/chatFunctions";
+
+const { message, sendMessage } = chatFunctions();
 const route = useRoute();
 const mallId = ref(route.params.id);
-const chatService = ref(null);
-const { messages } = chatFunctions();
-
-const message = ref("");
 
 watch(
   () => route.params.id,
@@ -17,13 +16,6 @@ watch(
     mallId.value = newId;
   }
 );
-
-const handleSendMessage = async () => {
-  if (chatService.value && message.value) {
-    await chatService.value.sendMessage(message.value, mallId.value);
-    message.value = "";
-  }
-};
 
 const currentMall = computed(() => {
   return mallsAccount.value.find((mall) => mall.userId === mallId.value);
@@ -61,9 +53,6 @@ onMounted(async () => {
       </div>
       <div class="h-[calc(100vh-10rem)] overflow-y-auto pb-14 mx-2 py-2">
         <div class="my-2">
-          <div>
-            {{ messages.value }}
-          </div>
           <div
             class="flex justify-center items-center text-[9px] text-gray-500"
           >
@@ -79,6 +68,9 @@ onMounted(async () => {
             >
               <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
                 Reciever Message
+                <div v-for="(message, index) in messages" :key="index">
+                  {{ message.message }}
+                </div>
               </div>
               <div
                 class="flex justify-start items-center text-xs font-semibold text-gray-500"
@@ -124,9 +116,8 @@ onMounted(async () => {
             placeholder="Type a message"
           />
           <button
-            @click="handleSendMessage"
-            :disabled="!message"
-            :class="!message ? 'cursor-not-allowed ' : 'cursor-pointer'"
+            @click="sendMessage(route.params.id)"
+            :class="message === '' ? 'cursor-not-allowed ' : 'cursor-pointer'"
             class="py-1 pl-2 pr-1 hover:bg-gray-800 hover:text-white transition border"
           >
             <Icon
