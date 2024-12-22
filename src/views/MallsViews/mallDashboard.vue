@@ -1,12 +1,9 @@
-<script setup>
-import { RouterView } from "vue-router";
-import Sidebar from "@/components/Sidebar.vue";
-import Header from "@/components/Header.vue";
-</script>
+<script setup></script>
 
 <template>
-  <Header />
-  <Sidebar />
-
-  <RouterView />
+  <div
+    class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
+  >
+    hey
+  </div>
 </template>

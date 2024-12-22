@@ -108,7 +108,7 @@ export const useAuth = () => {
         userDataFromFirestore.role.toLowerCase() === "seller";
       console.log(isValidSellerRole);
       if (isValidSellerRole) {
-        router.push("/dashboard");
+        router.push("/seller");
       } else {
         router.push("/login");
       }
