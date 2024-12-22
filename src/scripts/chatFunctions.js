@@ -32,7 +32,7 @@ await new Promise((resolve) => {
 });
 
 const firestore = getFirestore();
-const userId = user.value.uid;
+export const userId = user.value.uid;
 
 //-----------------below is the functions-----------------------------
 export const chatFunctions = () => {

@@ -5,10 +5,15 @@ import { Icon } from "@iconify/vue";
 import { mallsAccount, useMallsAccount } from "@/store";
 import { messages } from "@/store";
 import { chatFunctions } from "@/scripts/chatFunctions";
+import { useAuth } from "@/firebase.auth";
+
+const { user } = useAuth();
 
 const { message, sendMessage } = chatFunctions();
 const route = useRoute();
 const mallId = ref(route.params.id);
+const userId = user.value.uid;
+const userPhoto = user.value.photoURL;
 
 watch(
   () => route.params.id,
@@ -52,56 +57,57 @@ onMounted(async () => {
         </div>
       </div>
       <div class="h-[calc(100vh-10rem)] overflow-y-auto pb-14 mx-2 py-2">
-        <div class="my-2">
-          <div
-            class="flex justify-center items-center text-[9px] text-gray-500"
-          >
-            Tue 3, 10:30pm
-          </div>
-
-          <div
-            class="flex justify-start items-end font-medium text-gray-800 gap-2"
-          >
-            <div class="size-6 bg-gray-800"></div>
+        <div v-for="(message, index) in messages" :key="index">
+          <div class="my-2" v-if="message.senderId !== userId">
             <div
-              class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
+              class="flex justify-center items-center text-[9px] text-gray-500"
             >
-              <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
-                Reciever Message
-                <div v-for="(message, index) in messages" :key="index">
-                  {{ message.message }}
+              Tue 3, 10:30pm {{ userId }}
+            </div>
+
+            <div
+              class="flex justify-start items-end font-medium text-gray-800 gap-2"
+            >
+              <div class="size-6 bg-gray-800"></div>
+              <div
+                class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
+              >
+                <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
+                  Reciever {{ message.message }}
+                </div>
+                <div
+                  class="flex justify-start items-center text-xs font-semibold text-gray-500"
+                >
+                  Sending...
                 </div>
               </div>
-              <div
-                class="flex justify-start items-center text-xs font-semibold text-gray-500"
-              >
-                Sending...
-              </div>
             </div>
           </div>
-        </div>
-        <div class="my-2">
-          <div
-            class="flex justify-center items-center text-[9px] text-gray-500"
-          >
-            Tue 3, 10:30pm
-          </div>
-          <div
-            class="flex justify-end items-end font-medium text-gray-800 gap-2"
-          >
+          <div class="my-2" v-else>
             <div
-              class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
+              class="flex justify-center items-center text-[9px] text-gray-500"
             >
-              <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
-                Sender Message
-              </div>
+              Tue 3, 10:30pm
+            </div>
+            <div
+              class="flex justify-end items-end font-medium text-gray-800 gap-2"
+            >
               <div
-                class="flex justify-end items-center text-xs font-semibold text-gray-500"
+                class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
               >
-                Delivered
+                <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
+                  {{ message.message }}
+                </div>
+                <div
+                  class="flex justify-end items-center text-xs font-semibold text-gray-500"
+                >
+                  Delivered
+                </div>
+              </div>
+              <div class="size-6 bg-gray-800">
+                <img v-if="userPhoto" :src="userPhoto" alt="" />
               </div>
             </div>
-            <div class="size-6 bg-gray-800"></div>
           </div>
         </div>
       </div>
