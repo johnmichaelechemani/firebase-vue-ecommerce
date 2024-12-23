@@ -113,7 +113,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(userData.value,  isLoggedIn.value);
+  //console.log(userData.value,  isLoggedIn.value);
   // Enhanced login check
   if (to.name === "mallDashboard") {
     // More robust login verification

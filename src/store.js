@@ -129,8 +129,13 @@ export const useMallsAccount = async () => {
 const storedUserData = localStorage.getItem("userData");
 if (storedUserData) {
   const parsedUserData = JSON.parse(storedUserData);
-  userData.value = parsedUserData;
-  isLoggedIn.value = true;
+  const isExpired = Date.now() - parsedUserData.timestamp > 24 * 60 * 60 * 1000;
+  if (isExpired) {
+    localStorage.removeItem("userData");
+  } else {
+    userData.value = parsedUserData;
+    isLoggedIn.value = true;
+  }
 } else {
   userData.value = null;
   isLoggedIn.value = false;

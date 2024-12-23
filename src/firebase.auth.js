@@ -32,7 +32,6 @@ export const useAuth = () => {
 
   const router = useRouter();
   const firestore = getFirestore();
-
   const usersCollection = collection(firestore, "users");
   const authGoogle = new GoogleAuthProvider();
   const email = ref("");
@@ -60,6 +59,8 @@ export const useAuth = () => {
         email: res.user.email,
         userPhotoURL: res.user.photoURL,
         role: "customer",
+        timestamp: Date.now(),
+        accessToken: generateSecureToken(),
       };
 
       isLoggedIn.value = true;
@@ -75,9 +76,7 @@ export const useAuth = () => {
   const loginAnonymously = async () => {
     try {
       const res = await signInAnonymously(auth);
-
       const userDocRef = doc(usersCollection, res.user.uid);
-
       await setDoc(userDocRef, {
         userName: "Anonymous User",
         userPhotoURL: "https://via.placeholder.com/150",
@@ -93,6 +92,8 @@ export const useAuth = () => {
         userId: res.user.uid,
         anonymous: true,
         role: "customer",
+        timestamp: Date.now(),
+        accessToken: generateSecureToken(),
       };
 
       isLoggedIn.value = true;
@@ -124,6 +125,8 @@ export const useAuth = () => {
         userPhotoURL: userDataFromFirestore.userPhotoURL,
         email: userDataFromFirestore.email,
         role: userDataFromFirestore.role,
+        timestamp: Date.now(),
+        accessToken: generateSecureToken(),
       };
 
       const isValidSellerRole =
@@ -190,6 +193,29 @@ export const useAuth = () => {
         state: { errorMessage: "You must login first" },
       });
     }
+  };
+
+  const generateSecureToken = () => {
+    const randomBytes = () => {
+      const array = new Uint8Array(16);
+      crypto.getRandomValues(array);
+      return Array.from(array, (byte) =>
+        byte.toString(16).padStart(2, "0")
+      ).join("");
+    };
+    const timestamp = Date.now();
+    const randomPart = randomBytes();
+    const token = `${timestamp}-${randomPart}`;
+    const hashToken = (str) => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash;
+      }
+      return Math.abs(hash).toString(16);
+    };
+    return `${token}-${hashToken(token)}`;
   };
 
   return {
