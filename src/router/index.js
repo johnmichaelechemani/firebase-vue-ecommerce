@@ -73,7 +73,7 @@ const router = createRouter({
     },
     {
       path: "/seller",
-      name: "sellerLayout",
+      name: "seller",
       component: SellerLayout,
       children: [
         {
@@ -113,15 +113,11 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // Debugging logs
-  console.log("Is Logged In:", isLoggedIn.value);
-  console.log("User Data:", userData.value);
-  console.log("Current Route:", to.name);
-
+  console.log(userData.value,  isLoggedIn.value);
   // Enhanced login check
-  if (to.name === "sellerLayout") {
+  if (to.name === "mallDashboard") {
     // More robust login verification
-    if (!isLoggedIn.value || !userData.value) {
+    if (!isLoggedIn.value && !userData.value) {
       console.warn("Redirecting to login - not authenticated");
       next("/login");
       return;

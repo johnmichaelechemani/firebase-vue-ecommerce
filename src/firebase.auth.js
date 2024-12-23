@@ -4,7 +4,6 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInAnonymously,
-  onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   setPersistence,
@@ -55,20 +54,24 @@ export const useAuth = () => {
         role: "customer",
       });
 
-      isLoggedIn.value = true;
-      user.value = res.user;
-      userData.value = {
+      const userDetails = {
         userName: res.user.displayName,
         userId: res.user.uid,
         email: res.user.email,
         userPhotoURL: res.user.photoURL,
         role: "customer",
       };
+
+      isLoggedIn.value = true;
+      user.value = res.user;
+      userData.value = userDetails;
+      localStorage.setItem("userData", JSON.stringify(userDetails));
       router.push("/");
     } catch (error) {
       console.error("Error signing in with Google:", error);
     }
   };
+
   const loginAnonymously = async () => {
     try {
       const res = await signInAnonymously(auth);
@@ -84,13 +87,24 @@ export const useAuth = () => {
         role: "customer",
       });
 
+      const userDetails = {
+        userName: "Anonymous User",
+        userPhotoURL: "https://via.placeholder.com/150",
+        userId: res.user.uid,
+        anonymous: true,
+        role: "customer",
+      };
+
       isLoggedIn.value = true;
       user.value = res.user;
+      userData.value = userDetails;
+      localStorage.setItem("userData", JSON.stringify(userDetails));
       router.push("/");
     } catch (error) {
       console.error("Error during anonymous login:", error);
     }
   };
+
   const loginAccount = async () => {
     try {
       const res = await signInWithEmailAndPassword(
@@ -104,15 +118,28 @@ export const useAuth = () => {
       });
       const userDoc = await getDoc(userDocRef);
       const userDataFromFirestore = userDoc.data();
+      const userDetails = {
+        userName: userDataFromFirestore.userName,
+        userId: res.user.uid,
+        userPhotoURL: userDataFromFirestore.userPhotoURL,
+        email: userDataFromFirestore.email,
+        role: userDataFromFirestore.role,
+      };
+
       const isValidSellerRole =
         userDataFromFirestore &&
         userDataFromFirestore.role &&
         userDataFromFirestore.role.toLowerCase() === "seller";
-      console.log(isValidSellerRole);
+
+      isLoggedIn.value = true;
+      user.value = res.user;
+      userData.value = userDetails;
+      localStorage.setItem("userData", JSON.stringify(userDetails));
+
       if (isValidSellerRole) {
         router.push("/seller");
       } else {
-        router.push("/login");
+        router.push("/");
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -149,6 +176,8 @@ export const useAuth = () => {
       try {
         await updateDoc(userDocRef, { userOnline: false });
         await signOut(auth);
+        // Clear localStorage on logout
+        localStorage.removeItem("userData");
         isLoggedIn.value = false;
         user.value = null;
         router.push("/");
@@ -162,38 +191,6 @@ export const useAuth = () => {
       });
     }
   };
-
-  const checkUserStatus = async (currentUser) => {
-    if (currentUser) {
-      const userDocRef = doc(firestore, "users", currentUser.uid);
-      const userDoc = await getDoc(userDocRef);
-
-      if (userDoc.exists()) {
-        const userDataFromFirestore = userDoc.data();
-        isLoggedIn.value = userDataFromFirestore.userOnline;
-        user.value = currentUser;
-        userData.value = {
-          userName: userDataFromFirestore.userName,
-          userId: userDataFromFirestore.userId,
-          userPhotoURL: userDataFromFirestore.userPhotoURL,
-          role: userDataFromFirestore.role,
-          bgImage: userDataFromFirestore.bgImage || null,
-          email: userDataFromFirestore.email,
-        };
-      } else {
-        isLoggedIn.value = false;
-        user.value = null;
-        userData.value = null;
-      }
-    } else {
-      isLoggedIn.value = false;
-      user.value = null;
-      userData.value = null;
-    }
-  };
-  onAuthStateChanged(auth, (currentUser) => {
-    checkUserStatus(currentUser);
-  });
 
   return {
     signInWithGoogle,

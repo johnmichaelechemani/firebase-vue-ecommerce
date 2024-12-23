@@ -125,3 +125,13 @@ export const useMallsAccount = async () => {
     return [];
   }
 };
+
+const storedUserData = localStorage.getItem("userData");
+if (storedUserData) {
+  const parsedUserData = JSON.parse(storedUserData);
+  userData.value = parsedUserData;
+  isLoggedIn.value = true;
+} else {
+  userData.value = null;
+  isLoggedIn.value = false;
+}
