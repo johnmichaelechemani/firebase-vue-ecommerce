@@ -45,7 +45,7 @@
             ]"
           >
             <Icon
-              icon="material-symbols-light:shopping-basket-outline"
+              icon="material-symbols-light:remove-shopping-cart-rounded"
               width="30"
               height="30"
             />
@@ -67,7 +67,7 @@
             ]"
           >
             <Icon
-              icon="material-symbols-light:credit-card-outline"
+              icon="material-symbols-light:orders-outline"
               width="30"
               height="30"
             />
@@ -88,7 +88,7 @@
             ]"
           >
             <Icon
-              icon="material-symbols-light:credit-card-outline"
+              icon="material-symbols-light:report-outline-rounded"
               width="30"
               height="30"
             />
