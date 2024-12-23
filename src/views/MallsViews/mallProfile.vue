@@ -160,7 +160,7 @@ const clear = () => {
             type="text"
             v-model="profileData.storeName"
             required
-            class="font-semibold text-sm p-1 border w-full"
+            class="font-semibold text-sm p-1 placeholder:text-xs placeholder:font-normal outline-gray-500/20 border w-full"
             placeholder="Enter store name"
           />
         </div>
@@ -172,7 +172,7 @@ const clear = () => {
             type="email"
             v-model="profileData.storeEmail"
             required
-            class="font-semibold text-sm p-1 border w-full"
+            class="font-semibold text-sm p-1 placeholder:text-xs placeholder:font-normal outline-gray-500/20 border w-full"
             placeholder="Enter store email"
           />
         </div>
