@@ -1,14 +1,18 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Icon } from "@iconify/vue";
 import { userData } from "@/store";
 
 // Reactive state for profile data
 const profileData = ref({
-  storeName: userData.userName,
-  storeEmail: userData.email,
-  backgroundImage: null,
-  profileImage: userData.userPhotoURL,
+  storeName: userData.value.userName,
+  storeEmail: userData.value.email,
+  backgroundImage: userData.value.bgImage || null,
+  profileImage: userData.value.userPhotoURL || null,
+});
+
+onMounted(() => {
+  console.log(userData.value);
 });
 
 // References for file inputs

@@ -135,6 +135,7 @@ export const useAuth = () => {
           userPhotoURL: null,
           email: email.value,
           userOnline: false,
+          bgImage: null,
           role: role.value,
         });
         router.push("/login");
@@ -176,6 +177,7 @@ export const useAuth = () => {
           userId: userDataFromFirestore.userId,
           userPhotoURL: userDataFromFirestore.userPhotoURL,
           role: userDataFromFirestore.role,
+          bgImage: userDataFromFirestore.bgImage || null,
           email: userDataFromFirestore.email,
         };
       } else {
