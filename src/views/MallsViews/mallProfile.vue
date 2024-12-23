@@ -133,9 +133,9 @@ const clear = () => {
             class="hidden"
           />
           <div
-            class="sm:size-20 size-10 border-2 border-gray-700 bg-gray-700/90 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
+            class="border-2 border-gray-700 bg-gray-700/90 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
           >
-            <div class="relative">
+            <div class="relative sm:size-20 size-10">
               <img
                 v-if="profileImagePreview"
                 :src="profileImagePreview"
@@ -145,7 +145,7 @@ const clear = () => {
               />
               <button
                 @click="triggerProfileImageUpload"
-                class="absolute -top-2 shadow -right-2 border-2 bg-white rounded-full"
+                class="absolute -bottom-2 shadow -right-2 border-2 bg-white rounded-full"
               >
                 <Icon
                   icon="material-symbols-light:edit-outline"
