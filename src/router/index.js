@@ -81,6 +81,11 @@ const router = createRouter({
           name: "mallDashboard",
           component: () => import("../views/MallsViews/mallDashboard.vue"),
         },
+        {
+          path: "/profile",
+          name: "mallProfile",
+          component: () => import("../views/MallsViews/mallProfile.vue"),
+        },
       ],
     },
 

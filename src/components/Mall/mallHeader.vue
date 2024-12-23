@@ -1,9 +1,7 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { ref } from "vue";
-import Settings from "@/views/CustomerViews/Settings.vue";
-import Cart from "@/views/CustomerViews/Cart.vue";
-import Favorite from "@/views/CustomerViews/Favorite.vue";
+import Settings from "@/views/MallsViews/mallSettings.vue";
 import { isLoggedIn, messages, notifications, userData } from "@/store";
 import { useAuth } from "@/firebase.auth";
 
@@ -134,40 +132,6 @@ const logout = () => {
       </div>
     </div>
   </nav>
-
-  <!-- cart side -->
-  <aside
-    v-if="openPanel === 'cart'"
-    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
-  >
-    <button @click="showPanel(null)">
-      <Icon
-        icon="material-symbols-light:close-small-outline"
-        width="24"
-        height="24"
-      />
-    </button>
-    <div class="mx-2 mb-2">
-      <Cart />
-    </div>
-  </aside>
-
-  <!-- favorite side -->
-  <aside
-    v-if="openPanel === 'favorite'"
-    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
-  >
-    <button @click="showPanel(null)">
-      <Icon
-        icon="material-symbols-light:close-small-outline"
-        width="24"
-        height="24"
-      />
-    </button>
-    <div class="mx-2 mb-2">
-      <Favorite />
-    </div>
-  </aside>
 
   <!-- settings side -->
   <aside

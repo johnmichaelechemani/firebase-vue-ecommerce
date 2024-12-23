@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView } from "vue-router";
-import Sidebar from "@/components/Mall/Sidebar.vue";
+import Sidebar from "@/components/Mall/mallSidebar.vue";
 import Header from "@/components/Mall/mallHeader.vue";
 </script>
 
