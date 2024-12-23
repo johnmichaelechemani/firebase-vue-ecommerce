@@ -6,9 +6,9 @@ import { userData } from "@/store";
 // Reactive state for profile data
 const profileData = ref({
   storeName: userData.userName,
-  storeEmail: "mic@gmail.com",
+  storeEmail: userData.email,
   backgroundImage: null,
-  profileImage: null,
+  profileImage: userData.userPhotoURL,
 });
 
 // References for file inputs
@@ -60,9 +60,6 @@ const save = () => {
     backgroundImage: profileData.value.backgroundImage?.name,
     profileImage: profileData.value.profileImage?.name,
   });
-
-  // Here you would typically send the data to a backend
-  alert("Profile saved successfully!");
 };
 
 // Clear functionality
