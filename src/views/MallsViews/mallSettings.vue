@@ -17,14 +17,20 @@ import { userData } from "../../store.js";
     <h1 class="text-sm font-semibold">{{ userData.userName }}</h1>
   </div>
   <p class="text-xs font-semibold text-gray-500">My Account</p>
-  <button
-    class="flex justify-start items-center gap-2 my-2 hover:bg-gray-700/10 w-full"
-  >
-    <div class="border p-1 shadow place-items-center">
-      <Icon icon="material-symbols-light:edit-outline" width="24" height="24" />
-    </div>
-    <p class="text-sm font-semibold text-gray-700">Account</p>
-  </button>
+  <RouterLink to="/profile">
+    <button
+      class="flex justify-start items-center gap-2 my-2 hover:bg-gray-700/10 w-full"
+    >
+      <div class="border p-1 shadow place-items-center">
+        <Icon
+          icon="material-symbols-light:edit-outline"
+          width="24"
+          height="24"
+        />
+      </div>
+      <p class="text-sm font-semibold text-gray-700">Account</p>
+    </button>
+  </RouterLink>
 
   <p class="text-xs font-semibold text-gray-500">Support</p>
   <button

@@ -13,13 +13,13 @@
       >
         MENU
       </p>
-      <RouterLink to="/">
+      <RouterLink to="/seller">
         <div
           class="flex sm:justify-start my-2 justify-center items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
-              $route.path === '/' ? 'bg-gray-800 text-white' : '',
+              $route.path === '/seller' ? 'bg-gray-800 text-white' : '',
               'place-items-center p-1 border shadow',
             ]"
           >
@@ -29,16 +29,18 @@
               height="30"
             />
           </div>
-          <p class="text-sm font-semibold text-gray-700 hidden sm:flex">HOME</p>
+          <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
+            DASHBOARD
+          </p>
         </div>
       </RouterLink>
-      <RouterLink to="/malls">
+      <RouterLink to="/products">
         <div
           class="flex sm:justify-start justify-center my-2 items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
-              $route.path === '/malls' ? 'bg-gray-800 text-white' : '',
+              $route.path === '/products' ? 'bg-gray-800 text-white' : '',
               'place-items-center p-1 border shadow ',
             ]"
           >
@@ -49,18 +51,18 @@
             />
           </div>
           <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
-            MALLS
+            PRODUCTS
           </p>
         </div>
       </RouterLink>
 
-      <RouterLink to="/purchase">
+      <RouterLink to="/orders">
         <div
           class="flex sm:justify-start justify-center my-1 items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
-              $route.path === '/purchase' ? 'bg-gray-800 text-white ' : '',
+              $route.path === '/orders' ? 'bg-gray-800 text-white ' : '',
               'place-items-center p-1 border shadow ',
             ]"
           >
@@ -71,7 +73,28 @@
             />
           </div>
           <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
-            PURCHASE
+            ORDERS
+          </p>
+        </div>
+      </RouterLink>
+      <RouterLink to="/reports">
+        <div
+          class="flex sm:justify-start justify-center my-1 items-center gap-1 hover:bg-gray-700/10 transition"
+        >
+          <div
+            :class="[
+              $route.path === '/reports' ? 'bg-gray-800 text-white ' : '',
+              'place-items-center p-1 border shadow ',
+            ]"
+          >
+            <Icon
+              icon="material-symbols-light:credit-card-outline"
+              width="30"
+              height="30"
+            />
+          </div>
+          <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
+            REPORTS
           </p>
         </div>
       </RouterLink>
