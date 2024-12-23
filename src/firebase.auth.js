@@ -51,6 +51,7 @@ export const useAuth = () => {
         userId: res.user.uid,
         userPhotoURL: res.user.photoURL,
         userOnline: true,
+        email: res.user.email,
         role: "customer",
       });
 
@@ -59,6 +60,7 @@ export const useAuth = () => {
       userData.value = {
         userName: res.user.displayName,
         userId: res.user.uid,
+        email: res.user.email,
         userPhotoURL: res.user.photoURL,
         role: "customer",
       };
@@ -131,6 +133,7 @@ export const useAuth = () => {
           userName: name.value,
           userId: res.user.uid,
           userPhotoURL: null,
+          email: email.value,
           userOnline: false,
           role: role.value,
         });
@@ -173,6 +176,7 @@ export const useAuth = () => {
           userId: userDataFromFirestore.userId,
           userPhotoURL: userDataFromFirestore.userPhotoURL,
           role: userDataFromFirestore.role,
+          email: userDataFromFirestore.email,
         };
       } else {
         isLoggedIn.value = false;
