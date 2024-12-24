@@ -6,7 +6,6 @@ import {
   collection,
   addDoc,
   getFirestore,
-  getDocs,
   query,
   onSnapshot,
   serverTimestamp,
