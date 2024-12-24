@@ -2,7 +2,10 @@
 import { ref, onMounted } from "vue";
 import { Icon } from "@iconify/vue";
 import { userData } from "@/store";
-
+import { useAuth } from "@/firebase.auth";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
+const { user } = useAuth();
+const firestore = getFirestore();
 // Reactive state for profile data
 const profileData = ref({
   storeName: userData.value.userName,
@@ -15,58 +18,22 @@ onMounted(() => {
   console.log(userData.value);
 });
 
-// References for file inputs
-const backgroundImageInput = ref(null);
-const profileImageInput = ref(null);
+const save = async () => {
+  try {
+    if (user.value) {
+      const recipeRef = doc(firestore, "users", user.value.uid);
 
-// Background Image Handling
-const backgroundImagePreview = ref(null);
-const handleBackgroundImageUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      backgroundImagePreview.value = e.target.result;
-      profileData.value.backgroundImage = file;
-    };
-    reader.readAsDataURL(file);
+      await updateDoc(recipeRef, {
+        storeName: profileData.value.storeName,
+        storeEmail: profileData.value.storeEmail,
+      });
+    }
+    console.log("Profile data saved successfully");
+  } catch (error) {
+    console.error("Error saving profile data:", error);
   }
 };
 
-// Profile Image Handling
-const profileImagePreview = ref(null);
-const handleProfileImageUpload = (event) => {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      profileImagePreview.value = e.target.result;
-      profileData.value.profileImage = file;
-    };
-    reader.readAsDataURL(file);
-  }
-};
-
-// Trigger file input click
-const triggerBackgroundImageUpload = () => {
-  backgroundImageInput.value.click();
-};
-
-const triggerProfileImageUpload = () => {
-  profileImageInput.value.click();
-};
-
-// Save functionality
-const save = () => {
-  console.log("Saving Profile Data:", {
-    storeName: profileData.value.storeName,
-    storeEmail: profileData.value.storeEmail,
-    backgroundImage: profileData.value.backgroundImage?.name,
-    profileImage: profileData.value.profileImage?.name,
-  });
-};
-
-// Clear functionality
 const clear = () => {
   profileData.value = {
     storeName: "",
@@ -74,16 +41,6 @@ const clear = () => {
     backgroundImage: null,
     profileImage: null,
   };
-  backgroundImagePreview.value = null;
-  profileImagePreview.value = null;
-
-  // Reset file inputs
-  if (backgroundImageInput.value) {
-    backgroundImageInput.value.value = "";
-  }
-  if (profileImageInput.value) {
-    profileImageInput.value.value = "";
-  }
 };
 </script>
 
@@ -97,62 +54,27 @@ const clear = () => {
 
         <!-- Background Image Upload -->
         <div class="relative sm:mb-14 mb-5">
-          <input
-            type="file"
-            ref="backgroundImageInput"
-            @change="handleBackgroundImageUpload"
-            accept="image/*"
-            class="hidden"
-          />
           <div class="w-full h-32 sm:h-52 bg-gray-700/50">
             <img
-              v-if="backgroundImagePreview"
-              :src="backgroundImagePreview"
+              v-if="profileData.backgroundImage"
+              :src="profileData.backgroundImage"
               loading="lazy"
               alt="Background Image"
               class="w-full h-full object-cover object-center"
             />
-            <button
-              @click="triggerBackgroundImageUpload"
-              class="absolute bottom-2 shadow right-2 p-1 border-2 bg-white rounded-full"
-            >
-              <Icon
-                icon="material-symbols-light:edit-outline"
-                width="24"
-                height="24"
-              />
-            </button>
           </div>
 
-          <!-- Profile Image Upload -->
-          <input
-            type="file"
-            ref="profileImageInput"
-            @change="handleProfileImageUpload"
-            accept="image/*"
-            class="hidden"
-          />
           <div
             class="border-2 border-gray-700 bg-gray-700/90 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
           >
             <div class="relative sm:size-20 size-10">
               <img
-                v-if="profileImagePreview"
-                :src="profileImagePreview"
+                v-if="profileData.profileImage"
+                :src="profileData.profileImage"
                 alt="profile"
                 loading="lazy"
                 class="w-full h-full object-cover object-center"
               />
-              <button
-                @click="triggerProfileImageUpload"
-                class="absolute -bottom-2 shadow -right-2 border-2 bg-white rounded-full"
-              >
-                <Icon
-                  icon="material-symbols-light:edit-outline"
-                  width="24"
-                  height="24"
-                />
-              </button>
             </div>
           </div>
         </div>
