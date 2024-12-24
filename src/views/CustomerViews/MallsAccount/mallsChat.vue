@@ -41,13 +41,16 @@ onMounted(async () => {
   >
     <div>
       <div class="flex gap-2 justify-start items-center shadow-sm p-2 border-b">
-        <div class="flex justify-between bg-gray-700/20 size-8 items-center">
+        <div class="flex justify-center bg-gray-700/10 border  size-8 items-center">
           <img
             v-if="mallData && mallData.userPhotoURL"
             :src="mallData.userPhotoURL"
             alt="mall profile"
             class="w-full h-full object-center object-cover"
           />
+          <div v-else class="flex justify-center items-center">
+            <Icon icon="material-symbols-light:store" width="30" height="30" />
+          </div>
         </div>
         <div>
           <p class="text-sm font-semibold capitalize" v-if="mallData">
