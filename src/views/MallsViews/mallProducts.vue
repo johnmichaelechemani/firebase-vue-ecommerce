@@ -8,6 +8,7 @@ import {
   getFirestore,
   getDocs,
   query,
+  onSnapshot,
   serverTimestamp,
 } from "firebase/firestore";
 const { user } = useAuth();
@@ -59,17 +60,22 @@ const add = async () => {
   );
 };
 
-const getProducts = async () => {
+const getProducts = () => {
   const productsQuery = query(collection(firestore, "products"));
-  const querySnapshot = await getDocs(productsQuery);
-  products.value = querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  console.log(products.value);
+  onSnapshot(
+    productsQuery,
+    (querySnapshot) => {
+      products.value = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("Products updated in real-time:", products.value);
+    },
+    (error) => {
+      console.error("Error fetching products:", error);
+    }
+  );
 };
-
 onMounted(() => {
   getProducts();
 });
