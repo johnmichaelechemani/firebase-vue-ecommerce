@@ -13,7 +13,11 @@ const clear = () => {
   productDiscount.value = "";
   productImage.value = null;
 };
-const add = () => {
+const add = async () => {
+  try {
+  } catch (e) {
+    console.log("Error", e);
+  }
   console.log(
     productName.value,
     productDiscription.value,
@@ -34,25 +38,25 @@ const add = () => {
           <label for="name" class="block py-1 text-xs font-medium text-gray-700"
             >Product Name:</label
           >
-          <input type="text" class="border p-1" />
+          <input type="text" v-model="productName" class="border p-1" />
         </div>
         <div class="border p-2">
           <label for="name" class="block py-1 text-xs font-medium text-gray-700"
             >Product Discription:</label
           >
-          <input type="text" class="border p-1" />
+          <input type="text" v-model="productDiscription" class="border p-1" />
         </div>
         <div class="border p-2">
           <label for="name" class="block py-1 text-xs font-medium text-gray-700"
             >Product Price:</label
           >
-          <input type="number" class="border p-1" />
+          <input type="number" v-model="productPrice" class="border p-1" />
         </div>
         <div class="border p-2">
           <label for="name" class="block py-1 text-xs font-medium text-gray-700"
             >Product Discount:</label
           >
-          <input type="number" class="border p-1" />
+          <input type="number" v-model="productDiscount" class="border p-1" />
         </div>
       </form>
       <div class="flex justify-start items-center gap-3">
