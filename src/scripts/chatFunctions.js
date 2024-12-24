@@ -19,7 +19,7 @@ import { useAuth } from "@/firebase.auth";
 
 // global
 const { user, auth } = useAuth();
-const getChatId = (userId1, userId2) => {
+export const getChatId = (userId1, userId2) => {
   return [userId1, userId2].sort().join("_");
 };
 await new Promise((resolve) => {
@@ -33,6 +33,7 @@ await new Promise((resolve) => {
 const firestore = getFirestore();
 const userId = user.value.uid;
 export const messages = ref([]);
+export const latestMessages = ref({});
 
 //-----------------below is the functions-----------------------------
 export const chatFunctions = () => {
@@ -59,10 +60,11 @@ export const chatFunctions = () => {
         {
           participants: {
             [userId]: true,
-            [reciever.value]: true,
+            [reciever]: true,
           },
           lastMessage: message.value,
           sender: userId,
+          reciever: reciever,
           timestamp: serverTimestamp(),
         },
         { merge: true }
@@ -105,17 +107,22 @@ export const chatFunctions = () => {
       // 🔍 Cached Messages Retrieval
       const cachedMessages = localStorage.getItem(`messages_${chatId}`);
       messages.value = cachedMessages ? JSON.parse(cachedMessages) : [];
-      console.log("✅ Cached Messages Retrieved:", {
-        count: messages.value.length,
-        messages: messages.value,
-      });
-
       // 📡 Real-time Firestore Message Query
       const messagesQuery = query(
         collection(firestore, `chats/${chatId}/messages`),
         orderBy("timestamp", "asc")
       );
-
+      const lastMessagesQuery = doc(firestore, "chats", chatId);
+      const unsubscribe = onSnapshot(lastMessagesQuery, (doc) => {
+        if (doc.exists()) {
+          const data = doc.data();
+          if (data && data.lastMessage) {
+            latestMessages.value[chatId] = data.lastMessage;
+            // isSender.value[chatId] = data.sender;
+            // timestamp.value[chatId] = data.timestamp;
+          }
+        }
+      });
       // 🔄 Real-time Listener Setup
       const messageUnsub = onSnapshot(
         messagesQuery,
@@ -125,22 +132,18 @@ export const chatFunctions = () => {
               id: doc.id,
               ...doc.data(),
             }));
-
-            console.log("🌐 Live Messages Snapshot:", {
-              count: liveMessages.length,
-              messages: liveMessages,
-            });
-
+            // console.log("🌐 Live Messages Snapshot:", {
+            //   count: liveMessages.length,
+            //   messages: liveMessages,
+            // });
             // Update messages reactive value
             messages.value = liveMessages;
-
             // 💾 Local Storage Update
-
             localStorage.setItem(
               `messages_${chatId}`,
               JSON.stringify(liveMessages)
             );
-            console.log("💾 Messages Cached Successfully");
+            // console.log("💾 Messages Cached Successfully");
           } catch (mappingError) {
             console.error("❌ Message Mapping Error:", {
               error: mappingError.message,
@@ -156,10 +159,11 @@ export const chatFunctions = () => {
           });
         }
       );
-
       // 🧹 Cleanup listener on component unmount
       onUnmounted(() => {
         messageUnsub();
+
+        unsubscribe();
       });
     } catch (generalError) {
       console.error("❌ General Messages Loading Error:", {
@@ -179,5 +183,6 @@ export const chatFunctions = () => {
     messages,
     message,
     selectedMall,
+    getChatId,
   };
 };

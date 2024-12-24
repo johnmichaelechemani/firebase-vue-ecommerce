@@ -3,10 +3,16 @@ import { Icon } from "@iconify/vue";
 import { ref, watch, Transition, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
 import { mallsAccount, useMallsAccount } from "@/store";
-import { chatFunctions } from "@/scripts/chatFunctions";
+import {
+  chatFunctions,
+  latestMessages,
+  getChatId,
+} from "@/scripts/chatFunctions";
+import { useAuth } from "@/firebase.auth";
 
 const { selectedMall } = chatFunctions();
-
+const { user } = useAuth();
+const userId = user.value.uid;
 const route = useRoute();
 const isMenuToggled = ref(true);
 const mallId = ref(route.params.id);
@@ -90,8 +96,11 @@ onMounted(async () => {
                     <p class="text-sm font-semibold capitalize">
                       {{ mall.userName }}
                     </p>
-                    <p class="text-xs truncate font-medium max-w-32">
-                      Hey, select any of your like!
+                    <p
+                    
+                      class="text-xs truncate font-medium max-w-32"
+                    >
+                      {{ latestMessages[getChatId(userId, mall.userId)] }}
                     </p>
                   </div>
                 </div></router-link
