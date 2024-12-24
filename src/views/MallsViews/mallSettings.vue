@@ -7,12 +7,18 @@ import { userData } from "../../store.js";
   <div
     class="shadow-lg border mb-2 px-2 py-1 flex justify-start gap-2 items-center"
   >
-    <div class="size-10 rounded-full">
+    <div
+      class="size-10 rounded-full border border-gray-700 flex justify-center items-center"
+    >
       <img
+        v-if="userData.userPhotoURL"
         :src="userData.userPhotoURL"
         alt=""
         class="object-center w-full h-full rounded-full object-cover"
       />
+      <div v-else class="flex justify-center items-center">
+        <Icon icon="material-symbols-light:store" width="30" height="30" />
+      </div>
     </div>
     <h1 class="text-sm font-semibold">{{ userData.userName }}</h1>
   </div>

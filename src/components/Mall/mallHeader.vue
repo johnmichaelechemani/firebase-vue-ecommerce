@@ -90,13 +90,21 @@ const logout = () => {
           </RouterLink>
           <button
             @click="showPanel('settings')"
-            class="size-10 rounded-full bg-gray-800"
+            class="size-10 rounded-full bg-gray-50 border border-gray-700"
           >
             <img
+              v-if="userData.userPhotoURL"
               :src="userData.userPhotoURL"
               alt=""
               class="h-full w-full object-cover rounded-full object-center"
             />
+            <div v-else class="flex justify-center items-center">
+              <Icon
+                icon="material-symbols-light:store"
+                width="30"
+                height="30"
+              />
+            </div>
           </button>
         </div>
         <div

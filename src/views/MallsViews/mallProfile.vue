@@ -3,7 +3,7 @@ import { ref, onMounted } from "vue";
 import { Icon } from "@iconify/vue";
 import { userData } from "@/store";
 import { useAuth } from "@/firebase.auth";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 const { user } = useAuth();
 const firestore = getFirestore();
 // Reactive state for profile data
@@ -21,12 +21,21 @@ onMounted(() => {
 const save = async () => {
   try {
     if (user.value) {
-      const recipeRef = doc(firestore, "users", user.value.uid);
+      const userDocRef = doc(firestore, "users", user.value.uid);
 
-      await updateDoc(recipeRef, {
-        storeName: profileData.value.storeName,
-        storeEmail: profileData.value.storeEmail,
+      await updateDoc(userDocRef, {
+        userName: profileData.value.storeName,
+        email: profileData.value.storeEmail,
       });
+      const freshUserDoc = await getDoc(userDocRef);
+      const freshUserData = freshUserDoc.data();
+      const updatedUserData = {
+        ...freshUserData,
+        timestamp: Date.now(),
+      };
+      localStorage.setItem("userData", JSON.stringify(updatedUserData));
+      // Update reactive userData
+      userData.value = updatedUserData;
     }
     console.log("Profile data saved successfully");
   } catch (error) {
@@ -65,9 +74,9 @@ const clear = () => {
           </div>
 
           <div
-            class="border-2 border-gray-700 bg-gray-700/90 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
+            class="border-2 border-gray-700 bg-gray-50 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
           >
-            <div class="relative sm:size-20 size-10">
+            <div class="relative sm:size-20 size-10 flex justify-center items-center">
               <img
                 v-if="profileData.profileImage"
                 :src="profileData.profileImage"
@@ -75,6 +84,13 @@ const clear = () => {
                 loading="lazy"
                 class="w-full h-full object-cover object-center"
               />
+              <div v-else class="flex justify-center items-center">
+                <Icon
+                  icon="material-symbols-light:store"
+                  width="30"
+                  height="30"
+                />
+              </div>
             </div>
           </div>
         </div>
