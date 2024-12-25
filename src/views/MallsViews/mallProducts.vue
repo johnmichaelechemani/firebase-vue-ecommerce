@@ -80,7 +80,7 @@ const getProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      //  console.log("Products updated in real-time:", products.value);
+        console.log("Products updated in real-time:", products.value);
     },
     (error) => {
       console.error("Error fetching products:", error);

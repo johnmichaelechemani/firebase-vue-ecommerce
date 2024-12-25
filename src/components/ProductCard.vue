@@ -51,7 +51,7 @@ const selectedProduct = (item) => {
       </div>
     </div>
     <div class="p-1">
-      <div class="flex">
+      <div class="flex" v-if="item.ratings">
         <Icon
           v-for="(icon, index) in getStarIcons(item.ratings)"
           :key="index"

@@ -1,8 +1,8 @@
 <script setup>
 import ProductCard from "./ProductCard.vue";
 import { useRouter, useRoute } from "vue-router";
-import { ref, computed } from "vue";
-import { products } from "@/store";
+import { ref, computed, onMounted } from "vue";
+import { products, getProducts } from "@/store";
 
 const router = useRouter();
 const route = useRoute();
@@ -18,6 +18,10 @@ const filteredProducts = computed(() => {
     return products.value.filter((product) => product.category === category);
   }
   return products.value;
+});
+
+onMounted(() => {
+  getProducts();
 });
 
 const Category = ref([

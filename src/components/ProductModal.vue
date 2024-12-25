@@ -122,7 +122,7 @@ const addToFavorites = () => {
                 </p>
               </router-link>
 
-              <div class="flex my-2">
+              <div class="flex my-2" v-if="product.ratings">
                 <Icon
                   v-for="(icon, index) in getStarIcons(product.ratings)"
                   :key="index"
