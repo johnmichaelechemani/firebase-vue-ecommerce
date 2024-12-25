@@ -83,10 +83,10 @@ export const getCartProducts = () => {
 export const getFavoritesProducts = () => {
   const db = getFirestore();
   try {
-    const cartsQuery = query(
+    const favQuery = query(
       collection(db, "favorites", userData.value.userId, "items")
     );
-    onSnapshot(cartsQuery, (querySnapshot) => {
+    onSnapshot(favQuery, (querySnapshot) => {
       favoritesItem.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
