@@ -6,6 +6,7 @@ import {
   getDocs,
   query,
   where,
+  onSnapshot,
 } from "firebase/firestore";
 
 // global variables and storages
@@ -28,7 +29,7 @@ import Shoes from "./assets/dummyImages/shoes.jpg";
 export const products = ref([
   {
     id: 1,
-    mallId: "9YhScvvQvWdciOHb2kPrs4vv8N82",
+    mallId: "6rwZaZXwEJbhThoHhegfx6a0dqM2",
     mallName: "Store ni Michael",
     name: "Shoes ni Mike",
     category: "shoes",
@@ -125,6 +126,24 @@ export const useMallsAccount = async () => {
     return [];
   }
 };
+
+// export const getProducts = () => {
+//   const db = getFirestore();
+//   try {
+//     const productsQuery = query(collection(db, "products"));
+//     onSnapshot(productsQuery, (querySnapshot) => {
+//       products.value = querySnapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         ...doc.data(),
+//       }));
+//       console.log("Products updated in real-time:", products.value);
+//     });
+//     return products.value;
+//   } catch (error) {
+//     console.error("Error fetching products:", error);
+//     return [];
+//   }
+// };
 
 const storedUserData = localStorage.getItem("userData");
 if (storedUserData) {
