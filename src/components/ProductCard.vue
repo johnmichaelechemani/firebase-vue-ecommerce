@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { defineProps, ref } from "vue";
+import { defineProps, ref, watch } from "vue";
 import ProductModal from "./ProductModal.vue";
 
 const props = defineProps({
@@ -25,6 +25,12 @@ const selectedProduct = (item) => {
   isShowModal.value = true;
   selected.value = item;
 };
+
+watch(isShowModal, (newValue) => {
+  if (!newValue) {
+    selected.value = [];
+  }
+});
 </script>
 
 <template>
