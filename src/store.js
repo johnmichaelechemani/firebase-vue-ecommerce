@@ -59,6 +59,25 @@ export const getProducts = () => {
     return [];
   }
 };
+export const getCartProducts = () => {
+  const db = getFirestore();
+  try {
+    const cartsQuery = query(
+      collection(db, "carts", userData.value.userId, "items")
+    );
+    onSnapshot(cartsQuery, (querySnapshot) => {
+      cartItems.value = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("Products updated in real-time:", cartItems.value);
+    });
+    return cartItems.value;
+  } catch (error) {
+    console.error("Error fetching cart items:", error);
+    return [];
+  }
+};
 
 const storedUserData = localStorage.getItem("userData");
 if (storedUserData) {

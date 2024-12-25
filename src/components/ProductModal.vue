@@ -2,7 +2,6 @@
 import {
   isLoggedIn,
   loginErrorMessage,
-  cartItems,
   userData,
   favoritesItem,
 } from "../store.js";
@@ -47,6 +46,11 @@ const decrement = () => {
 
 const showSuccessMessage = ref(false);
 const addToCart = async () => {
+  if (isLoggedIn.value === false) {
+    loginErrorMessage.value = "Please login before you shop!";
+    route.push("/login");
+    return;
+  }
   try {
     await addDoc(
       collection(firestore, "carts", userData.value.userId, "items"),
@@ -68,29 +72,10 @@ const addToCart = async () => {
     console.log("Error", e);
   }
 
-  if (isLoggedIn.value === false) {
-    loginErrorMessage.value = "Please login before you shop!";
-    route.push("/login");
-  }
-  const productToAdd = {
-    id: props.product.id,
-    name: props.product.name,
-    store: "Mike Store",
-    price: props.product.price,
-    size: selectedSize.value,
-    quantity: quantity.value,
-    image: props.product.image,
-    discount: props.product.discount,
-  };
-
-  cartItems.value.push(productToAdd);
-
   showSuccessMessage.value = true;
   setTimeout(() => {
     showSuccessMessage.value = false;
   }, 2000);
-
-  console.log("Added to cart", productToAdd);
 };
 
 const isAddToCartDisabled = computed(() => {

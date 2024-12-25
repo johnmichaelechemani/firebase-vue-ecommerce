@@ -1,7 +1,7 @@
 <script setup>
 import User from "../assets/dummyImages/user.jpg";
 import { Icon } from "@iconify/vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import Settings from "@/views/CustomerViews/Settings.vue";
 import Cart from "@/views/CustomerViews/Cart.vue";
 import Favorite from "@/views/CustomerViews/Favorite.vue";
@@ -11,6 +11,7 @@ import {
   messages,
   notifications,
   userData,
+  getCartProducts,
 } from "../store.js";
 import { useAuth } from "@/firebase.auth";
 
@@ -27,6 +28,10 @@ const logout = () => {
   isLoggedIn.value = false;
   openPanel.value = null;
 };
+
+onMounted(() => {
+  getCartProducts();
+});
 </script>
 <template>
   <nav
