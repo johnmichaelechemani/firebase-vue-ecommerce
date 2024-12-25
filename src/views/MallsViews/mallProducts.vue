@@ -50,6 +50,7 @@ const add = async () => {
     });
 
     console.log("Adding Success");
+    clear();
   } catch (e) {
     console.log("Error", e);
   }
