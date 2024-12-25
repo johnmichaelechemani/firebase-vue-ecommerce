@@ -27,6 +27,7 @@ const clear = () => {
   productDiscount.value = "";
   productImage.value = null;
   productCategory.value = "";
+  console.log("Cleared");
 };
 const add = async () => {
   try {
@@ -86,13 +87,14 @@ onMounted(() => {
   >
     <div class="m-2">
       <p class="text-sm font-semibold py-2">Add Products</p>
-      <form action="" @submit.prevent="add">
+      <form action="">
         <div class="flex flex-wrap gap-2">
           <div class="border p-2">
             <label
               for="name"
               class="block py-1 text-xs font-medium text-gray-700"
-              >Product Name:</label
+            >
+              Name:</label
             >
             <input
               required
@@ -105,7 +107,8 @@ onMounted(() => {
             <label
               for="name"
               class="block py-1 text-xs font-medium text-gray-700"
-              >Product Discription:</label
+            >
+              Discription:</label
             >
             <input
               type="text"
@@ -117,28 +120,42 @@ onMounted(() => {
             <label
               for="name"
               class="block py-1 text-xs font-medium text-gray-700"
-              >Product Price:</label
             >
-            <input
-              required
-              type="number"
-              v-model="productPrice"
-              class="border p-1"
-            />
+              Price:</label
+            >
+
+            <div class="border flex items-center gap-1 px-3 max-w-32">
+              $
+              <input
+                type="number"
+                v-model="productPrice"
+                class="w-full outline-none p-1"
+              />
+            </div>
           </div>
           <div class="border p-2">
             <label
               for="name"
               class="block py-1 text-xs font-medium text-gray-700"
-              >Product Discount:</label
             >
-            <input type="number" v-model="productDiscount" class="border p-1" />
+              Discount:</label
+            >
+
+            <div class="border flex items-center gap-1 px-3 max-w-32">
+              <input
+                type="number"
+                v-model="productDiscount"
+                class="w-full outline-none p-1"
+              />
+              %
+            </div>
           </div>
           <div class="border p-2">
             <label
               for="name"
               class="block py-1 text-xs font-medium text-gray-700"
-              >Product Category:</label
+            >
+              Category:</label
             >
             <select
               name=""
@@ -156,21 +173,21 @@ onMounted(() => {
             </select>
           </div>
         </div>
-        <div class="flex justify-start items-center gap-3">
-          <button
-            @click="clear"
-            class="text-sm border py-2 font-semibold my-2 w-32 px-5"
-          >
-            Clear
-          </button>
-          <button
-            type="submit"
-            class="text-sm text-white font-semibold bg-gray-800 w-32 py-2 my-2 px-5"
-          >
-            Add
-          </button>
-        </div>
       </form>
+      <div class="flex justify-start items-center gap-3">
+        <button
+          @click="clear"
+          class="text-sm border py-2 font-semibold my-2 w-32 px-5"
+        >
+          Clear
+        </button>
+        <button
+          @click="add"
+          class="text-sm text-white font-semibold bg-gray-800 w-32 py-2 my-2 px-5"
+        >
+          Add
+        </button>
+      </div>
 
       <p class="text-sm font-semibold my-2">Product Lists</p>
       <div class="flex flex-wrap gap-2">
