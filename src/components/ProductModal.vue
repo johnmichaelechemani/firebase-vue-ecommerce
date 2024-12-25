@@ -30,10 +30,12 @@ const changeSize = (size) => {
 };
 
 const incerment = () => {
-  quantity.value += 1;
+  if (quantity.value < props.product.inventory) {
+    quantity.value += 1;
+  }
 };
 const decrement = () => {
-  if (quantity.value > 0) {
+  if (quantity.value > 1) {
     quantity.value -= 1;
   }
 };
@@ -202,6 +204,11 @@ const addToFavorites = () => {
                     <div class="flex justify-start items-center gap-2">
                       <button
                         @click="decrement"
+                        :class="
+                          quantity === 1
+                            ? 'cursor-not-allowed text-gray-500'
+                            : ''
+                        "
                         class="hover:bg-gray-700/20 rounded-full transition"
                       >
                         <Icon
@@ -215,6 +222,11 @@ const addToFavorites = () => {
                       </div>
                       <button
                         @click="incerment"
+                        :class="
+                          props.product.inventory === quantity
+                            ? 'cursor-not-allowed text-gray-500'
+                            : ''
+                        "
                         class="hover:bg-gray-700/20 rounded-full transition"
                       >
                         <Icon
