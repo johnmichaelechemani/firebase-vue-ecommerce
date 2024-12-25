@@ -1,8 +1,9 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Shoes from "../../assets/dummyImages/shoes.jpg";
+import { purchaseProducts, getPurchaseProducts } from "@/store";
 const router = useRouter();
 const route = useRoute();
 const queryForStat = (query) => {
@@ -11,73 +12,10 @@ const queryForStat = (query) => {
     query: { status: query },
   });
 };
-const purchaseProducts = ref([
-  {
-    id: 1,
-    name: "Shoes ni Mike",
-    store: "Mike Store",
-    quantity: Math.floor(Math.random() * 5) + 1,
-    category: "shoes",
-    status: "pay",
-    price: Math.floor(Math.random() * 500) + 50,
-    image: Shoes,
-    ratings: Math.floor(Math.random() * 5) + 1,
-    discount: Math.floor(Math.random() * 50),
-    sold: Math.floor(Math.random() * 1000) + 100,
-  },
-  {
-    id: 3,
-    name: "Shoes ni Michael",
-    store: "Mike Store",
-    quantity: Math.floor(Math.random() * 5) + 1,
-    category: "shoes",
-    status: "ship",
-    price: Math.floor(Math.random() * 500) + 50,
-    image: Shoes,
-    ratings: Math.floor(Math.random() * 5) + 1,
-    discount: Math.floor(Math.random() * 50),
-    sold: Math.floor(Math.random() * 1000) + 100,
-  },
-  {
-    id: 4,
-    name: "Shoes ni Mic",
-    store: "Mike Store",
-    quantity: Math.floor(Math.random() * 5) + 1,
-    category: "shoes",
-    status: "recieve",
-    price: Math.floor(Math.random() * 500) + 50,
-    image: Shoes,
-    ratings: Math.floor(Math.random() * 5) + 1,
-    discount: Math.floor(Math.random() * 50),
-    sold: Math.floor(Math.random() * 1000) + 100,
-  },
-  {
-    id: 5,
-    name: "Shoes ni John",
-    store: "Mike Store",
-    quantity: Math.floor(Math.random() * 5) + 1,
-    category: "shoes",
-    status: "rate",
-    price: Math.floor(Math.random() * 500) + 50,
-    image: Shoes,
-    ratings: Math.floor(Math.random() * 5) + 1,
-    discount: Math.floor(Math.random() * 50),
-    sold: Math.floor(Math.random() * 1000) + 100,
-  },
-  {
-    id: 6,
-    name: "Shoes ni John",
-    store: "Mike Store",
-    quantity: Math.floor(Math.random() * 5) + 1,
-    category: "shoes",
-    status: "completed",
-    price: Math.floor(Math.random() * 500) + 50,
-    image: Shoes,
-    ratings: Math.floor(Math.random() * 5) + 1,
-    discount: Math.floor(Math.random() * 50),
-    sold: Math.floor(Math.random() * 1000) + 100,
-  },
-]);
+
+onMounted(() => {
+  getPurchaseProducts();
+});
 
 const purchasesStatus = ref([
   {

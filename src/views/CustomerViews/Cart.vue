@@ -33,7 +33,7 @@ const purchase = async () => {
   );
   try {
     await addDoc(collection(db, "purchase", userData.value.userId, "items"), {
-      ...selectedItems,
+      ...selectedItems[0],
       status: "pay",
       purchaseDate: new Date(),
       totalPrice: selectedItems.reduce(

@@ -20,6 +20,7 @@ export const isLoggedIn = ref(null);
 export const userData = ref(null);
 export const mallsAccount = ref([]);
 export const products = ref([]);
+export const purchaseProducts = ref([]);
 const storedUserData = localStorage.getItem("userData");
 
 // fetch global data
@@ -95,6 +96,26 @@ export const getFavoritesProducts = () => {
       console.log("fav updated in real-time:", favoritesItem.value);
     });
     return favoritesItem.value;
+  } catch (error) {
+    console.error("Error fetching fav items:", error);
+    return [];
+  }
+};
+
+export const getPurchaseProducts = () => {
+  const db = getFirestore();
+  try {
+    const purchaseQuery = query(
+      collection(db, "purchase", userData.value.userId, "items")
+    );
+    onSnapshot(purchaseQuery, (querySnapshot) => {
+      purchaseProducts.value = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("purchase updated in real-time:", purchaseProducts.value);
+    });
+    return purchaseProducts.value;
   } catch (error) {
     console.error("Error fetching fav items:", error);
     return [];
