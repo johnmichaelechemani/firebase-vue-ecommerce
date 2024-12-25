@@ -3,12 +3,31 @@ import { ref } from "vue";
 import { Icon } from "@iconify/vue";
 import { favoritesItem } from "@/store";
 import ProductModal from "@/components/ProductModal.vue";
+import { userData } from "@/store";
+import { doc, deleteDoc, getFirestore } from "firebase/firestore";
 
 const selected = ref([]);
 const isShowModal = ref(false);
 const selectedProduct = (item) => {
   isShowModal.value = true;
   selected.value = item;
+};
+
+const deleteFavoriteItems = (cartId) => {
+  const db = getFirestore();
+  try {
+    const favorateItemRef = doc(
+      db,
+      "favorites",
+      userData.value.userId,
+      "items",
+      cartId
+    );
+    deleteDoc(favorateItemRef);
+    console.log("Item successfully deleted from fav");
+  } catch (error) {
+    console.error("Error deleting fav item:", error);
+  }
 };
 </script>
 
@@ -42,7 +61,8 @@ const selectedProduct = (item) => {
             </div>
           </div>
         </div>
-        <div
+        <button
+          @click.stop="deleteFavoriteItems(product.favoriteId)"
           class="flex justify-end p-1 hover:bg-gray-700 hover:text-white transition"
         >
           <Icon
@@ -50,7 +70,7 @@ const selectedProduct = (item) => {
             width="24"
             height="24"
           />
-        </div>
+        </button>
       </div>
       <div
         v-if="favoritesItem.length === 0"

@@ -1,10 +1,5 @@
 <script setup>
-import {
-  isLoggedIn,
-  loginErrorMessage,
-  userData,
-  favoritesItem,
-} from "../store.js";
+import { isLoggedIn, loginErrorMessage, userData } from "../store.js";
 import { Icon } from "@iconify/vue";
 import { ref, defineEmits, computed, defineProps } from "vue";
 import { useRouter } from "vue-router";
@@ -115,25 +110,26 @@ const addToFavorites = async () => {
     route.push("/login");
     return;
   }
-  const productToAdd = {
-    ...props.product,
-  };
+  console.log(props.product);
 
   try {
-    await addDoc(
+    const favItemRef = await addDoc(
       collection(firestore, "favorites", userData.value.userId, "items"),
       {
         ...props.product,
-        cartItemId: docRef.id,
+        favoriteId: null,
       }
     );
+
+    await updateDoc(favItemRef, {
+      favoriteId: favItemRef.id,
+    });
 
     console.log("Adding to favorate Success");
   } catch (e) {
     console.log("Error", e);
   }
 
-  favoritesItem.value.push(productToAdd);
   showSuccessMessageFavorites.value = true;
   setTimeout(() => {
     showSuccessMessageFavorites.value = false;
