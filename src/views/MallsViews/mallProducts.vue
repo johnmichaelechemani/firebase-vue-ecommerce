@@ -21,6 +21,7 @@ const productPrice = ref("");
 const productDiscount = ref("");
 const productImage = ref(" https://via.placeholder.com/150?text=Nothing");
 const productCategory = ref("");
+const productInventory = ref(0);
 
 const clear = () => {
   productName.value = "";
@@ -29,6 +30,7 @@ const clear = () => {
   productDiscount.value = "";
   productImage.value = null;
   productCategory.value = "";
+  productInventory.value = 0;
   console.log("Cleared");
 };
 const add = async () => {
@@ -39,6 +41,7 @@ const add = async () => {
       price: productPrice.value,
       image: productImage.value,
       discount: productDiscount.value,
+      inventory: productInventory.value,
       mall: true,
       category: productCategory.value,
       mallId: user.value.uid,
@@ -74,7 +77,7 @@ const getProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("Products updated in real-time:", products.value);
+      //  console.log("Products updated in real-time:", products.value);
     },
     (error) => {
       console.error("Error fetching products:", error);
@@ -162,6 +165,23 @@ onMounted(() => {
               for="name"
               class="block py-1 text-xs font-medium text-gray-700"
             >
+              Inventory:</label
+            >
+
+            <div class="border flex items-center gap-1 px-3 max-w-32">
+              x
+              <input
+                type="number"
+                v-model="productInventory"
+                class="w-full outline-none p-1"
+              />
+            </div>
+          </div>
+          <div class="border p-2">
+            <label
+              for="name"
+              class="block py-1 text-xs font-medium text-gray-700"
+            >
               Category:</label
             >
             <select
@@ -204,6 +224,7 @@ onMounted(() => {
               <tr>
                 <th scope="col" class="px-6 py-3">Product name</th>
                 <th scope="col" class="px-6 py-3">Category</th>
+                <th scope="col" class="px-6 py-3">Inventory</th>
                 <th scope="col" class="px-6 py-3">Discount</th>
                 <th scope="col" class="px-6 py-3">Price</th>
                 <th scope="col" class="px-6 py-3">Action</th>
@@ -215,6 +236,7 @@ onMounted(() => {
                   {{ item.name }}
                 </th>
                 <td class="px-6 py-4">{{ item.category }}</td>
+                <td class="px-6 py-4">{{ item.inventory }}</td>
                 <td class="px-6 py-4">{{ item.discount }}</td>
                 <td class="px-6 py-4">$ {{ item.price }}</td>
                 <td class="px-6 py-4 flex justify-start items-center gap-2">
