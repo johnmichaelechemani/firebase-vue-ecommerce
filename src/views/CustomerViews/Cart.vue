@@ -2,7 +2,8 @@
 import { ref, watch, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { cartItems } from "../../store.js";
-
+import { doc, deleteDoc, getFirestore } from "firebase/firestore";
+import { userData } from "../../store.js";
 const selected = ref([]);
 const selectAll = ref(false);
 watch(selectAll, (newValue) => {
@@ -25,6 +26,24 @@ const isBuyDisabled = computed(() => {
 
 const purchase = () => {
   console.log("You have purchased the selected items", selected.value);
+};
+
+const deleteCartItems = (productId) => {
+  console.log(userData.value.userId, productId);
+  const db = getFirestore();
+  try {
+    const cartItemRef = doc(
+      db,
+      "carts",
+      userData.value.userId,
+      "items",
+      productId
+    );
+    deleteDoc(cartItemRef);
+    console.log("Item successfully deleted from cart");
+  } catch (error) {
+    console.error("Error deleting cart item:", error);
+  }
 };
 </script>
 
@@ -70,7 +89,8 @@ const purchase = () => {
             </div>
           </div>
         </div>
-        <div
+        <button
+          @click="deleteCartItems(product.cartItemId)"
           class="flex justify-end p-1 hover:bg-gray-700 hover:text-white transition"
         >
           <Icon
@@ -78,7 +98,7 @@ const purchase = () => {
             width="24"
             height="24"
           />
-        </div>
+        </button>
       </div>
       <hr />
     </div>

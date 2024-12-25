@@ -8,7 +8,12 @@ import {
 import { Icon } from "@iconify/vue";
 import { ref, defineEmits, computed, defineProps } from "vue";
 import { useRouter } from "vue-router";
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
 
 const firestore = getFirestore();
 const route = useRouter();
@@ -52,24 +57,33 @@ const addToCart = async () => {
     return;
   }
   try {
-    await addDoc(
+    const cartItemData = {
+      id: props.product.id,
+      name: props.product.name,
+      mallId: props.product.mallId,
+      store: props.product.mallName,
+      price: props.product.price,
+      size: selectedSize.value,
+      quantity: quantity.value,
+      image: props.product.image,
+      discount: props.product.discount,
+    };
+
+    const cartItemRef = await addDoc(
       collection(firestore, "carts", userData.value.userId, "items"),
       {
-        id: props.product.id,
-        name: props.product.name,
-        mallId: props.product.mallId,
-        store: props.product.mallName,
-        price: props.product.price,
-        size: selectedSize.value,
-        quantity: quantity.value,
-        image: props.product.image,
-        discount: props.product.discount,
+        ...cartItemData,
+        cartItemId: null,
       }
     );
 
+    await updateDoc(cartItemRef, {
+      cartItemId: cartItemRef.id,
+    });
+
     console.log("Adding to cart Success");
   } catch (e) {
-    console.log("Error", e);
+    console.error("Error adding to cart", e);
   }
 
   showSuccessMessage.value = true;
@@ -110,6 +124,7 @@ const addToFavorites = async () => {
       collection(firestore, "favorites", userData.value.userId, "items"),
       {
         ...props.product,
+        cartItemId: docRef.id,
       }
     );
 
