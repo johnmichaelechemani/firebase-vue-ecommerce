@@ -10,7 +10,6 @@ import {
 } from "firebase/firestore";
 
 // global variables and storages
-
 export const cartItems = ref([]);
 export const favoritesItem = ref([]);
 export const messages = ref([]);
@@ -20,12 +19,6 @@ export const showSidebar = ref(false);
 export const isLoggedIn = ref(null);
 export const userData = ref(null);
 export const mallsAccount = ref([]);
-
-import Rep from "./assets/dummyImages/ref.png";
-import Computer from "./assets/dummyImages/computer.jpg";
-import Shirt from "./assets/dummyImages/shirt.jpg";
-import Shoes from "./assets/dummyImages/shoes.jpg";
-
 export const products = ref([]);
 
 // fetch global data
@@ -36,16 +29,12 @@ export const useMallsAccount = async () => {
       collection(db, "users"),
       where("role", "==", "seller")
     );
-
     const querySnapshot = await getDocs(sellersQuery);
-
     const sellers = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
-
     mallsAccount.value = sellers;
-
     return sellers;
   } catch (error) {
     console.error("Error fetching sellers: ", error);
