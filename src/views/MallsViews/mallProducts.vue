@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useAuth } from "@/firebase.auth";
 import { userData } from "@/store";
+import { Icon } from "@iconify/vue";
 import {
   collection,
   addDoc,
@@ -85,7 +86,9 @@ onMounted(() => {
   <div
     class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
-    <div class="m-2">
+    <div
+      class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] pb-32"
+    >
       <p class="text-sm font-semibold py-2">Add Products</p>
       <form action="">
         <div class="flex flex-wrap gap-2">
@@ -191,48 +194,48 @@ onMounted(() => {
 
       <p class="text-sm font-semibold my-2">Product Lists</p>
       <div class="flex flex-wrap gap-2">
-        <div
-          v-for="(item, index) in products"
-          :key="index"
-          class="hover:bg-gray-700/10 transition"
-        >
-          <div
-            class="sm:size-40 size-32 bg-gray-700/10 border-gray-700/20 border relative"
-          >
-            <img
-              v-if="item.image"
-              :src="item.image"
-              loading="lazy"
-              alt=""
-              class="object-center h-full w-full object-cover"
-            />
-            <div
-              class="absolute top-0 right-0 py-0.5 px-1 bg-gray-700 text-white font-medium text-center text-xs"
-            >
-              <span>{{ item.discount }} % </span>
-              <p>OFF</p>
-            </div>
-          </div>
-          <div class="p-1">
-            <h1
-              class="sm:text-sm text-xs font-medium truncate whitespace-break-spaces max-w-28"
-            >
-              <span
-                v-if="item.mall"
-                class="text-[9px] bg-gray-800 text-white px-1"
-                >Mall</span
-              >
-              {{ item.name }}
-            </h1>
-            <div class="flex justify-start gap-1 items-center">
-              <p class="sm:text-lg text-sm text-gray-800 font-bold">
-                ${{ item.price }}
-              </p>
-              <p class="text-xs text-gray-700 font-semibold">
-                {{ item.sold }} Sold
-              </p>
-            </div>
-          </div>
+        <div class="relative overflow-x-auto shadow-sm w-full">
+          <table class="w-full text-sm text-left rtl:text-right">
+            <thead class="text-xs text-white uppercase bg-gray-800">
+              <tr>
+                <th scope="col" class="px-6 py-3">Product name</th>
+                <th scope="col" class="px-6 py-3">Category</th>
+                <th scope="col" class="px-6 py-3">Discount</th>
+                <th scope="col" class="px-6 py-3">Price</th>
+                <th scope="col" class="px-6 py-3">Action</th>
+              </tr>
+            </thead>
+            <tbody v-for="(item, index) in products" :key="index">
+              <tr class="border-b">
+                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                  {{ item.name }}
+                </th>
+                <td class="px-6 py-4">{{ item.category }}</td>
+                <td class="px-6 py-4">{{ item.discount }}</td>
+                <td class="px-6 py-4">$ {{ item.price }}</td>
+                <td class="px-6 py-4 flex justify-start items-center gap-2">
+                  <button
+                    class="font-medium text-green-500 border border-green-500/20 p-1"
+                  >
+                    <Icon
+                      icon="material-symbols-light:edit-outline"
+                      width="20"
+                      height="20"
+                    />
+                  </button>
+                  <button
+                    class="font-medium text-red-500 border border-red-500/20 p-1"
+                  >
+                    <Icon
+                      icon="material-symbols-light:restore-from-trash-outline"
+                      width="20"
+                      height="20"
+                    />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
