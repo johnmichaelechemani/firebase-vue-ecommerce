@@ -7,7 +7,7 @@ import { RouterLink } from "vue-router";
   <div
     class="w-screen h-screen flex justify-center items-center text-lg font-semibold"
   >
-    <div>
+    <div class="border p-5 shadow-sm">
       <div class="">Hey! I can't find what you're looking.</div>
       <RouterLink to="/" class="flex items-center gap-2 text-sm my-5">
         <div class="border p-1 shadow bg-gray-800 text-white">
