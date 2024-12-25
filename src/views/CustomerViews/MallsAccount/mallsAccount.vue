@@ -105,13 +105,17 @@ const productTags = ref([
       <h1 class="font-semibold text-lg drop-shadow-lg">
         {{ mallData.userName }}
       </h1>
-      <div class="p-1 shadow border hover:bg-gray-500/10" v-if="isLoggedIn">
+      <router-link
+        :to="{ name: 'mallsChat', params: { id: mallData.mallId } }"
+        class="p-1 shadow border hover:bg-gray-500/10"
+        v-if="isLoggedIn"
+      >
         <Icon
           icon="material-symbols-light:chat-outline"
           width="24"
           height="24"
         />
-      </div>
+      </router-link>
     </div>
     <div class="flex justify-start items-center gap-4">
       <button
