@@ -68,7 +68,7 @@
           <div
             :class="[
               $route.path === '/purchase' ? 'bg-gray-800 text-white ' : '',
-              'place-items-center p-1 border shadow ',
+              'place-items-center p-1 border shadow relative',
             ]"
           >
             <Icon
@@ -76,6 +76,12 @@
               width="30"
               height="30"
             />
+            <div
+              v-if="purchaseProducts.length !== 0"
+              class="absolute -top-1 -right-1 bg-gray-800 text-xs text-white font-semibold min-w-6 text-center p-0.5 rounded-full border"
+            >
+              {{ purchaseProducts.length }}
+            </div>
           </div>
           <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
             PURCHASE
@@ -88,6 +94,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { Icon } from "@iconify/vue";
-import router from "@/router";
+import { purchaseProducts } from "@/store";
 import Shop from "../assets/dummyImages/shop.jpg";
 </script>
