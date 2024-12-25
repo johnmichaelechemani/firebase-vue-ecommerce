@@ -59,6 +59,7 @@ export const getProducts = () => {
     return [];
   }
 };
+
 export const getCartProducts = () => {
   const db = getFirestore();
   try {
@@ -70,11 +71,31 @@ export const getCartProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("Products updated in real-time:", cartItems.value);
+      console.log("carts updated in real-time:", cartItems.value);
     });
     return cartItems.value;
   } catch (error) {
     console.error("Error fetching cart items:", error);
+    return [];
+  }
+};
+
+export const getFavoritesProducts = () => {
+  const db = getFirestore();
+  try {
+    const cartsQuery = query(
+      collection(db, "favorites", userData.value.userId, "items")
+    );
+    onSnapshot(cartsQuery, (querySnapshot) => {
+      favoritesItem.value = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("fav updated in real-time:", favoritesItem.value);
+    });
+    return favoritesItem.value;
+  } catch (error) {
+    console.error("Error fetching fav items:", error);
     return [];
   }
 };

@@ -1,5 +1,4 @@
 <script setup>
-import User from "../assets/dummyImages/user.jpg";
 import { Icon } from "@iconify/vue";
 import { ref, onMounted } from "vue";
 import Settings from "@/views/CustomerViews/Settings.vue";
@@ -11,7 +10,9 @@ import {
   messages,
   notifications,
   userData,
+  favoritesItem,
   getCartProducts,
+  getFavoritesProducts,
 } from "../store.js";
 import { useAuth } from "@/firebase.auth";
 
@@ -31,6 +32,7 @@ const logout = () => {
 
 onMounted(() => {
   getCartProducts();
+  getFavoritesProducts();
 });
 </script>
 <template>
@@ -85,9 +87,18 @@ onMounted(() => {
               openPanel === 'favorite'
                 ? 'bg-gray-800 text-white'
                 : 'hover:bg-gray-700/20 ',
-              'p-2 rounded-full ',
+              'p-2 rounded-full relative',
             ]"
           >
+            <div
+              v-if="favoritesItem.length > 0"
+              class="absolute -top-1 right-0"
+            >
+              <span
+                class="text-[9px] font-medium bg-gray-700 px-1.5 py-0.5 text-white rounded-full"
+                >{{ favoritesItem.length }}</span
+              >
+            </div>
             <Icon
               icon="material-symbols-light:favorite-outline"
               width="24"
