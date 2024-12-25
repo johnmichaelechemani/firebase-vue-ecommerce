@@ -164,8 +164,9 @@ const getButtonConfig = (status) => {
               <div class="font-semibold flex justify-start items-center gap-2">
                 <span class="font-semibold text-xs"
                   >Total {{ item.quantity }} Item :
-                  <span class="text-sm font-bold"
-                    >${{ item.quantity * item.price }}</span
+                  <span
+                    class="text-sm font-bold px-2 py-0.5 bg-gray-800 text-white"
+                    >$ {{ item.quantity * item.price }}</span
                   >
                 </span>
               </div>
