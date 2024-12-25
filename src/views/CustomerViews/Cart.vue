@@ -2,10 +2,17 @@
 import { ref, watch, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { cartItems } from "../../store.js";
-import { doc, deleteDoc, getFirestore } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  getFirestore,
+  collection,
+  addDoc,
+} from "firebase/firestore";
 import { userData } from "../../store.js";
 const selected = ref([]);
 const selectAll = ref(false);
+const db = getFirestore();
 watch(selectAll, (newValue) => {
   if (newValue) {
     selected.value = cartItems.value.map((product) => product.id);
@@ -24,13 +31,32 @@ const isBuyDisabled = computed(() => {
   return selected.value.length === 0;
 });
 
-const purchase = () => {
+const purchase = async () => {
+  try {
+    const selectedItems = cartItems.value.filter((item) =>
+      selected.value.includes(item.id)
+    );
+
+    await addDoc(collection(db, "purchase", userData.value.userId, "items"), {
+      ...selectedItems,
+      status: "pay",
+      purchaseDate: new Date(),
+      totalPrice: selectedItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      ),
+    });
+
+    console.log("Purchase successful", selectedItems);
+  } catch (e) {
+    console.log("Error", e);
+  }
   console.log("You have purchased the selected items", selected.value);
 };
 
 const deleteCartItems = (productId) => {
   console.log(userData.value.userId, productId);
-  const db = getFirestore();
+
   try {
     const cartItemRef = doc(
       db,
