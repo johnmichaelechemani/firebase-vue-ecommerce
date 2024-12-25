@@ -4,6 +4,7 @@ import { products, mallsAccount, useMallsAccount } from "@/store";
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import { Icon } from "@iconify/vue";
+import { isLoggedIn } from "@/store";
 
 const router = useRouter();
 const route = useRoute();
@@ -104,7 +105,7 @@ const productTags = ref([
       <h1 class="font-semibold text-lg drop-shadow-lg">
         {{ mallData.userName }}
       </h1>
-      <div class="p-1 shadow border hover:bg-gray-500/10">
+      <div class="p-1 shadow border hover:bg-gray-500/10" v-if="isLoggedIn">
         <Icon
           icon="material-symbols-light:chat-outline"
           width="24"
