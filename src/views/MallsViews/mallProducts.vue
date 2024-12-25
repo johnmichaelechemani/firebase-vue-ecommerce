@@ -9,6 +9,7 @@ import {
   getFirestore,
   query,
   onSnapshot,
+  where,
   serverTimestamp,
 } from "firebase/firestore";
 const { user } = useAuth();
@@ -62,7 +63,10 @@ const add = async () => {
 };
 
 const getProducts = () => {
-  const productsQuery = query(collection(firestore, "products"));
+  const productsQuery = query(
+    collection(firestore, "products"),
+    where("mallId", "==", userData.value.userId)
+  );
   onSnapshot(
     productsQuery,
     (querySnapshot) => {
@@ -234,6 +238,11 @@ onMounted(() => {
                   </button>
                 </td>
               </tr>
+            </tbody>
+            <tbody v-if="products.length === 0" class="">
+              <div class="p-2 text-sm font-semibold text-gray-500">
+                No Products
+              </div>
             </tbody>
           </table>
         </div>
