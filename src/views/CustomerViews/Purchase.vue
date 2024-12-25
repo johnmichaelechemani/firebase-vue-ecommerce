@@ -136,7 +136,7 @@ const getButtonConfig = (status) => {
                   height="24" /></span
               >{{ item.store }}
             </div>
-            <div class="text-xs shadow-sm font-medium border px-2 capitalize">
+            <div class="text-xs shadow-sm font-medium border border-gray-800/50 px-2 capitalize">
               {{ item.status }}
             </div>
           </div>
