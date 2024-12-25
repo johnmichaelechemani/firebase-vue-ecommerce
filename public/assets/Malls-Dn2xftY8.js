@@ -1,0 +1,1 @@
+import{c as e,a as s,e as a,b as l,o as c,R as o}from"./index-Ce3yGuet.js";const r={class:"sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"},t={class:"p-2 relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32 w-full"},i={__name:"Malls",setup(m){return(_,n)=>(c(),e("div",r,[s("div",t,[a(l(o))])]))}};export{i as default};

@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c,o}from"./index-Ce3yGuet.js";const r={},s={class:"sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"};function t(a,l){return o(),c("div",s," hey ")}const _=e(r,[["render",t]]);export{_ as default};

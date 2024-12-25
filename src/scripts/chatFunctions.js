@@ -16,13 +16,14 @@ import {
 import { ref, onMounted, onUnmounted, watch } from "vue";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "@/firebase.auth";
+import { userData } from "@/store";
 
 // global
 const { user, auth } = useAuth();
 export const getChatId = (userId1, userId2) => {
   return [userId1, userId2].sort().join("_");
 };
-await new Promise((resolve) => {
+new Promise((resolve) => {
   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
     user.value = currentUser;
     unsubscribe();
@@ -31,7 +32,7 @@ await new Promise((resolve) => {
 });
 
 const firestore = getFirestore();
-const userId = user.value.uid;
+const userId = userData.value.userId;
 export const messages = ref([]);
 export const latestMessages = ref({});
 
