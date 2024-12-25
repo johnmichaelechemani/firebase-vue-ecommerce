@@ -43,6 +43,8 @@ const add = async () => {
       discount: productDiscount.value,
       inventory: productInventory.value,
       mall: true,
+      ratings: 0,
+      sold: 0,
       category: productCategory.value,
       mallId: user.value.uid,
       mallName: userData.value.userName,
