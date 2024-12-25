@@ -3,12 +3,15 @@ import {
   isLoggedIn,
   loginErrorMessage,
   cartItems,
+  userData,
   favoritesItem,
 } from "../store.js";
 import { Icon } from "@iconify/vue";
 import { ref, defineEmits, computed, defineProps } from "vue";
 import { useRouter } from "vue-router";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
 
+const firestore = getFirestore();
 const route = useRouter();
 const quantity = ref(1);
 const selectedSize = ref("");
@@ -43,7 +46,28 @@ const decrement = () => {
 };
 
 const showSuccessMessage = ref(false);
-const addToCart = () => {
+const addToCart = async () => {
+  try {
+    await addDoc(
+      collection(firestore, "carts", userData.value.userId, "items"),
+      {
+        id: props.product.id,
+        name: props.product.name,
+        mallId: props.product.mallId,
+        store: props.product.mallName,
+        price: props.product.price,
+        size: selectedSize.value,
+        quantity: quantity.value,
+        image: props.product.image,
+        discount: props.product.discount,
+      }
+    );
+
+    console.log("Adding to cart Success");
+  } catch (e) {
+    console.log("Error", e);
+  }
+
   if (isLoggedIn.value === false) {
     loginErrorMessage.value = "Please login before you shop!";
     route.push("/login");
@@ -86,10 +110,24 @@ const getStarIcons = (ratings) => {
 };
 
 const showSuccessMessageFavorites = ref(false);
-const addToFavorites = () => {
+const addToFavorites = async () => {
   const productToAdd = {
     ...props.product,
   };
+
+  try {
+    await addDoc(
+      collection(firestore, "favorites", userData.value.userId, "items"),
+      {
+        ...props.product,
+      }
+    );
+
+    console.log("Adding to favorate Success");
+  } catch (e) {
+    console.log("Error", e);
+  }
+
   favoritesItem.value.push(productToAdd);
   showSuccessMessageFavorites.value = true;
   setTimeout(() => {
