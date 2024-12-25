@@ -2,14 +2,10 @@
 import { ref, watch, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { cartItems } from "../../store.js";
-import {
-  doc,
-  deleteDoc,
-  getFirestore,
-  collection,
-  addDoc,
-} from "firebase/firestore";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { userData } from "../../store.js";
+import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
+
 const selected = ref([]);
 const selectAll = ref(false);
 const db = getFirestore();
@@ -32,11 +28,10 @@ const isBuyDisabled = computed(() => {
 });
 
 const purchase = async () => {
+  const selectedItems = cartItems.value.filter((item) =>
+    selected.value.includes(item.id)
+  );
   try {
-    const selectedItems = cartItems.value.filter((item) =>
-      selected.value.includes(item.id)
-    );
-
     await addDoc(collection(db, "purchase", userData.value.userId, "items"), {
       ...selectedItems,
       status: "pay",
@@ -46,29 +41,9 @@ const purchase = async () => {
         0
       ),
     });
-
-    console.log("Purchase successful", selectedItems);
+    deleteItems("carts", selectedItems[0].cartItemId);
   } catch (e) {
     console.log("Error", e);
-  }
-  console.log("You have purchased the selected items", selected.value);
-};
-
-const deleteCartItems = (productId) => {
-  console.log(userData.value.userId, productId);
-
-  try {
-    const cartItemRef = doc(
-      db,
-      "carts",
-      userData.value.userId,
-      "items",
-      productId
-    );
-    deleteDoc(cartItemRef);
-    console.log("Item successfully deleted from cart");
-  } catch (error) {
-    console.error("Error deleting cart item:", error);
   }
 };
 </script>
@@ -116,7 +91,7 @@ const deleteCartItems = (productId) => {
           </div>
         </div>
         <button
-          @click="deleteCartItems(product.cartItemId)"
+          @click="deleteItems('carts', product.cartItemId)"
           class="flex justify-end p-1 hover:bg-gray-700 hover:text-white transition"
         >
           <Icon
