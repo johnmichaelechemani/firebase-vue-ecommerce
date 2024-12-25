@@ -20,6 +20,7 @@ export const isLoggedIn = ref(null);
 export const userData = ref(null);
 export const mallsAccount = ref([]);
 export const products = ref([]);
+const storedUserData = localStorage.getItem("userData");
 
 // fetch global data
 export const useMallsAccount = async () => {
@@ -100,7 +101,6 @@ export const getFavoritesProducts = () => {
   }
 };
 
-const storedUserData = localStorage.getItem("userData");
 if (storedUserData) {
   const parsedUserData = JSON.parse(storedUserData);
   const isExpired = Date.now() - parsedUserData.timestamp > 24 * 60 * 60 * 1000;
