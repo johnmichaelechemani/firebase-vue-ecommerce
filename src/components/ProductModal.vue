@@ -96,6 +96,11 @@ const getStarIcons = (ratings) => {
 
 const showSuccessMessageFavorites = ref(false);
 const addToFavorites = async () => {
+  if (isLoggedIn.value === false) {
+    loginErrorMessage.value = "Please login before you shop!";
+    route.push("/login");
+    return;
+  }
   const productToAdd = {
     ...props.product,
   };
