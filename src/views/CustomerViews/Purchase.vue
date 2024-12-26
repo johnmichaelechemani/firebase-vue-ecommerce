@@ -85,6 +85,16 @@ const getButtonConfig = (status) => {
   };
   return buttonMap[status] || null;
 };
+
+const formatPrice = (value) => {
+  return Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+  })
+    .format(value)
+    .replace("$", "");
+};
 </script>
 
 <template>
@@ -168,8 +178,8 @@ const getButtonConfig = (status) => {
                   >Total {{ item.quantity }} Item :
                   <span
                     class="text-sm font-bold px-2 py-0.5 bg-gray-800 text-white"
-                    >$ {{ item.quantity * item.price }}</span
-                  >
+                    >$ {{ formatPrice(item.quantity * item.price) }}
+                  </span>
                 </span>
               </div>
             </div>
