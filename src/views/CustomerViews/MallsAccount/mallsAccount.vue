@@ -1,6 +1,6 @@
 <script setup>
 import ProductCard from "@/components/ProductCard.vue";
-import { products, mallsAccount, useMallsAccount } from "@/store";
+import { products, mallsAccount, useMallsAccount, getProducts } from "@/store";
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import { Icon } from "@iconify/vue";
@@ -12,9 +12,16 @@ const activeTab = ref("shop");
 const isPriceUp = ref(true);
 const filteredProducts = ref(products);
 
-onMounted(async () => {
-  await useMallsAccount();
-});
+const getAutoProducts = () => {
+  try {
+    products.value = products.value.filter(
+      (product) => product.mallId === route.params.id
+    );
+  } catch (error) {
+    console.error("Error fetching mall products:", error);
+    products.value = [];
+  }
+};
 
 const queryForCategories = (query, id) => {
   router.push({
@@ -75,6 +82,12 @@ const productTags = ref([
     icon: true,
   },
 ]);
+
+onMounted(async () => {
+  await useMallsAccount();
+  getProducts();
+  getAutoProducts();
+});
 </script>
 
 <template>
