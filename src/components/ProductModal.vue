@@ -171,7 +171,7 @@ const addToFavorites = async () => {
                     class="object-center h-full w-full object-cover"
                   />
                   <div
-                    class="absolute top-0 right-0 py-0.5 px-1 bg-gray-700 text-white font-medium text-center text-xs"
+                    class="absolute top-0 right-0 py-0.5 px-1 bg-gray-800 text-white font-medium text-center text-xs"
                   >
                     <span>{{ product.discount }} %</span>
                     <p>OFF</p>
