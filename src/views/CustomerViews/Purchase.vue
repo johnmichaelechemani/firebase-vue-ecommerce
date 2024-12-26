@@ -2,8 +2,8 @@
 import { Icon } from "@iconify/vue";
 import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import Shoes from "../../assets/dummyImages/shoes.jpg";
 import { purchaseProducts, getPurchaseProducts } from "@/store";
+import { formatPrice } from "@/scripts/composables";
 const router = useRouter();
 const route = useRoute();
 const queryForStat = (query) => {
@@ -85,16 +85,6 @@ const getButtonConfig = (status) => {
   };
   return buttonMap[status] || null;
 };
-
-const formatPrice = (value) => {
-  return Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  })
-    .format(value)
-    .replace("$", "");
-};
 </script>
 
 <template>
@@ -167,7 +157,9 @@ const formatPrice = (value) => {
             <div>
               <p class="text-sm font-semibold">{{ item.name }}</p>
               <div class="flex justify-start items-center gap-2">
-                <p class="text-xs font-medium">${{ item.price }}</p>
+                <p class="text-xs font-medium">
+                  $ {{ formatPrice(item.price) }}
+                </p>
               </div>
 
               <div class="font-semibold flex justify-start items-center gap-2">

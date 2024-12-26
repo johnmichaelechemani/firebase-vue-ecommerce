@@ -9,6 +9,7 @@ import {
   getFirestore,
   updateDoc,
 } from "firebase/firestore";
+import { formatSoldNumber } from "@/scripts/composables.js";
 
 const firestore = getFirestore();
 const route = useRouter();
@@ -91,18 +92,6 @@ const isAddToCartDisabled = computed(() => {
   return quantity.value === 0 || selectedSize.value === "";
 });
 
-const getStarIcons = (ratings) => {
-  const fullStars = Math.floor(ratings);
-  const halfStar = ratings % 1 >= 0.5 ? 1 : 0;
-  const emptyStars = 5 - fullStars - halfStar;
-
-  return [
-    ...Array(fullStars).fill("material-symbols-light:star"),
-    ...Array(halfStar).fill("material-symbols-light:star-half"),
-    ...Array(emptyStars).fill("material-symbols-light:star-outline"),
-  ];
-};
-
 const showSuccessMessageFavorites = ref(false);
 const addToFavorites = async () => {
   if (isLoggedIn.value === false) {
@@ -165,15 +154,6 @@ const addToFavorites = async () => {
                 </p>
               </router-link>
 
-              <div class="flex my-2" v-if="product.ratings">
-                <Icon
-                  v-for="(icon, index) in getStarIcons(product.ratings)"
-                  :key="index"
-                  :icon="icon"
-                  width="24"
-                  height="24"
-                />
-              </div>
               <div class="flex justify-start items-start gap-4">
                 <div
                   class="sm:size-40 size-32 bg-gray-700/10 border-gray-700/20 border relative"
@@ -290,16 +270,36 @@ const addToFavorites = async () => {
                 </div>
               </div>
 
-              <button
-                @click="addToFavorites"
-                class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
-              >
-                <Icon
-                  icon="material-symbols-light:favorite-outline"
-                  width="24"
-                  height="24"
-                />
-              </button>
+              <div class="flex justify-start items-center gap-2">
+                <button
+                  @click="addToFavorites"
+                  class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
+                >
+                  <Icon
+                    icon="material-symbols-light:favorite-outline"
+                    width="24"
+                    height="24"
+                  />
+                </button>
+                <div
+                  class="flex justify-start items-center"
+                  v-if="product.ratings"
+                >
+                  <Icon
+                    icon="material-symbols-light:star"
+                    width="20"
+                    height="20"
+                  />
+                  <span class="text-gray-600 font-semibold text-sm">{{
+                    product.ratings.toFixed(1)
+                  }}</span>
+                </div>
+                <div
+                  class="flex justify-start items-center text-gray-600 font-semibold text-sm"
+                >
+                  {{ formatSoldNumber(product.sold) }} Sold
+                </div>
+              </div>
 
               <div class="my-1">
                 <div class="text-sm font-semibold">

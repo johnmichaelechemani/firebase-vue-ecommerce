@@ -2,22 +2,12 @@
 import { Icon } from "@iconify/vue";
 import { defineProps, ref, watch } from "vue";
 import ProductModal from "./ProductModal.vue";
+import { formatPrice, formatSoldNumber } from "@/scripts/composables";
 
 const props = defineProps({
   products: Object,
   require: true,
 });
-const getStarIcons = (ratings) => {
-  const fullStars = Math.floor(ratings);
-  const halfStar = ratings % 1 >= 0.5 ? 1 : 0;
-  const emptyStars = 5 - fullStars - halfStar;
-
-  return [
-    ...Array(fullStars).fill("material-symbols-light:star"),
-    ...Array(halfStar).fill("material-symbols-light:star-half"),
-    ...Array(emptyStars).fill("material-symbols-light:star-outline"),
-  ];
-};
 
 const selected = ref([]);
 const isShowModal = ref(false);
@@ -57,14 +47,11 @@ watch(isShowModal, (newValue) => {
       </div>
     </div>
     <div class="p-1">
-      <div class="flex" v-if="item.ratings">
-        <Icon
-          v-for="(icon, index) in getStarIcons(item.ratings)"
-          :key="index"
-          :icon="icon"
-          width="20"
-          height="20"
-        />
+      <div class="flex justify-start items-center" v-if="item.ratings">
+        <Icon icon="material-symbols-light:star" width="20" height="20" />
+        <span class="text-gray-600 font-semibold text-xs">{{
+          item.ratings.toFixed(1)
+        }}</span>
       </div>
       <h1
         class="sm:text-sm text-xs font-medium truncate whitespace-break-spaces max-w-28"
@@ -76,9 +63,11 @@ watch(isShowModal, (newValue) => {
       </h1>
       <div class="flex justify-start gap-1 items-center">
         <p class="sm:text-lg text-sm text-gray-800 font-bold">
-          ${{ item.price }}
+          ${{ formatPrice(item.price) }}
         </p>
-        <p class="text-xs text-gray-700 font-semibold">{{ item.sold }} Sold</p>
+        <p class="text-xs text-gray-700 font-semibold">
+          {{ formatSoldNumber(item.sold) }} Sold
+        </p>
       </div>
     </div>
   </div>
