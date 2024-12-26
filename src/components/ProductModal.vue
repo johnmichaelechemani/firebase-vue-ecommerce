@@ -270,7 +270,7 @@ const addToFavorites = async () => {
                 </div>
               </div>
 
-              <div class="flex justify-start items-center gap-2">
+              <div class="flex justify-start items-center">
                 <button
                   @click="addToFavorites"
                   class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
@@ -290,14 +290,14 @@ const addToFavorites = async () => {
                     width="20"
                     height="20"
                   />
-                  <span class="text-gray-600 font-semibold text-sm">{{
-                    product.ratings.toFixed(1)
-                  }}</span>
+                  <span class="text-gray-600 font-semibold text-sm pr-1"
+                    >{{ product.ratings.toFixed(1) }}
+                  </span>
                 </div>
                 <div
                   class="flex justify-start items-center text-gray-600 font-semibold text-sm"
                 >
-                  {{ formatSoldNumber(product.sold) }} Sold
+                  | {{ formatSoldNumber(product.sold) }} Sold
                 </div>
               </div>
 
