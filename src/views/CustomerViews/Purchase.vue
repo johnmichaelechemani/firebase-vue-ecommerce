@@ -129,12 +129,22 @@ const getButtonConfig = (status) => {
             <div
               class="text-sm font-semibold flex justify-between items-center"
             >
-              <span
-                ><Icon
-                  icon="material-symbols-light:store"
-                  width="24"
-                  height="24" /></span
-              >{{ item.store }}
+              <router-link
+                :to="{ name: 'mallStore', params: { id: item.mallId } }"
+                class="flex justify-start items-center"
+              >
+                <span>
+                  <Icon
+                    icon="material-symbols-light:store"
+                    width="24"
+                    height="24" /></span
+                >{{ item.store }}
+                <Icon
+                  icon="material-symbols-light:double-arrow"
+                  width="20"
+                  height="20"
+                />
+              </router-link>
             </div>
             <div
               class="text-xs shadow-sm font-medium border border-gray-800/50 px-2 capitalize"
