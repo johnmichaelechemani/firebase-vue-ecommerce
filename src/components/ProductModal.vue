@@ -148,10 +148,16 @@ const addToFavorites = async () => {
               <router-link
                 :to="{ name: 'mallStore', params: { id: product.mallId } }"
                 @click="showModal"
+                class="flex gap-1 justify-start items-center my-2"
               >
-                <p class="text-xl font-semibold mt-2 hover:underline">
+                <p class="text-xl font-semibold hover:underline">
                   {{ product.mallName }}
                 </p>
+                <Icon
+                  icon="material-symbols-light:double-arrow"
+                  width="30"
+                  height="30"
+                />
               </router-link>
 
               <div class="flex justify-start items-start gap-4">
