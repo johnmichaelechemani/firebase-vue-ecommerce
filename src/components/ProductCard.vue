@@ -52,6 +52,10 @@ watch(isShowModal, (newValue) => {
         <span class="text-gray-600 font-semibold text-xs">{{
           item.ratings.toFixed(1)
         }}</span>
+        <span class="px-1 text-gray-600">|</span>
+        <p class="text-xs text-gray-600 font-semibold">
+          {{ formatSoldNumber(item.sold) }} Sold
+        </p>
       </div>
       <h1
         class="sm:text-sm text-xs font-medium truncate whitespace-break-spaces max-w-28"
@@ -64,9 +68,6 @@ watch(isShowModal, (newValue) => {
       <div class="flex justify-start gap-1 items-center">
         <p class="sm:text-lg text-sm text-gray-800 font-bold">
           ${{ formatPrice(item.price) }}
-        </p>
-        <p class="text-xs text-gray-700 font-semibold">
-          {{ formatSoldNumber(item.sold) }} Sold
         </p>
       </div>
     </div>
