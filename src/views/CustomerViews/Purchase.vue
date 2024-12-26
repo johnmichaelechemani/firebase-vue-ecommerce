@@ -175,14 +175,17 @@ const getButtonConfig = (status) => {
               <div class="font-semibold flex justify-start items-center gap-2">
                 <span class="font-semibold text-xs">x{{ item.quantity }} </span>
               </div>
-              <div class="font-semibold flex justify-start items-center gap-2">
-                <span class="font-semibold text-xs"
-                  >Total {{ item.quantity }} Item :
-                  <span
+              <div class="flex flex-wrap">
+                <div
+                  class="font-semibold text-xs flex justify-start items-center flex-wrap gap-1"
+                >
+                  Total {{ item.quantity }} Item :
+                  <p
                     class="text-sm font-bold px-2 py-0.5 bg-gray-800 text-white"
-                    >$ {{ formatPrice(item.quantity * item.price) }}
-                  </span>
-                </span>
+                  >
+                    $ {{ formatPrice(item.quantity * item.price) }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
