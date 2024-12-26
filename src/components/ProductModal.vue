@@ -203,9 +203,9 @@ const addToFavorites = async () => {
                         selectedSize === 'sm'
                           ? 'bg-gray-700 text-white'
                           : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
+                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
                       ]"
-                      >sm</span
+                      >SM</span
                     >
                     <span
                       @click="changeSize('md')"
@@ -213,9 +213,9 @@ const addToFavorites = async () => {
                         selectedSize === 'md'
                           ? 'bg-gray-700 text-white'
                           : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
+                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
                       ]"
-                      >md</span
+                      >MD</span
                     >
                     <span
                       @click="changeSize('lg')"
@@ -223,9 +223,9 @@ const addToFavorites = async () => {
                         selectedSize === 'lg'
                           ? 'bg-gray-700 text-white'
                           : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
+                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
                       ]"
-                      >lg</span
+                      >LG</span
                     >
                     <span
                       @click="changeSize('xl')"
@@ -233,9 +233,9 @@ const addToFavorites = async () => {
                         selectedSize === 'xl'
                           ? 'bg-gray-700 text-white'
                           : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-sm',
+                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
                       ]"
-                      >xl</span
+                      >XL</span
                     >
                   </div>
                   <div
@@ -306,7 +306,7 @@ const addToFavorites = async () => {
                   Decription:
                   <p>{{ product.discription }}</p>
                 </div>
-                <hr>
+                <hr />
                 <div class="text-sm font-semibold">Reviews:</div>
               </div>
             </div>
