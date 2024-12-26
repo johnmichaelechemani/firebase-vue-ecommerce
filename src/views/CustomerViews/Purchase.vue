@@ -136,7 +136,9 @@ const getButtonConfig = (status) => {
                   height="24" /></span
               >{{ item.store }}
             </div>
-            <div class="text-xs shadow-sm font-medium border border-gray-800/50 px-2 capitalize">
+            <div
+              class="text-xs shadow-sm font-medium border border-gray-800/50 px-2 capitalize"
+            >
               {{ item.status }}
             </div>
           </div>
@@ -172,7 +174,10 @@ const getButtonConfig = (status) => {
               </div>
             </div>
           </div>
-          <div class="flex justify-end" v-if="getButtonConfig(item.status)">
+          <div
+            class="flex justify-end mt-2"
+            v-if="getButtonConfig(item.status)"
+          >
             <button
               class="border text-sm border-gray-700/50 hover:bg-gray-800 transition hover:text-white font-semibold px-4 py-2"
               @click="getButtonConfig(item.status).action"
