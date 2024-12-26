@@ -58,7 +58,7 @@ watch(isShowModal, (newValue) => {
         </p>
       </div>
       <h1
-        class="sm:text-sm text-xs font-medium truncate whitespace-break-spaces max-w-28"
+        class="sm:text-sm text-xs font-semibold flex justify-start items-center truncate whitespace-break-spaces max-w-28"
       >
         <span v-if="item.mall" class="text-[9px] bg-gray-800 text-white px-1"
           >Mall</span
