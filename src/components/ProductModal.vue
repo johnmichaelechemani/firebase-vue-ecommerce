@@ -15,6 +15,7 @@ import {
   incerment,
   decrement,
 } from "@/scripts/composables.js";
+import ErrorMessage from "./ErrorMessage.vue";
 
 const firestore = getFirestore();
 const route = useRouter();
@@ -26,6 +27,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["closeModal"]);
+const cartErrorMessage = ref("");
 
 const showModal = () => {
   emit("closeModal");
@@ -39,6 +41,10 @@ const changeSize = (size) => {
 
 const showSuccessMessage = ref(false);
 const addToCart = async () => {
+  if (selectedSize.value === "") {
+    cartErrorMessage.value = "Please select a size";
+    return;
+  }
   if (isLoggedIn.value === false) {
     loginErrorMessage.value = "Please login before you shop!";
     route.push("/login");
@@ -71,7 +77,10 @@ const addToCart = async () => {
     });
 
     console.log("Adding to cart Success");
+    emit("closeModal");
+    selectedSize.value = "";
   } catch (e) {
+    cartErrorMessage.value = "Error adding to cart";
     console.error("Error adding to cart", e);
   }
 
@@ -81,10 +90,6 @@ const addToCart = async () => {
   }, 2000);
 };
 
-const isAddToCartDisabled = computed(() => {
-  return props.product.quantity === 0 || selectedSize.value === "";
-});
-
 const showSuccessMessageFavorites = ref(false);
 const addToFavorites = async () => {
   if (isLoggedIn.value === false) {
@@ -92,7 +97,6 @@ const addToFavorites = async () => {
     route.push("/login");
     return;
   }
-  console.log(props.product);
 
   try {
     const favItemRef = await addDoc(
@@ -108,6 +112,7 @@ const addToFavorites = async () => {
     });
 
     console.log("Adding to favorate Success");
+    emit("closeModal");
   } catch (e) {
     console.log("Error", e);
   }
@@ -152,6 +157,7 @@ const addToFavorites = async () => {
                   height="30"
                 />
               </router-link>
+              <ErrorMessage :errMessage="cartErrorMessage" />
 
               <div class="flex justify-start items-start gap-4">
                 <div
@@ -260,7 +266,6 @@ const addToFavorites = async () => {
                     <button
                       @click="addToCart"
                       class="bg-gray-800 text-white font-semibold text-sm py-2 w-full"
-                      :disabled="isAddToCartDisabled"
                     >
                       Add to Cart
                     </button>
