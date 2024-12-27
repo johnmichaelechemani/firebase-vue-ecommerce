@@ -102,9 +102,7 @@ onMounted(async () => {
           class="w-full h-full object-cover object-center"
         />
       </div>
-      <div
-        class="sm:size-20 size-10 border-2 border-gray-700 bg-gray-700/90 absolute sm:-bottom-10 -bottom-5 left-2 shadow-xl"
-      >
+      <div class="sm:size-20 size-10 absolute sm:-bottom-10 -bottom-5 left-2">
         <img
           v-if="mallData.image"
           :src="mallData.image"
@@ -112,6 +110,9 @@ onMounted(async () => {
           loading="lazy"
           class="w-full h-full object-cover object-center"
         />
+        <div v-else>
+          <Icon icon="noto-v1:convenience-store" class="sm:size-20 size-10" />
+        </div>
       </div>
     </div>
     <div class="mb-3 flex justify-start items-center gap-2">
