@@ -47,16 +47,13 @@ const placeOrder = async () => {
     paymentErrMessage.value = "Please select a payment method";
     return;
   }
-
   if (!props.product || props.product.length === 0) {
     paymentErrMessage.value = "No products to purchase.";
     return;
   }
-
   const db = getFirestore();
 
   try {
-    // Add each product as a subcollection under the order
     const productPromises = props.product.map(async (item) => {
       await addDoc(collection(db, `purchase/${userData.value.userId}/items`), {
         productId: item.id,
@@ -78,12 +75,9 @@ const placeOrder = async () => {
             "4d, Legazpi Apartments, Saint Paris Street, Legazpi, Albay, Philippines",
         },
       });
-
       deleteItems("carts", item.cartItemId);
     });
-
     await Promise.all(productPromises);
-
     emit("closeModal");
     props.product = [];
     selectedPaymentMethod.value = null;
