@@ -2,6 +2,7 @@
 import { Transition, defineEmits, ref, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
+import { formatPrice } from "@/scripts/composables";
 const props = defineProps({
   isShowModal: Boolean,
   product: Array,
@@ -95,21 +96,23 @@ const showModal = () => {
                 />
               </router-link>
             </div>
-            <div class="flex justify-start items-start w-full gap-2">
+            <div class="flex justify-start items-start gap-2">
               <div
                 class="sm:size-20 size-16 bg-gray-700/10 border-gray-700/20 border relative"
               >
-                <!-- <img
-                :src="item.image"
-                loading="lazy"
-                alt=""
-                class="object-center h-full w-full object-cover"
-              /> -->
+                <img
+                  :src="item.image"
+                  loading="lazy"
+                  alt=""
+                  class="object-center h-full w-full object-cover"
+                />
               </div>
               <div class="w-full">
                 <p class="text-sm font-semibold">{{ item.name }}</p>
                 <div class="flex justify-start items-center gap-2">
-                  <p class="text-xs font-medium">$ {{ item.price }}</p>
+                  <p class="text-xs font-medium">
+                    $ {{ formatPrice(item.price) }}
+                  </p>
                 </div>
 
                 <div class="flex justify-end items-center mt-4">
@@ -162,7 +165,7 @@ const showModal = () => {
                 >
                   {{ item.quantity }} Item, Total:
                   <p class="text-sm font-bold">
-                    $ {{ item.quantity * item.price }}
+                    $ {{ formatPrice(item.quantity * item.price) }}
                   </p>
                 </div>
               </div>
@@ -197,7 +200,9 @@ const showModal = () => {
                 class="flex justify-between text-sm font-semibold items-center"
               >
                 Total
-                <p class="text-lg text-gray-800">$ {{ totalPrice }}</p>
+                <p class="text-lg text-gray-800">
+                  $ {{ formatPrice(totalPrice) }}
+                </p>
               </div>
               <button
                 class="text-sm w-full py-2 font-semibold text-white bg-gray-800"
