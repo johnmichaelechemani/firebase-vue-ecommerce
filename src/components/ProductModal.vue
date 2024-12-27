@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import {
   formatSoldNumber,
+  formatPrice,
   incerment,
   decrement,
 } from "@/scripts/composables.js";
@@ -172,7 +173,9 @@ const addToFavorites = async () => {
                 <div>
                   <p class="text-sm font-semibold">{{ product.name }}</p>
                   <div class="flex justify-start items-center gap-2">
-                    <p class="text-lg font-bold">${{ product.price }}</p>
+                    <p class="text-lg font-bold">
+                      $ {{ formatPrice(product.price) }}
+                    </p>
                   </div>
                   <div class="font-medium flex flex-wrap gap-2 my-2">
                     <span
@@ -219,8 +222,13 @@ const addToFavorites = async () => {
                   <div
                     class="font-semibold flex justify-start items-center gap-2"
                   >
-                    <span class="font-semibold text-sm">QTY: </span>
-                    <div class="flex justify-start items-center gap-2">
+                    <span class="font-semibold text-sm">
+                      <Icon
+                        icon="material-symbols-light:production-quantity-limits"
+                        width="20"
+                        height="20"
+                    /></span>
+                    <div class="flex justify-start items-center">
                       <button
                         @click="decrement(props.product)"
                         :class="
@@ -228,15 +236,11 @@ const addToFavorites = async () => {
                             ? 'cursor-not-allowed text-gray-500'
                             : ''
                         "
-                        class="hover:bg-gray-700/20 rounded-full transition"
+                        class="hover:bg-gray-700/20 px-4 py-1 transition"
                       >
-                        <Icon
-                          icon="material-symbols-light:arrow-left"
-                          width="32"
-                          height="32"
-                        />
+                        <Icon icon="mdi-light:minus" width="20" height="20" />
                       </button>
-                      <div class="px-4 py-1 border rounded-full">
+                      <div class="py-1 text-sm w-10 text-center border">
                         {{ props.product.quantity }}
                       </div>
                       <button
@@ -246,13 +250,9 @@ const addToFavorites = async () => {
                             ? 'cursor-not-allowed text-gray-500'
                             : ''
                         "
-                        class="hover:bg-gray-700/20 rounded-full transition"
+                        class="hover:bg-gray-700/20 px-4 py-1 transition"
                       >
-                        <Icon
-                          icon="material-symbols-light:arrow-right"
-                          width="32"
-                          height="32"
-                        />
+                        <Icon icon="mdi-light:plus" width="20" height="20" />
                       </button>
                     </div>
                   </div>
