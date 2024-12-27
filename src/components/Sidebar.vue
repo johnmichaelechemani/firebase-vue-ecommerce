@@ -94,6 +94,11 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { Icon } from "@iconify/vue";
-import { purchaseProducts } from "@/store";
+import { purchaseProducts, getPurchaseProducts } from "@/store";
+import { onMounted } from "vue";
 import Shop from "../assets/dummyImages/shop.jpg";
+
+onMounted(() => {
+  getPurchaseProducts();
+});
 </script>
