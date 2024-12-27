@@ -10,6 +10,7 @@ import {
 } from "@/scripts/chatFunctions";
 
 const { selectedMall } = chatFunctions();
+
 const userId = userData.value.userId;
 const route = useRoute();
 const isMenuToggled = ref(true);

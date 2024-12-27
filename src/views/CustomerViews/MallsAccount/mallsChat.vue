@@ -2,18 +2,14 @@
 import { ref, watch, computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { Icon } from "@iconify/vue";
-import { mallsAccount, useMallsAccount } from "@/store";
-
+import { mallsAccount, useMallsAccount, userData } from "@/store";
 import { chatFunctions, messages } from "@/scripts/chatFunctions";
-import { useAuth } from "@/firebase.auth";
-
-const { user } = useAuth();
 
 const { message, sendMessage } = chatFunctions();
 const route = useRoute();
 const mallId = ref(route.params.id);
-const userId = user.value.uid;
-const userPhoto = user.value.photoURL;
+const userId = userData.value.userId;
+const userPhoto = userData.value.userPhotoURL;
 
 watch(
   () => route.params.id,
@@ -21,15 +17,12 @@ watch(
     mallId.value = newId;
   }
 );
-
 const currentMall = computed(() => {
   return mallsAccount.value.find((mall) => mall.userId === mallId.value);
 });
-
 const mallData = computed(() => {
   return currentMall.value;
 });
-
 onMounted(async () => {
   await useMallsAccount();
 });
@@ -41,7 +34,9 @@ onMounted(async () => {
   >
     <div>
       <div class="flex gap-2 justify-start items-center shadow-sm p-2 border-b">
-        <div class="flex justify-center bg-gray-700/10 border  size-8 items-center">
+        <div
+          class="flex justify-center bg-gray-700/10 border size-8 items-center"
+        >
           <img
             v-if="mallData && mallData.userPhotoURL"
             :src="mallData.userPhotoURL"
