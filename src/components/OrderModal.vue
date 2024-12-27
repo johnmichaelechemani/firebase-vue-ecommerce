@@ -83,7 +83,6 @@ const placeOrder = async () => {
     selectedPaymentMethod.value = null;
     quantity.value = 1;
     paymentErrMessage.value = "";
-    console.log("Order placed successfully!");
   } catch (error) {
     console.error("Error placing order:", error);
     paymentErrMessage.value =
