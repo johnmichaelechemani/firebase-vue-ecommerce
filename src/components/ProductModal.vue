@@ -9,7 +9,11 @@ import {
   getFirestore,
   updateDoc,
 } from "firebase/firestore";
-import { formatSoldNumber } from "@/scripts/composables.js";
+import {
+  formatSoldNumber,
+  incerment,
+  decrement,
+} from "@/scripts/composables.js";
 
 const firestore = getFirestore();
 const route = useRouter();
@@ -30,17 +34,6 @@ const showModal = () => {
 
 const changeSize = (size) => {
   selectedSize.value = size;
-};
-
-const incerment = (item) => {
-  if (item.quantity < item.inventory) {
-    item.quantity += 1;
-  }
-};
-const decrement = (item) => {
-  if (item.quantity > 1) {
-    item.quantity -= 1;
-  }
 };
 
 const showSuccessMessage = ref(false);

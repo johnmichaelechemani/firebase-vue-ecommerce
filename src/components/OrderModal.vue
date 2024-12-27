@@ -2,7 +2,7 @@
 import { Transition, defineEmits, ref, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
-import { formatPrice } from "@/scripts/composables";
+import { formatPrice, incerment, decrement } from "@/scripts/composables";
 import { userData } from "@/store";
 import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
@@ -22,17 +22,7 @@ const totalPrice = computed(() => {
   }, 0);
 });
 const emit = defineEmits(["closeModal"]);
-const incerment = (item) => {
-  if (item.quantity < item.inventory) {
-    item.quantity += 1;
-  }
-};
 
-const decrement = (item) => {
-  if (item.quantity > 1) {
-    item.quantity -= 1;
-  }
-};
 const showModal = () => {
   emit("closeModal");
   props.product.value = null;
