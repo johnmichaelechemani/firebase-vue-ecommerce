@@ -5,11 +5,9 @@ import { products, mallsAccount, getProducts, useMallsAccount } from "@/store";
 import ProductLoading from "@/components/ProductLoading.vue";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 
-// State Management
 const isLoading = ref(true);
 const error = ref(null);
 
-// Computed Properties for Better Performance
 const fashionMalls = computed(() =>
   mallsAccount.value.filter((mall) => mall.mallType === "fashion")
 );
@@ -29,7 +27,6 @@ const categorizedMalls = computed(() => {
   }));
 });
 
-// Async Data Fetching with Error Handling
 async function initializeData() {
   try {
     isLoading.value = true;
