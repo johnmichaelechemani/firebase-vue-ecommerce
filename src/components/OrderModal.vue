@@ -1,8 +1,20 @@
 <template>
   <transition>
-    <div class="fixed inset-0 z-50 bg-gray-800/30 backdrop-blur">
+    <div
+      v-if="props.isShowModal"
+      class="fixed inset-0 z-50 bg-gray-800/30 backdrop-blur"
+    >
       <div class="relative flex justify-center items-center h-full">
-        <div class="bg-white p-2 max-w-80">
+        <div class="bg-white p-2 relative max-w-80">
+          <div class="absolute top-0 right-0">
+            <button @click="showModal">
+              <Icon
+                icon="material-symbols-light:close-small-outline"
+                width="24"
+                height="24"
+              />
+            </button>
+          </div>
           <p class="text-sm font-semibold py-3">Order Summary</p>
           <div class="bg-gray-700/5 p-2">
             <div
@@ -160,7 +172,28 @@
   </transition>
 </template>
 <script setup>
-import { Transition } from "vue";
+import { Transition, defineEmits, ref } from "vue";
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
+const props = defineProps({
+  isShowModal: Boolean,
+  product: Object,
+});
+const quantity = ref(1);
+const emit = defineEmits(["closeModal"]);
+const incerment = () => {
+  if (quantity.value < props.product.inventory) {
+    quantity.value += 1;
+  }
+};
+const decrement = () => {
+  if (quantity.value > 1) {
+    quantity.value -= 1;
+  }
+};
+const showModal = () => {
+  emit("closeModal");
+  props.product.value = null;
+  quantity.value = 1;
+};
 </script>

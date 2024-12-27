@@ -9,6 +9,8 @@ import OrderModal from "@/components/OrderModal.vue";
 
 const selected = ref([]);
 const selectAll = ref(false);
+const isShowModal = ref(false);
+
 const db = getFirestore();
 watch(selectAll, (newValue) => {
   if (newValue) {
@@ -29,24 +31,31 @@ const isBuyDisabled = computed(() => {
 });
 
 const purchase = async () => {
-  const selectedItems = cartItems.value.filter((item) =>
-    selected.value.includes(item.id)
-  );
-  try {
-    await addDoc(collection(db, "purchase", userData.value.userId, "items"), {
-      ...selectedItems[0],
-      status: "pay",
-      purchaseDate: new Date(),
-      totalPrice: selectedItems.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      ),
-    });
-    deleteItems("carts", selectedItems[0].cartItemId);
-  } catch (e) {
-    console.log("Error", e);
-  }
+  isShowModal.value = true;
+  // const selectedItems = cartItems.value.filter((item) =>
+  //   selected.value.includes(item.id)
+  // );
+  // try {
+  //   await addDoc(collection(db, "purchase", userData.value.userId, "items"), {
+  //     ...selectedItems[0],
+  //     status: "pay",
+  //     purchaseDate: new Date(),
+  //     totalPrice: selectedItems.reduce(
+  //       (total, item) => total + item.price * item.quantity,
+  //       0
+  //     ),
+  //   });
+  //   deleteItems("carts", selectedItems[0].cartItemId);
+  // } catch (e) {
+  //   console.log("Error", e);
+  // }
 };
+
+watch(isShowModal, (newValue) => {
+  if (!newValue) {
+    selected.value = [];
+  }
+});
 </script>
 
 <template>
@@ -125,6 +134,10 @@ const purchase = async () => {
         BUY
       </button>
     </div>
-    <OrderModal />
+    <OrderModal
+      @closeModal="isShowModal = false"
+      :product="selected"
+      :isShowModal="isShowModal"
+    />
   </div>
 </template>
