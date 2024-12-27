@@ -105,10 +105,8 @@ export const chatFunctions = () => {
   const loadMessages = (reciever) => {
     try {
       const chatId = getChatId(userId, reciever);
-      // 🔍 Cached Messages Retrieval
       const cachedMessages = localStorage.getItem(`messages_${chatId}`);
       messages.value = cachedMessages ? JSON.parse(cachedMessages) : [];
-      // 📡 Real-time Firestore Message Query
       const messagesQuery = query(
         collection(firestore, `chats/${chatId}/messages`),
         orderBy("timestamp", "asc")
@@ -124,7 +122,6 @@ export const chatFunctions = () => {
           }
         }
       });
-      // 🔄 Real-time Listener Setup
       const messageUnsub = onSnapshot(
         messagesQuery,
         (snapshot) => {
@@ -133,18 +130,11 @@ export const chatFunctions = () => {
               id: doc.id,
               ...doc.data(),
             }));
-            // console.log("🌐 Live Messages Snapshot:", {
-            //   count: liveMessages.length,
-            //   messages: liveMessages,
-            // });
-            // Update messages reactive value
             messages.value = liveMessages;
-            // 💾 Local Storage Update
             localStorage.setItem(
               `messages_${chatId}`,
               JSON.stringify(liveMessages)
             );
-            // console.log("💾 Messages Cached Successfully");
           } catch (mappingError) {
             console.error("❌ Message Mapping Error:", {
               error: mappingError.message,
@@ -153,17 +143,14 @@ export const chatFunctions = () => {
           }
         },
         (snapshotError) => {
-          // Handle snapshot listener error
           console.error("❌ Snapshot Listener Error:", {
             error: snapshotError.message,
             query: messagesQuery,
           });
         }
       );
-      // 🧹 Cleanup listener on component unmount
       onUnmounted(() => {
         messageUnsub();
-
         unsubscribe();
       });
     } catch (generalError) {
@@ -174,8 +161,6 @@ export const chatFunctions = () => {
       });
     }
   };
-
-  // 🚀 Auto-trigger message loading
   onMounted(() => {
     loadMessages();
   });
@@ -185,5 +170,6 @@ export const chatFunctions = () => {
     message,
     selectedMall,
     getChatId,
+    loadMessages,
   };
 };
