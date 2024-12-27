@@ -2,6 +2,7 @@
 import { ref, watch, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { cartItems } from "../../store.js";
+import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
 import OrderModal from "@/components/OrderModal.vue";
 
 const selected = ref([]);

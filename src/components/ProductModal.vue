@@ -25,7 +25,6 @@ const emit = defineEmits(["closeModal"]);
 const showModal = () => {
   emit("closeModal");
   props.product.value = null;
-  props.quantity.value = 1;
   selectedSize.value = "";
 };
 
