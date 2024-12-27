@@ -38,6 +38,8 @@ export const latestMessages = ref({});
 
 //-----------------below is the functions-----------------------------
 export const chatFunctions = () => {
+  const unsubscribes = ref([]);
+
   const selectedMall = (mallId) => {
     loadMessages(mallId);
   };
@@ -112,7 +114,7 @@ export const chatFunctions = () => {
         orderBy("timestamp", "asc")
       );
       const lastMessagesQuery = doc(firestore, "chats", chatId);
-      const unsubscribe = onSnapshot(lastMessagesQuery, (doc) => {
+      const latestMessageUnsub = onSnapshot(lastMessagesQuery, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
           if (data && data.lastMessage) {
@@ -149,10 +151,8 @@ export const chatFunctions = () => {
           });
         }
       );
-      onUnmounted(() => {
-        messageUnsub();
-        unsubscribe();
-      });
+      unsubscribes.value.push(messageUnsub);
+      unsubscribes.value.push(latestMessageUnsub);
     } catch (generalError) {
       console.error("❌ General Messages Loading Error:", {
         error: generalError.message,
@@ -162,6 +162,8 @@ export const chatFunctions = () => {
     }
   };
   onMounted(() => {
+    unsubscribes.value.forEach((unsub) => unsub());
+    unsubscribes.value = [];
     loadMessages();
   });
   return {
