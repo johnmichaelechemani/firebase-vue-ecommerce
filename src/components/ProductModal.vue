@@ -292,6 +292,7 @@ const addToFavorites = async () => {
                   </span>
                 </div>
                 <div
+                  v-if="product.sold"
                   class="flex justify-start items-center text-gray-600 font-semibold text-sm"
                 >
                   | {{ formatSoldNumber(product.sold) }} Sold

@@ -47,15 +47,21 @@ watch(isShowModal, (newValue) => {
       </div>
     </div>
     <div class="p-1">
-      <div class="flex justify-start items-center" v-if="item.ratings">
-        <Icon icon="material-symbols-light:star" width="20" height="20" />
-        <span class="text-gray-600 font-semibold text-xs">{{
-          item.ratings.toFixed(1)
-        }}</span>
-        <span class="px-1 text-gray-600">|</span>
-        <p class="text-xs text-gray-600 font-semibold">
-          {{ formatSoldNumber(item.sold) }} Sold
-        </p>
+      <div class="flex justify-start items-center">
+        <div class="flex justify-start items-center" v-if="item.ratings">
+          <Icon icon="material-symbols-light:star" width="20" height="20" />
+          <span class="text-gray-600 font-semibold text-xs">{{
+            item.ratings.toFixed(1)
+          }}</span>
+          <span v-if="item.ratings && item.sold" class="px-1 text-gray-600"
+            >|</span
+          >
+        </div>
+        <div v-if="item.sold">
+          <p class="text-xs text-gray-600 font-semibold">
+            {{ formatSoldNumber(item.sold) }} Sold
+          </p>
+        </div>
       </div>
       <h1
         class="sm:text-sm text-xs font-semibold flex justify-start items-center truncate whitespace-break-spaces max-w-28"
