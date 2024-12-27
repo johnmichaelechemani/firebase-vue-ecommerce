@@ -53,7 +53,7 @@ const showModal = () => {
             </button>
           </div>
           <p class="text-sm font-semibold py-3">Order Summary</p>
-          <div class="bg-gray-700/5 p-2">
+          <div class="bg-gray-700/5 p-2 shadow">
             <div
               class="text-sm font-semibold flex justify-between items-center"
             >
@@ -75,102 +75,105 @@ const showModal = () => {
               Legazpi, Albay, Philippines
             </p>
           </div>
-          <div v-for="item in product" :key="item.id">
-            <div
-              class="text-sm font-semibold flex mt-2 justify-between items-center"
-            >
-              <router-link
-                :to="{ name: 'mallStore', params: { id: '435804584' } }"
-                class="flex justify-start items-center"
-              >
-                <span>
-                  <Icon
-                    icon="material-symbols-light:store"
-                    width="24"
-                    height="24" /></span
-                >{{ item.store }}
-                <Icon
-                  icon="material-symbols-light:double-arrow"
-                  width="20"
-                  height="20"
-                />
-              </router-link>
-            </div>
-            <div class="flex justify-start items-start gap-2">
+          <div class="max-h-52 overflow-y-scroll">
+            <div v-for="item in product" :key="item.id">
               <div
-                class="sm:size-20 size-16 bg-gray-700/10 border-gray-700/20 border relative"
+                class="text-sm font-semibold flex mt-2 justify-between items-center"
               >
-                <img
-                  :src="item.image"
-                  loading="lazy"
-                  alt=""
-                  class="object-center h-full w-full object-cover"
-                />
-              </div>
-              <div class="w-full">
-                <p class="text-sm font-semibold">{{ item.name }}</p>
-                <div class="flex justify-start items-center gap-2">
-                  <p class="text-xs font-medium">
-                    $ {{ formatPrice(item.price) }}
-                  </p>
-                </div>
-
-                <div class="flex justify-end items-center mt-4">
-                  <button
-                    @click="decrement(item)"
-                    class="hover:bg-gray-700/20 text-xs border px-2 transition"
-                  >
-                    -
-                  </button>
-                  <div class="px-3 border text-xs">{{ item.quantity }}</div>
-                  <button
-                    @click="incerment(item)"
-                    class="hover:bg-gray-700/20 text-xs border px-2 transition"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="flex justify-between items-center mt-2">
-              <p class="text-xs">Standard shipping</p>
-              <div
-                class="flex gap-1 bg-gray-800 text-white px-1 text-xs font-semibold justify-start items-center"
-              >
-                <Icon
-                  icon="material-symbols-light:delivery-truck-bolt-outline"
-                  width="20"
-                  height="20"
-                />Free
-              </div>
-            </div>
-            <div class="flex justify-between items-center my-1">
-              <div class="text-xs flex justify-start items-center gap-0.5">
-                <Icon
-                  icon="material-symbols-light:delivery-truck-bolt-outline"
-                  width="16"
-                  height="16"
-                />Shipping voucher applied
-              </div>
-              <div
-                class="flex gap-1 text-gray-600 px-1 text-xs font-semibold justify-start items-center"
-              >
-                $ 39.00
-              </div>
-            </div>
-            <div class="flex justify-end">
-              <div class="flex flex-wrap">
-                <div
-                  class="text-xs flex justify-start items-center flex-wrap gap-1"
+                <router-link
+                  :to="{ name: 'mallStore', params: { id: '435804584' } }"
+                  class="flex justify-start items-center"
                 >
-                  {{ item.quantity }} Item, Total:
-                  <p class="text-sm font-bold">
-                    $ {{ formatPrice(item.quantity * item.price) }}
-                  </p>
+                  <span>
+                    <Icon
+                      icon="material-symbols-light:store"
+                      width="24"
+                      height="24" /></span
+                  >{{ item.store }}
+                  <Icon
+                    icon="material-symbols-light:double-arrow"
+                    width="20"
+                    height="20"
+                  />
+                </router-link>
+              </div>
+              <div class="flex justify-start items-start gap-2">
+                <div
+                  class="sm:size-20 size-16 bg-gray-700/10 border-gray-700/20 border relative"
+                >
+                  <img
+                    :src="item.image"
+                    loading="lazy"
+                    alt=""
+                    class="object-center h-full w-full object-cover"
+                  />
+                </div>
+                <div class="w-full">
+                  <p class="text-sm font-semibold">{{ item.name }}</p>
+                  <div class="flex justify-start items-center gap-2">
+                    <p class="text-xs font-medium">
+                      $ {{ formatPrice(item.price) }}
+                    </p>
+                  </div>
+
+                  <div class="flex justify-end items-center mt-4">
+                    <button
+                      @click="decrement(item)"
+                      class="hover:bg-gray-700/20 text-xs border px-2 transition"
+                    >
+                      -
+                    </button>
+                    <div class="px-3 border text-xs">{{ item.quantity }}</div>
+                    <button
+                      @click="incerment(item)"
+                      class="hover:bg-gray-700/20 text-xs border px-2 transition"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-between items-center mt-2">
+                <p class="text-xs">Standard shipping</p>
+                <div
+                  class="flex gap-1 bg-gray-800 text-white px-1 text-xs font-semibold justify-start items-center"
+                >
+                  <Icon
+                    icon="material-symbols-light:delivery-truck-bolt-outline"
+                    width="20"
+                    height="20"
+                  />Free
+                </div>
+              </div>
+              <div class="flex justify-between items-center my-1">
+                <div class="text-xs flex justify-start items-center gap-0.5">
+                  <Icon
+                    icon="material-symbols-light:delivery-truck-bolt-outline"
+                    width="16"
+                    height="16"
+                  />Shipping voucher applied
+                </div>
+                <div
+                  class="flex gap-1 text-gray-600 px-1 text-xs font-semibold justify-start items-center"
+                >
+                  $ 39.00
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <div class="flex flex-wrap">
+                  <div
+                    class="text-xs flex justify-start items-center flex-wrap gap-1"
+                  >
+                    {{ item.quantity }} Item, Total:
+                    <p class="text-sm font-bold">
+                      $ {{ formatPrice(item.quantity * item.price) }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
           <div>
             <div class="p-2 border my-2">
               <p class="text-sm font-semibold pb-2">Payment method</p>
