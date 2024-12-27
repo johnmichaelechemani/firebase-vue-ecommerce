@@ -28,7 +28,7 @@ const props = defineProps({
 
 const emit = defineEmits(["closeModal"]);
 const cartErrorMessage = ref("");
-
+const showSuccessMessageFavorites = ref(false);
 const showModal = () => {
   emit("closeModal");
   props.product.value = null;
@@ -83,21 +83,17 @@ const addToCart = async () => {
     cartErrorMessage.value = "Error adding to cart";
     console.error("Error adding to cart", e);
   }
-
   showSuccessMessage.value = true;
   setTimeout(() => {
     showSuccessMessage.value = false;
   }, 2000);
 };
-
-const showSuccessMessageFavorites = ref(false);
 const addToFavorites = async () => {
   if (isLoggedIn.value === false) {
     loginErrorMessage.value = "Please login before you shop!";
     route.push("/login");
     return;
   }
-
   try {
     const favItemRef = await addDoc(
       collection(firestore, "favorites", userData.value.userId, "items"),
@@ -106,11 +102,9 @@ const addToFavorites = async () => {
         favoriteId: null,
       }
     );
-
     await updateDoc(favItemRef, {
       favoriteId: favItemRef.id,
     });
-
     console.log("Adding to favorate Success");
     emit("closeModal");
   } catch (e) {
