@@ -1,0 +1,1 @@
+import{Z as e,c,o as r}from"./index-B-cudqEO.js";const s={},t={class:"sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"};function l(o,a){return r(),c("div",t," Orders ")}const n=e(s,[["render",l]]);export{n as default};
