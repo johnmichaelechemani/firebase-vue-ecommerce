@@ -5,6 +5,7 @@ import { cartItems } from "../../store.js";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { userData } from "../../store.js";
 import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
+import OrderModal from "@/components/OrderModal.vue";
 
 const selected = ref([]);
 const selectAll = ref(false);
@@ -124,5 +125,6 @@ const purchase = async () => {
         BUY
       </button>
     </div>
+    <OrderModal />
   </div>
 </template>
