@@ -61,6 +61,7 @@ const placeOrder = async () => {
       await addDoc(collection(db, `purchase/${userData.value.userId}/items`), {
         productId: item.id,
         userId: userData.value.userId,
+        mallId: item.mallId,
         paymentMethod: selectedPaymentMethod.value,
         status: "pay",
         purchaseDate: new Date(),

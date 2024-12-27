@@ -175,6 +175,16 @@ const getButtonConfig = (status) => {
               <div class="font-semibold flex justify-start items-center gap-2">
                 <span class="font-semibold text-xs">x{{ item.quantity }} </span>
               </div>
+              <div class="font-semibold flex justify-start items-center gap-2">
+                <span
+                  class="font-semibold text-xs uppercase flex justify-start items-center gap-0.5"
+                  ><Icon
+                    icon="material-symbols-light:delivery-truck-bolt-outline"
+                    width="20"
+                    height="20"
+                  />{{ item.paymentMethod }}
+                </span>
+              </div>
               <div class="flex flex-wrap">
                 <div
                   class="font-semibold text-xs flex justify-start items-center flex-wrap gap-1"
