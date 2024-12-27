@@ -2,17 +2,15 @@
 import { Icon } from "@iconify/vue";
 import { ref, watch, Transition, onMounted } from "vue";
 import { RouterView, useRoute } from "vue-router";
-import { mallsAccount, useMallsAccount } from "@/store";
+import { mallsAccount, useMallsAccount, userData } from "@/store";
 import {
   chatFunctions,
   latestMessages,
   getChatId,
 } from "@/scripts/chatFunctions";
-import { useAuth } from "@/firebase.auth";
 
 const { selectedMall } = chatFunctions();
-const { user } = useAuth();
-const userId = user.value.uid;
+const userId = userData.value.userId;
 const route = useRoute();
 const isMenuToggled = ref(true);
 const mallId = ref(route.params.id);
@@ -96,10 +94,7 @@ onMounted(async () => {
                     <p class="text-sm font-semibold capitalize">
                       {{ mall.userName }}
                     </p>
-                    <p
-                    
-                      class="text-xs truncate font-medium max-w-32"
-                    >
+                    <p class="text-xs truncate font-medium max-w-32">
                       {{ latestMessages[getChatId(userId, mall.userId)] }}
                     </p>
                   </div>
