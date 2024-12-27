@@ -3,7 +3,8 @@ import { Icon } from "@iconify/vue";
 import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { purchaseProducts, getPurchaseProducts } from "@/store";
-import { formatPrice } from "@/scripts/composables";
+import { formatPrice, Time } from "@/scripts/composables";
+
 const router = useRouter();
 const route = useRoute();
 const queryForStat = (query) => {
@@ -125,6 +126,9 @@ const getButtonConfig = (status) => {
           :key="item.id"
           class="shadow-sm border p-2 w-full sm:max-w-72"
         >
+          <div class="text-xs font-semibold text-gray-600">
+            {{ Time(item.purchaseDate) }}
+          </div>
           <div class="flex justify-between items-center">
             <div
               class="text-sm font-semibold flex justify-between items-center"
@@ -167,17 +171,32 @@ const getButtonConfig = (status) => {
             <div>
               <p class="text-sm font-semibold">{{ item.name }}</p>
               <div class="flex justify-start items-center gap-2">
-                <p class="text-xs font-medium">
-                  $ {{ formatPrice(item.price) }}
+                <p
+                  class="text-xs font-medium flex justify-start items-center gap-0.5"
+                >
+                  <Icon
+                    icon="material-symbols-light:price-change-outline"
+                    width="20"
+                    height="20"
+                  />
+                  {{ formatPrice(item.price) }}
                 </p>
               </div>
 
               <div class="font-semibold flex justify-start items-center gap-2">
-                <span class="font-semibold text-xs">x{{ item.quantity }} </span>
+                <div
+                  class="font-semibold text-xs flex justify-start items-center gap-0.5"
+                >
+                  <Icon
+                    icon="material-symbols-light:production-quantity-limits"
+                    width="20"
+                    height="20"
+                  />{{ item.quantity }}
+                </div>
               </div>
-              <div class="font-semibold flex justify-start items-center gap-2">
+              <div class="font-medium flex justify-start items-center gap-2">
                 <span
-                  class="font-semibold text-xs uppercase flex justify-start items-center gap-0.5"
+                  class="font-medium text-xs uppercase flex justify-start items-center gap-0.5"
                   ><Icon
                     icon="material-symbols-light:delivery-truck-bolt-outline"
                     width="20"
