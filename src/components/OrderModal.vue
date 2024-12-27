@@ -154,7 +154,7 @@ const showModal = () => {
                   />Shipping voucher applied
                 </div>
                 <div
-                  class="flex gap-1 text-gray-600 px-1 text-xs font-semibold justify-start items-center"
+                  class="flex gap-1 line-through text-gray-600 px-1 text-xs font-semibold justify-start items-center"
                 >
                   $ 39.00
                 </div>
