@@ -6,11 +6,12 @@ import { formatPrice, incerment, decrement } from "@/scripts/composables";
 import { userData } from "@/store";
 import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import ErrorMessage from "./ErrorMessage.vue";
 const props = defineProps({
   isShowModal: Boolean,
   product: Array,
 });
-//const db = getFirestore();
+const db = getFirestore();
 const quantity = ref(1);
 const selectedPaymentMethod = ref(null);
 const paymentErrMessage = ref("");
@@ -51,7 +52,6 @@ const placeOrder = async () => {
     paymentErrMessage.value = "No products to purchase.";
     return;
   }
-  const db = getFirestore();
 
   try {
     const productPromises = props.product.map(async (item) => {
@@ -234,12 +234,8 @@ const placeOrder = async () => {
           <div>
             <div class="p-2 border my-2">
               <p class="text-sm font-semibold pb-2">Payment method</p>
-              <div
-                v-if="paymentErrMessage"
-                class="text-xs font-semibold mb-2 text-red-500 p-2 border border-red-500/10"
-              >
-                {{ paymentErrMessage }}
-              </div>
+              <ErrorMessage :errMessage="paymentErrMessage" />
+
               <div
                 v-for="method in paymentMethods"
                 :key="method.id"
