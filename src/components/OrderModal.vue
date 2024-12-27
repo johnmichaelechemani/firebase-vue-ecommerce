@@ -1,21 +1,30 @@
 <script setup>
-import { Transition, defineEmits, ref } from "vue";
+import { Transition, defineEmits, ref, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
 const props = defineProps({
   isShowModal: Boolean,
-  product: Object,
+  product: Array,
 });
 const quantity = ref(1);
+const totalPrice = computed(() => {
+  if (!props.product || props.product.length === 0) return 0;
+
+  return props.product.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, 0);
+});
 const emit = defineEmits(["closeModal"]);
-const incerment = () => {
-  if (quantity.value < props.product.inventory) {
-    quantity.value += 1;
+const incerment = (item) => {
+  if (item.quantity < item.inventory) {
+    item.quantity += 1;
   }
 };
-const decrement = () => {
-  if (quantity.value > 1) {
-    quantity.value -= 1;
+
+// Quantity decrement method
+const decrement = (item) => {
+  if (item.quantity > 1) {
+    item.quantity -= 1;
   }
 };
 const showModal = () => {
@@ -65,27 +74,27 @@ const showModal = () => {
               Legazpi, Albay, Philippines
             </p>
           </div>
-          <div
-            class="text-sm font-semibold flex mt-2 justify-between items-center"
-          >
-            <router-link
-              :to="{ name: 'mallStore', params: { id: '435804584' } }"
-              class="flex justify-start items-center"
+          <div v-for="item in product" :key="item.id">
+            <div
+              class="text-sm font-semibold flex mt-2 justify-between items-center"
             >
-              <span>
+              <router-link
+                :to="{ name: 'mallStore', params: { id: '435804584' } }"
+                class="flex justify-start items-center"
+              >
+                <span>
+                  <Icon
+                    icon="material-symbols-light:store"
+                    width="24"
+                    height="24" /></span
+                >{{ item.store }}
                 <Icon
-                  icon="material-symbols-light:store"
-                  width="24"
-                  height="24" /></span
-              >Micak Store
-              <Icon
-                icon="material-symbols-light:double-arrow"
-                width="20"
-                height="20"
-              />
-            </router-link>
-          </div>
-          <div>
+                  icon="material-symbols-light:double-arrow"
+                  width="20"
+                  height="20"
+                />
+              </router-link>
+            </div>
             <div class="flex justify-start items-start w-full gap-2">
               <div
                 class="sm:size-20 size-16 bg-gray-700/10 border-gray-700/20 border relative"
@@ -98,21 +107,21 @@ const showModal = () => {
               /> -->
               </div>
               <div class="w-full">
-                <p class="text-sm font-semibold">kjdsdjsd</p>
+                <p class="text-sm font-semibold">{{ item.name }}</p>
                 <div class="flex justify-start items-center gap-2">
-                  <p class="text-xs font-medium">$ 23121</p>
+                  <p class="text-xs font-medium">$ {{ item.price }}</p>
                 </div>
 
                 <div class="flex justify-end items-center mt-4">
                   <button
-                    @click="decrement"
+                    @click="decrement(item)"
                     class="hover:bg-gray-700/20 text-xs border px-2 transition"
                   >
                     -
                   </button>
-                  <div class="px-3 border text-xs">9</div>
+                  <div class="px-3 border text-xs">{{ item.quantity }}</div>
                   <button
-                    @click="incerment"
+                    @click="incerment(item)"
                     class="hover:bg-gray-700/20 text-xs border px-2 transition"
                   >
                     +
@@ -151,11 +160,15 @@ const showModal = () => {
                 <div
                   class="text-xs flex justify-start items-center flex-wrap gap-1"
                 >
-                  2 Item, Total:
-                  <p class="text-sm font-bold">$ 2,332.21</p>
+                  {{ item.quantity }} Item, Total:
+                  <p class="text-sm font-bold">
+                    $ {{ item.quantity * item.price }}
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
+          <div>
             <div class="p-2 border my-2">
               <p class="text-sm font-semibold pb-2">Payment method</p>
               <div class="flex justify-between border px-2 py-1 mb-1">
@@ -184,7 +197,7 @@ const showModal = () => {
                 class="flex justify-between text-sm font-semibold items-center"
               >
                 Total
-                <p class="text-lg text-gray-800">$ 2,332.21</p>
+                <p class="text-lg text-gray-800">$ {{ totalPrice }}</p>
               </div>
               <button
                 class="text-sm w-full py-2 font-semibold text-white bg-gray-800"

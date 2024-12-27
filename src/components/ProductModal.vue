@@ -55,6 +55,7 @@ const addToCart = async () => {
   try {
     const cartItemData = {
       id: props.product.id,
+      inventory: props.product.inventory,
       name: props.product.name,
       mallId: props.product.mallId,
       store: props.product.mallName,

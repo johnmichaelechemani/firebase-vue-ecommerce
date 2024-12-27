@@ -14,16 +14,17 @@ const isShowModal = ref(false);
 const db = getFirestore();
 watch(selectAll, (newValue) => {
   if (newValue) {
-    selected.value = cartItems.value.map((product) => product.id);
+    selected.value = cartItems.value;
   } else {
     selected.value = [];
   }
 });
-const toggleSelection = (productId) => {
-  if (selected.value.includes(productId)) {
-    selected.value = selected.value.filter((id) => id !== productId);
+const toggleSelection = (product) => {
+  const exists = selected.value.find((item) => item.id === product.id);
+  if (exists) {
+    selected.value = selected.value.filter((item) => item.id !== product.id);
   } else {
-    selected.value.push(productId);
+    selected.value.push(product);
   }
 };
 const isBuyDisabled = computed(() => {
@@ -32,6 +33,7 @@ const isBuyDisabled = computed(() => {
 
 const purchase = async () => {
   isShowModal.value = true;
+  console.log(selected.value);
   // const selectedItems = cartItems.value.filter((item) =>
   //   selected.value.includes(item.id)
   // );
@@ -50,12 +52,6 @@ const purchase = async () => {
   //   console.log("Error", e);
   // }
 };
-
-watch(isShowModal, (newValue) => {
-  if (!newValue) {
-    selected.value = [];
-  }
-});
 </script>
 
 <template>
@@ -79,8 +75,8 @@ watch(isShowModal, (newValue) => {
           <input
             type="checkbox"
             class="accent-gray-700"
-            :checked="selected.includes(product.id)"
-            @change="toggleSelection(product.id)"
+            :checked="selected.some((item) => item.id === product.id)"
+            @change="toggleSelection(product)"
           />
           <div class="size-10">
             <img
