@@ -1,344 +1,78 @@
 <script setup>
-const image = "https://via.placeholder.com/150?text=Kids+Apparel";
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import ProductCard from "@/components/ProductCard.vue";
-import { products } from "@/store";
+import { products, mallsAccount, getProducts, useMallsAccount } from "@/store";
+import ProductLoading from "@/components/ProductLoading.vue";
+import ErrorMessage from "@/components/ErrorMessage.vue";
 
-const malls = ref([
-  {
-    id: 1,
-    name: "FASHION",
-    price: [
-      {
-        id: 1,
-        lowestPrice: 500,
-        action: () => sortProducts(500),
-      },
-      {
-        id: 2,
-        lowestPrice: 700,
-        action: () => sortProducts(700),
-      },
-      {
-        id: 3,
-        lowestPrice: 1500,
-        action: () => sortProducts(1500),
-      },
-    ],
-    mallLogo: [
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-    ],
-    mallProducts: products,
-  },
-  {
-    id: 2,
-    name: "ELECTRONICS",
-    price: [
-      {
-        id: 1,
-        lowestPrice: 500,
-        action: () => sortProducts(500),
-      },
-      {
-        id: 2,
-        lowestPrice: 700,
-        action: () => sortProducts(700),
-      },
-      {
-        id: 3,
-        lowestPrice: 1500,
-        action: () => sortProducts(1500),
-      },
-    ],
-    mallLogo: [
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-    ],
-    mallProducts: products,
-  },
-  {
-    id: 3,
-    name: " HOME & OUTDORS",
-    price: [
-      {
-        id: 1,
-        lowestPrice: 500,
-        action: () => sortProducts(500),
-      },
-      {
-        id: 2,
-        lowestPrice: 700,
-        action: () => sortProducts(700),
-      },
-      {
-        id: 3,
-        lowestPrice: 1500,
-        action: () => sortProducts(1500),
-      },
-    ],
-    mallLogo: [
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-    ],
-    mallProducts: products,
-  },
-  {
-    id: 4,
-    name: " ESSENTIALS",
-    price: [
-      {
-        id: 1,
-        lowestPrice: 500,
-        action: () => sortProducts(500, 4),
-      },
-      {
-        id: 2,
-        lowestPrice: 700,
-        action: () => sortProducts(700),
-      },
-      {
-        id: 3,
-        lowestPrice: 1500,
-        action: () => sortProducts(1500),
-      },
-    ],
-    mallLogo: [
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-      {
-        id: 1,
-        image: image,
-        alt: "Mall 1 Logo",
-      },
-    ],
-    mallProducts: products,
-  },
-]);
-const selectedPrice = ref(500);
-const originalProducts = ref([]);
+// State Management
+const isLoading = ref(true);
+const error = ref(null);
 
-malls.value.forEach((mall) => {
-  originalProducts.value.push({
+// Computed Properties for Better Performance
+const fashionMalls = computed(() =>
+  mallsAccount.value.filter((mall) => mall.mallType === "fashion")
+);
+
+const electronicMalls = computed(() =>
+  mallsAccount.value.filter((mall) => mall.mallType === "electronics")
+);
+
+const categorizedMalls = computed(() => {
+  const allMalls = [...fashionMalls.value, ...electronicMalls.value];
+
+  return allMalls.map((mall) => ({
     ...mall,
-    mallProducts: [...mall.mallProducts],
-  });
+    mallProducts: products.value.filter(
+      (product) => product.mallId === mall.userId
+    ),
+  }));
 });
 
-const sortProducts = (maxPrice) => {
-  malls.value.forEach((mall, index) => {
-    const originalProductsForMall = originalProducts.value[index].mallProducts;
+// Async Data Fetching with Error Handling
+async function initializeData() {
+  try {
+    isLoading.value = true;
+    await useMallsAccount();
+    getProducts();
+  } catch (fetchError) {
+    error.value = fetchError;
+    console.error("Data fetching failed:", fetchError);
+  } finally {
+    isLoading.value = false;
+  }
+}
 
-    mall.mallProducts = originalProductsForMall.filter(
-      (product) => product.price <= maxPrice
-    );
-  });
-  selectedPrice.value = maxPrice;
-};
+onMounted(initializeData);
 </script>
 
 <template>
-  <div>
-    <div v-for="mall in malls" :key="mall.id" class="my-2">
-      <div class="text-lg font-extrabold text-gray-800 drop-shadow">
-        {{ mall.name }}
+  <div v-if="isLoading" class="text-center">
+    <ProductLoading />
+  </div>
+  <ErrorMessage v-else-if="error" :err-message="error.message" />
+  <div v-else>
+    <div
+      v-for="mall in categorizedMalls"
+      :key="mall.id"
+      class="mb-6 p-4 bg-white border"
+    >
+      <h2 class="text-xl font-bold text-gray-800 uppercase">
+        {{ mall.mallType }}
+      </h2>
+      <div class="flex items-center mb-4">
+        <img
+          :src="mall.image"
+          :alt="`${mall.mallType} mall logo`"
+          class="w-16 h-16 object-cover mr-4"
+        />
       </div>
-      <div class="flex overflow-x-scroll no-scrollbar gap-4">
-        <div class="my-2" v-for="item in mall.mallLogo" :key="item.id">
-          <div class="size-20">
-            <img
-              :src="item.image"
-              loading="lazy"
-              alt=""
-              class="object-center h-full w-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="flex justify-start items-center my-2">
-        <div v-for="sortButton in mall.price" :key="sortButton.id">
-          <button
-            @click="sortButton.action(sortButton.lowestPrice, mall.id)"
-            :class="[
-              selectedPrice === sortButton.lowestPrice
-                ? 'bg-gray-800 border text-white'
-                : 'border ',
-              'px-4 py-1 text-xs font-semibold',
-            ]"
-          >
-            {{ sortButton.lowestPrice }} & BELOW
-          </button>
-        </div>
-      </div>
-      <div class="flex overflow-x-scroll no-scrollbar gap-4">
-        <ProductCard :products="mall.mallProducts" />
+
+      <div class="overflow-x-auto flex gap-2">
+        <ProductCard
+          :products="mall.mallProducts"
+          :key="`products-${mall.id}`"
+        />
       </div>
     </div>
   </div>
