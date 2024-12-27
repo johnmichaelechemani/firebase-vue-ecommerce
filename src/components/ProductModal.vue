@@ -13,7 +13,6 @@ import { formatSoldNumber } from "@/scripts/composables.js";
 
 const firestore = getFirestore();
 const route = useRouter();
-const quantity = ref(1);
 const selectedSize = ref("");
 
 const props = defineProps({
@@ -26,7 +25,7 @@ const emit = defineEmits(["closeModal"]);
 const showModal = () => {
   emit("closeModal");
   props.product.value = null;
-  quantity.value = 1;
+  props.quantity.value = 1;
   selectedSize.value = "";
 };
 
@@ -34,14 +33,14 @@ const changeSize = (size) => {
   selectedSize.value = size;
 };
 
-const incerment = () => {
-  if (quantity.value < props.product.inventory) {
-    quantity.value += 1;
+const incerment = (item) => {
+  if (item.quantity < item.inventory) {
+    item.quantity += 1;
   }
 };
-const decrement = () => {
-  if (quantity.value > 1) {
-    quantity.value -= 1;
+const decrement = (item) => {
+  if (item.quantity > 1) {
+    item.quantity -= 1;
   }
 };
 
@@ -61,7 +60,7 @@ const addToCart = async () => {
       store: props.product.mallName,
       price: props.product.price,
       size: selectedSize.value,
-      quantity: quantity.value,
+      quantity: props.product.quantity,
       image: props.product.image,
       discount: props.product.discount,
     };
@@ -90,7 +89,7 @@ const addToCart = async () => {
 };
 
 const isAddToCartDisabled = computed(() => {
-  return quantity.value === 0 || selectedSize.value === "";
+  return props.product.quantity === 0 || selectedSize.value === "";
 });
 
 const showSuccessMessageFavorites = ref(false);
@@ -231,9 +230,9 @@ const addToFavorites = async () => {
                     <span class="font-semibold text-sm">QTY: </span>
                     <div class="flex justify-start items-center gap-2">
                       <button
-                        @click="decrement"
+                        @click="decrement(props.product)"
                         :class="
-                          quantity === 1
+                          props.product.quantity === 1
                             ? 'cursor-not-allowed text-gray-500'
                             : ''
                         "
@@ -246,12 +245,12 @@ const addToFavorites = async () => {
                         />
                       </button>
                       <div class="px-4 py-1 border rounded-full">
-                        {{ quantity }}
+                        {{ props.product.quantity }}
                       </div>
                       <button
-                        @click="incerment"
+                        @click="incerment(props.product)"
                         :class="
-                          props.product.inventory === quantity
+                          props.product.inventory === props.product.quantity
                             ? 'cursor-not-allowed text-gray-500'
                             : ''
                         "

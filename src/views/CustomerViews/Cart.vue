@@ -2,16 +2,12 @@
 import { ref, watch, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { cartItems } from "../../store.js";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { userData } from "../../store.js";
-import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
 import OrderModal from "@/components/OrderModal.vue";
 
 const selected = ref([]);
 const selectAll = ref(false);
 const isShowModal = ref(false);
 
-const db = getFirestore();
 watch(selectAll, (newValue) => {
   if (newValue) {
     selected.value = cartItems.value;
@@ -33,24 +29,6 @@ const isBuyDisabled = computed(() => {
 
 const purchase = async () => {
   isShowModal.value = true;
-  console.log(selected.value);
-  // const selectedItems = cartItems.value.filter((item) =>
-  //   selected.value.includes(item.id)
-  // );
-  // try {
-  //   await addDoc(collection(db, "purchase", userData.value.userId, "items"), {
-  //     ...selectedItems[0],
-  //     status: "pay",
-  //     purchaseDate: new Date(),
-  //     totalPrice: selectedItems.reduce(
-  //       (total, item) => total + item.price * item.quantity,
-  //       0
-  //     ),
-  //   });
-  //   deleteItems("carts", selectedItems[0].cartItemId);
-  // } catch (e) {
-  //   console.log("Error", e);
-  // }
 };
 </script>
 

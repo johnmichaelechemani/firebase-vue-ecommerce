@@ -4,10 +4,13 @@ import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
 import { formatPrice } from "@/scripts/composables";
 import { userData } from "@/store";
+import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 const props = defineProps({
   isShowModal: Boolean,
   product: Array,
 });
+//const db = getFirestore();
 const quantity = ref(1);
 const selectedPaymentMethod = ref(null);
 const paymentErrMessage = ref("");
@@ -48,13 +51,59 @@ const paymentMethods = [
     icon: "arcticons:gcash",
   },
 ];
-const placeOrder = () => {
+
+const placeOrder = async () => {
   if (!selectedPaymentMethod.value) {
     paymentErrMessage.value = "Please select a payment method";
     return;
   }
-  console.log(selectedPaymentMethod.value);
-  emit("closeModal");
+
+  if (!props.product || props.product.length === 0) {
+    paymentErrMessage.value = "No products to purchase.";
+    return;
+  }
+
+  const db = getFirestore();
+
+  try {
+    // Add each product as a subcollection under the order
+    const productPromises = props.product.map(async (item) => {
+      await addDoc(collection(db, `purchase/${userData.value.userId}/items`), {
+        productId: item.id,
+        userId: userData.value.userId,
+        paymentMethod: selectedPaymentMethod.value,
+        status: "pay",
+        purchaseDate: new Date(),
+        name: item.name,
+        price: item.price,
+        totalPrice: item.price * item.quantity,
+        quantity: item.quantity,
+        store: item.store,
+        image: item.image,
+        address: {
+          name: userData.value.userName,
+          phone: "(+63)90******89",
+          location:
+            "4d, Legazpi Apartments, Saint Paris Street, Legazpi, Albay, Philippines",
+        },
+      });
+
+      deleteItems("carts", item.cartItemId);
+    });
+
+    await Promise.all(productPromises);
+
+    emit("closeModal");
+    props.product = [];
+    selectedPaymentMethod.value = null;
+    quantity.value = 1;
+    paymentErrMessage.value = "";
+    console.log("Order placed successfully!");
+  } catch (error) {
+    console.error("Error placing order:", error);
+    paymentErrMessage.value =
+      "An error occurred while placing the order. Please try again.";
+  }
 };
 </script>
 
