@@ -1,3 +1,30 @@
+<script setup>
+import { Transition, defineEmits, ref } from "vue";
+import { Icon } from "@iconify/vue";
+import { RouterLink } from "vue-router";
+const props = defineProps({
+  isShowModal: Boolean,
+  product: Object,
+});
+const quantity = ref(1);
+const emit = defineEmits(["closeModal"]);
+const incerment = () => {
+  if (quantity.value < props.product.inventory) {
+    quantity.value += 1;
+  }
+};
+const decrement = () => {
+  if (quantity.value > 1) {
+    quantity.value -= 1;
+  }
+};
+const showModal = () => {
+  emit("closeModal");
+  props.product.value = null;
+  quantity.value = 1;
+};
+</script>
+
 <template>
   <transition>
     <div
@@ -171,29 +198,3 @@
     </div>
   </transition>
 </template>
-<script setup>
-import { Transition, defineEmits, ref } from "vue";
-import { Icon } from "@iconify/vue";
-import { RouterLink } from "vue-router";
-const props = defineProps({
-  isShowModal: Boolean,
-  product: Object,
-});
-const quantity = ref(1);
-const emit = defineEmits(["closeModal"]);
-const incerment = () => {
-  if (quantity.value < props.product.inventory) {
-    quantity.value += 1;
-  }
-};
-const decrement = () => {
-  if (quantity.value > 1) {
-    quantity.value -= 1;
-  }
-};
-const showModal = () => {
-  emit("closeModal");
-  props.product.value = null;
-  quantity.value = 1;
-};
-</script>
