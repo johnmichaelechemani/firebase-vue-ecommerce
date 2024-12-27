@@ -21,6 +21,7 @@ export const userData = ref(null);
 export const mallsAccount = ref([]);
 export const products = ref([]);
 export const purchaseProducts = ref([]);
+export const isProductLoading = ref(false);
 const storedUserData = localStorage.getItem("userData");
 
 // fetch global data
@@ -46,6 +47,7 @@ export const useMallsAccount = async () => {
 
 export const getProducts = () => {
   const db = getFirestore();
+  isProductLoading.value = true;
   try {
     const productsQuery = query(collection(db, "products"));
     onSnapshot(productsQuery, (querySnapshot) => {
@@ -53,11 +55,14 @@ export const getProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
+      isProductLoading.value = false;
       console.log("Products updated in real-time:", products.value);
     });
+
     return products.value;
   } catch (error) {
     console.error("Error fetching products:", error);
+    isProductLoading.value = false;
     return [];
   }
 };

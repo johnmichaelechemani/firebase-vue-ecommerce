@@ -73,7 +73,7 @@ onMounted(() => {
                 width="24"
                 height="24"
               />
-              <div class="absolute -top-1 right-0">
+              <div class="absolute -top-1 right-0" v-if="messages.length !== 0">
                 <span
                   class="text-[9px] font-medium bg-gray-700 px-1.5 py-0.5 text-white rounded-full"
                   >{{ messages.length }}</span

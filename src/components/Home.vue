@@ -2,7 +2,8 @@
 import ProductCard from "./ProductCard.vue";
 import { useRouter, useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
-import { products, getProducts } from "@/store";
+import { products, getProducts, isProductLoading } from "@/store";
+import ProductLoading from "./ProductLoading.vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -92,22 +93,25 @@ const Category = ref([
       >
         <div class="m-2">
           <h1 class="text-md font-semibold my-2">Products</h1>
-          <div class="flex flex-wrap gap-1">
+          <div class="flex flex-wrap gap-1" v-if="!isProductLoading">
             <ProductCard :products="filteredProducts" />
           </div>
+          <ProductLoading v-else />
         </div>
         <div class="m-2">
           <h1 class="text-md font-semibold my-2">Recommendations</h1>
-          <div class="flex flex-wrap gap-1">
+          <div class="flex flex-wrap gap-1" v-if="!isProductLoading">
             <ProductCard :products="filteredProducts" />
           </div>
+          <ProductLoading v-else />
         </div>
 
         <div class="m-2">
           <h1 class="text-md font-semibold my-2">Discover</h1>
-          <div class="flex gap-1 overflow-x-auto">
+          <div class="flex gap-1 overflow-x-auto" v-if="!isProductLoading">
             <ProductCard :products="filteredProducts" />
           </div>
+          <ProductLoading v-else />
         </div>
       </div>
     </div>
