@@ -5,23 +5,19 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { isLoggedIn } from "@/store";
+import ProductLoading from "@/components/ProductLoading.vue";
 
 const router = useRouter();
 const route = useRoute();
 const activeTab = ref("shop");
 const isPriceUp = ref(true);
 const filteredProducts = ref(products);
+const isLoading = ref(true);
 
-const getAutoProducts = () => {
-  try {
-    products.value = products.value.filter(
-      (product) => product.mallId === route.params.id
-    );
-  } catch (error) {
-    console.error("Error fetching mall products:", error);
-    products.value = [];
-  }
-};
+const filteredMallproducts = computed(() => {
+  if (isLoading.value) return [];
+  return products.value.filter((product) => product.mallId === route.params.id);
+});
 
 const queryForCategories = (query, id) => {
   router.push({
@@ -82,11 +78,16 @@ const productTags = ref([
     icon: true,
   },
 ]);
-
 onMounted(async () => {
-  await useMallsAccount();
-  getProducts();
-  getAutoProducts();
+  try {
+    isLoading.value = true;
+    await useMallsAccount();
+    getProducts();
+  } catch (error) {
+    console.error("Failed to load mall data:", error);
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>
 
@@ -157,8 +158,11 @@ onMounted(async () => {
     <div class="my-2">
       <div v-if="activeTab === 'shop'">
         <p class="font-semibold text-sm my-2">Recommended For You</p>
-        <div class="flex flex-wrap gap-1">
-          <ProductCard :products="products" />
+        <div v-if="isLoading" class="text-center">
+          <ProductLoading />
+        </div>
+        <div class="flex flex-wrap gap-1" v-else>
+          <ProductCard :products="filteredMallproducts" />
         </div>
       </div>
 
@@ -199,7 +203,7 @@ onMounted(async () => {
           </div>
 
           <div class="flex flex-wrap gap-1 my-5">
-            <ProductCard :products="filteredProducts" />
+            <ProductCard :products="filteredMallproducts" />
           </div>
         </div>
       </div>

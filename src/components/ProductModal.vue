@@ -142,7 +142,7 @@ const addToFavorites = async () => {
                 @click="showModal"
                 class="flex gap-1 justify-start items-center my-2"
               >
-                <p class="text-xl font-semibold hover:underline">
+                <p class="text-xl font-semibold capitalize hover:underline">
                   {{ product.mallName }}
                 </p>
                 <Icon
