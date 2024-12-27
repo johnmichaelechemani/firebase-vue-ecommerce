@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { mallsAccount, useMallsAccount, userData } from "@/store";
 import { chatFunctions, messages } from "@/scripts/chatFunctions";
+import { Time } from "@/scripts/composables";
 
 const { message, sendMessage } = chatFunctions();
 const route = useRoute();
@@ -59,7 +60,7 @@ onMounted(async () => {
             <div
               class="flex justify-center items-center text-[9px] text-gray-500"
             >
-              Tue 3, 10:30pm
+              {{ Time(message.timestamp) }}
             </div>
 
             <div
@@ -84,7 +85,7 @@ onMounted(async () => {
             <div
               class="flex justify-center items-center text-[9px] text-gray-500"
             >
-              Tue 3, 10:30pm
+              {{ Time(message.timestamp) }}
             </div>
             <div
               class="flex justify-end items-end font-medium text-gray-800 gap-2"
