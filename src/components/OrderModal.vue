@@ -3,11 +3,14 @@ import { Transition, defineEmits, ref, computed } from "vue";
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
 import { formatPrice } from "@/scripts/composables";
+import { userData } from "@/store";
 const props = defineProps({
   isShowModal: Boolean,
   product: Array,
 });
 const quantity = ref(1);
+const selectedPaymentMethod = ref(null);
+const paymentErrMessage = ref("");
 const totalPrice = computed(() => {
   if (!props.product || props.product.length === 0) return 0;
 
@@ -22,7 +25,6 @@ const incerment = (item) => {
   }
 };
 
-// Quantity decrement method
 const decrement = (item) => {
   if (item.quantity > 1) {
     item.quantity -= 1;
@@ -32,6 +34,27 @@ const showModal = () => {
   emit("closeModal");
   props.product.value = null;
   quantity.value = 1;
+};
+
+const paymentMethods = [
+  {
+    id: "cod",
+    name: "Cash on Delivery",
+    icon: "mdi:cash-on-delivery",
+  },
+  {
+    id: "gcash",
+    name: "GCASH",
+    icon: "arcticons:gcash",
+  },
+];
+const placeOrder = () => {
+  if (!selectedPaymentMethod.value) {
+    paymentErrMessage.value = "Please select a payment method";
+    return;
+  }
+  console.log(selectedPaymentMethod.value);
+  emit("closeModal");
 };
 </script>
 
@@ -55,16 +78,16 @@ const showModal = () => {
           <p class="text-sm font-semibold py-3">Order Summary</p>
           <div class="bg-gray-700/5 p-2 shadow">
             <div
-              class="text-sm font-semibold flex justify-between items-center"
+              class="text-sm font-semibold gap-2 flex justify-between items-center"
             >
               <div
-                class="text-sm font-semibold flex justify-start items-center"
+                class="text-xs font-semibold flex justify-start items-center"
               >
                 <Icon
                   icon="material-symbols-light:location-on-outline"
                   width="24"
                   height="24"
-                />John Michael (+63)90******89
+                />{{ userData.userName }} (+63)90******89
               </div>
               <Icon icon="weui:arrow-outlined" width="6" height="12" />
             </div>
@@ -81,7 +104,7 @@ const showModal = () => {
                 class="text-sm font-semibold flex mt-2 justify-between items-center"
               >
                 <router-link
-                  :to="{ name: 'mallStore', params: { id: '435804584' } }"
+                  :to="{ name: 'mallStore', params: { id: item.mallId } }"
                   class="flex justify-start items-center"
                 >
                   <span>
@@ -177,25 +200,29 @@ const showModal = () => {
           <div>
             <div class="p-2 border my-2">
               <p class="text-sm font-semibold pb-2">Payment method</p>
-              <div class="flex justify-between border px-2 py-1 mb-1">
-                <div
-                  class="text-xs flex text-gray-700 font-semibold justify-start items-center gap-1"
-                >
-                  <Icon
-                    icon="mdi:cash-on-delivery"
-                    width="20"
-                    height="20"
-                  />Cash on Delivery
-                </div>
-                <input type="radio" class="accent-gray-800 text-gray-800" />
+              <div
+                v-if="paymentErrMessage"
+                class="text-xs font-semibold mb-2 text-red-500 p-2 border border-red-500/10"
+              >
+                {{ paymentErrMessage }}
               </div>
-              <div class="flex justify-between border px-2 py-1">
+              <div
+                v-for="method in paymentMethods"
+                :key="method.id"
+                class="flex justify-between border px-2 py-1 mb-1"
+              >
                 <div
                   class="text-xs flex text-gray-700 font-semibold justify-start items-center gap-1"
                 >
-                  <Icon icon="arcticons:gcash" width="20" height="20" />GCASH
+                  <Icon :icon="method.icon" width="20" height="20" />
+                  {{ method.name }}
                 </div>
-                <input type="radio" class="accent-gray-800 text-gray-800" />
+                <input
+                  type="radio"
+                  :value="method.id"
+                  v-model="selectedPaymentMethod"
+                  class="accent-gray-800 text-gray-800"
+                />
               </div>
             </div>
             <div class="w-full mt-2 border-t">
@@ -208,6 +235,7 @@ const showModal = () => {
                 </p>
               </div>
               <button
+                @click="placeOrder"
                 class="text-sm w-full py-2 font-semibold text-white bg-gray-800"
               >
                 Place Order
