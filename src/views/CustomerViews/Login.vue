@@ -31,6 +31,7 @@ if (loginErrorMessage) {
           <p class="text-sm font-semibold text-gray-700">Email</p>
           <input
             v-model="email"
+            required
             type="text"
             class="outline-none border p-2 min-w-52 sm:min-w-80"
           />
@@ -39,6 +40,7 @@ if (loginErrorMessage) {
           <p class="text-sm font-semibold text-gray-700">Password</p>
           <input
             v-model="password"
+            required
             type="password"
             class="outline-none border p-2 min-w-52 sm:min-w-80"
           />

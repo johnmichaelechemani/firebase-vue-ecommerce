@@ -19,7 +19,7 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { isLoggedIn, userData } from "./store";
+import { isLoggedIn, userData, loginErrorMessage } from "./store";
 
 export const useAuth = () => {
   const auth = getAuth();
@@ -107,6 +107,10 @@ export const useAuth = () => {
   };
 
   const loginAccount = async () => {
+    if (email.value.trim() === "" || password.value.trim() === "") {
+      loginErrorMessage.value = "Enter your account!";
+      return;
+    }
     try {
       const res = await signInWithEmailAndPassword(
         auth,
@@ -145,6 +149,7 @@ export const useAuth = () => {
         router.push("/");
       }
     } catch (error) {
+      loginErrorMessage.value = "Invalid credentials!";
       console.error("Login error:", error);
     }
   };
