@@ -3,6 +3,7 @@ import HomeView from "../views/CustomerViews/HomeView.vue";
 import CustomerLayout from "../layouts/customerLayout.vue";
 import SellerLayout from "../layouts/sellerLayout.vue";
 import { isLoggedIn, userData } from "@/store";
+import { loginErrorMessage } from "@/store";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -115,10 +116,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   //console.log(userData.value,  isLoggedIn.value);
   // Enhanced login check
-  if (to.name === "mallDashboard") {
+  if (to.name === "mallDashboard" || to.name === "purchase") {
     // More robust login verification
     if (!isLoggedIn.value && !userData.value) {
       console.warn("Redirecting to login - not authenticated");
+      loginErrorMessage.value = "Please login first!";
       next("/login");
       return;
     }
