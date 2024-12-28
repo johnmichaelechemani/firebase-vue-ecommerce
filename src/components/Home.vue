@@ -90,12 +90,18 @@ const Category = ref([
       </nav>
 
       <div
-        class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-48"
+        class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-48 text-gray-800"
       >
         <div class="m-2">
           <div class="p-2 border bg-gray-800/5">
-            <div class="flex justify-start items-center gap-2 mb-2">
-              <h1 class="text-lg font-semibold">Flash sale</h1>
+            <div class="flex justify-between items-center gap-4 mb-2">
+              <div
+                class="text-lg font-semibold flex justify-start gap-1 items-center"
+              >
+                Flash sale
+                <span class="text-xs bg-gray-800 text-white px-1">Mall</span>
+              </div>
+
               <div
                 class="flex text-xs font-semibold justify-start items-center gap-1"
               >
