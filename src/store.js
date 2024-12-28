@@ -15,6 +15,7 @@ export const favoritesItem = ref([]);
 export const messages = ref([]);
 export const notifications = ref(23);
 export const loginErrorMessage = ref("");
+export const registerErrorMessage = ref("");
 export const showSidebar = ref(false);
 export const isLoggedIn = ref(null);
 export const userData = ref(null);

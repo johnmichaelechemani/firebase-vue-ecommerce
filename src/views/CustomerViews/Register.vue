@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue";
 import { useAuth } from "@/firebase.auth";
+import ErrorMessage from "@/components/ErrorMessage.vue";
+import { registerErrorMessage } from "@/store";
 
 const { registerAccount, name, email, password, role } = useAuth();
 </script>
@@ -11,6 +13,7 @@ const { registerAccount, name, email, password, role } = useAuth();
   >
     <div class="flex justify-center items-center h-[calc(100%-5rem)]">
       <div class="border p-5">
+        <ErrorMessage :err-message="registerErrorMessage" />
         <h1 class="text-lg font-bold my-3">Sign Up</h1>
         <div class="my-2">
           <p class="text-sm font-semibold text-gray-700">

@@ -19,7 +19,12 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
-import { isLoggedIn, userData, loginErrorMessage } from "./store";
+import {
+  isLoggedIn,
+  userData,
+  loginErrorMessage,
+  registerErrorMessage,
+} from "./store";
 
 export const useAuth = () => {
   const auth = getAuth();
@@ -155,6 +160,15 @@ export const useAuth = () => {
   };
 
   const registerAccount = async () => {
+    if (
+      email.value.trim() === "" ||
+      password.value.trim() === "" ||
+      name.value.trim() === "" ||
+      role.value.trim() === ""
+    ) {
+      registerErrorMessage.value = "Enter your information.";
+      return;
+    }
     await createUserWithEmailAndPassword(
       auth,
       email.value,
@@ -175,7 +189,9 @@ export const useAuth = () => {
         });
         router.push("/login");
       })
-      .catch(() => {});
+      .catch(() => {
+        registerErrorMessage.value = "Invalid information.";
+      });
   };
 
   const logoutAccount = async () => {
