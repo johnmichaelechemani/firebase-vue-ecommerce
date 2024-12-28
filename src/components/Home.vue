@@ -4,6 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 import { products, getProducts, isProductLoading } from "@/store";
 import ProductLoading from "./ProductLoading.vue";
+import { Icon } from "@iconify/vue";
 
 const router = useRouter();
 const route = useRoute();
@@ -92,14 +93,51 @@ const Category = ref([
         class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-48"
       >
         <div class="m-2">
-          <h1 class="text-md font-semibold my-2">Products</h1>
+          <div class="p-2 border bg-gray-800/5">
+            <div class="flex justify-start items-center gap-2 mb-2">
+              <h1 class="text-lg font-semibold">Flash sale</h1>
+              <div
+                class="flex text-xs font-semibold justify-start items-center gap-1"
+              >
+                <div class="bg-gray-800 text-white px-1 w-5 text-center">
+                  01
+                </div>
+                :
+                <div class="bg-gray-800 text-white px-1 w-5 text-center">
+                  01
+                </div>
+                :
+                <div class="bg-gray-800 text-white px-1 w-5 text-center">
+                  01
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="size-20 bg-gray-700/50 relative">
+                <div
+                  class="absolute flex bottom-0 left-0 text-xs bg-gray-800 text-white px-0.5 py-0.5"
+                >
+                  <Icon
+                    icon="material-symbols-light:arrow-cool-down"
+                    width="16"
+                    height="16"
+                  />
+                  80%
+                </div>
+              </div>
+              <div class="text-sm font-bold">$ 800.00</div>
+            </div>
+          </div>
+        </div>
+        <div class="m-2">
+          <h1 class="text-lg font-semibold my-2">Products</h1>
           <div class="flex flex-wrap gap-1" v-if="!isProductLoading">
             <ProductCard :products="filteredProducts" />
           </div>
           <ProductLoading v-else />
         </div>
         <div class="m-2">
-          <h1 class="text-md font-semibold my-2">Recommendations</h1>
+          <h1 class="text-lg font-semibold my-2">Recommendations</h1>
           <div class="flex flex-wrap gap-1" v-if="!isProductLoading">
             <ProductCard :products="filteredProducts" />
           </div>
@@ -107,7 +145,7 @@ const Category = ref([
         </div>
 
         <div class="m-2">
-          <h1 class="text-md font-semibold my-2">Discover</h1>
+          <h1 class="text-lg font-semibold my-2">Discover</h1>
           <div class="flex gap-1 overflow-x-auto" v-if="!isProductLoading">
             <ProductCard :products="filteredProducts" />
           </div>

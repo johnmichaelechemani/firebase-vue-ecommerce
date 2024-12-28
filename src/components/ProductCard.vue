@@ -63,14 +63,24 @@ watch(isShowModal, (newValue) => {
           </p>
         </div>
       </div>
-      <h1
-        class="sm:text-sm text-xs font-semibold flex justify-start items-center truncate whitespace-break-spaces max-w-28"
+      <div
+        class="sm:text-sm text-xs font-semibold flex justify-start gap-0.5 items-center truncate whitespace-break-spaces max-w-28"
       >
         <span v-if="item.mall" class="text-[9px] bg-gray-800 text-white px-1"
           >Mall</span
         >
+        <div
+          v-if="item.shipping === 0"
+          class="flex gap-0.5 bg-gray-800 text-white px-1 text-[9px] font-semibold justify-start items-center"
+        >
+          <Icon
+            icon="material-symbols-light:delivery-truck-bolt-outline"
+            width="18"
+            height="18"
+          />Free
+        </div>
         {{ item.name }}
-      </h1>
+      </div>
       <div class="flex justify-start gap-1 items-center">
         <p class="sm:text-lg text-sm text-gray-800 font-bold">
           ${{ formatPrice(item.price) }}
