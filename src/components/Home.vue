@@ -117,6 +117,15 @@ const flashSaleProducts = ref([
     image:
       "https://images.pexels.com/photos/157757/wedding-dresses-fashion-character-bride-157757.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
+  {
+    id: 3,
+    name: "Dress",
+    price: 3500,
+    discount: 99,
+    category: "dress",
+    image:
+      "https://images.pexels.com/photos/890669/pexels-photo-890669.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  },
 ]);
 </script>
 

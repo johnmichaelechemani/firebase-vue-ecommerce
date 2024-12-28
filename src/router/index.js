@@ -115,8 +115,16 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   //console.log(userData.value,  isLoggedIn.value);
-  // Enhanced login check
-  if (to.name === "mallDashboard" || to.name === "purchase") {
+  if (to.name === "purchase") {
+    // More robust login verification
+    if (!isLoggedIn.value && !userData.value) {
+      console.warn("Redirecting to login - not authenticated");
+      loginErrorMessage.value = "Please login first!";
+      next("/login");
+      return;
+    }
+  }
+  if (to.name === "mallDashboard") {
     // More robust login verification
     if (!isLoggedIn.value && !userData.value) {
       console.warn("Redirecting to login - not authenticated");
