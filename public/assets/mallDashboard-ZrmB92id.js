@@ -1,0 +1,1 @@
+import{$ as e,c,o as s}from"./index-efUQckq_.js";const o={},t={class:"sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"};function a(l,r){return s(),c("div",t," hey ")}const n=e(o,[["render",a]]);export{n as default};
