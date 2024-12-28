@@ -14,7 +14,7 @@ const { registerAccount, name, email, password, role } = useAuth();
     <div class="flex justify-center items-center h-[calc(100%-5rem)]">
       <div class="border p-5 min-w-72 sm:min-w-96">
         <ErrorMessage :err-message="registerErrorMessage" />
-        <h1 class="text-lg font-bold my-3">Sign Up</h1>
+        <h1 class="text-lg font-bold mb-3">Sign Up</h1>
         <div class="my-2">
           <p class="text-sm font-semibold text-gray-700">
             Name: <span title="important">*</span>
@@ -72,7 +72,7 @@ const { registerAccount, name, email, password, role } = useAuth();
         </div>
 
         <p
-          class="text-xs my-2 cursor-pointer flex justify-end gap-2 font-semibold text-gray-700"
+          class="text-xs mt-2 cursor-pointer flex justify-end gap-2 font-semibold text-gray-700"
         >
           Already have an account?
           <RouterLink to="/login" class="underline"> Login</RouterLink>
