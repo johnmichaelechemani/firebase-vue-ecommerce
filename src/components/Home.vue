@@ -1,10 +1,11 @@
 <script setup>
 import ProductCard from "./ProductCard.vue";
 import { useRouter, useRoute } from "vue-router";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { products, getProducts, isProductLoading } from "@/store";
 import ProductLoading from "./ProductLoading.vue";
 import { Icon } from "@iconify/vue";
+import { formatPrice } from "@/scripts/composables";
 
 const router = useRouter();
 const route = useRoute();
@@ -22,8 +23,51 @@ const filteredProducts = computed(() => {
   return products.value;
 });
 
+const hours = ref("00");
+const minutes = ref("00");
+const seconds = ref("00");
+const calculateCountdown = () => {
+  const targetDate = new Date();
+  targetDate.setHours(targetDate.getHours() + 2);
+  targetDate.setMinutes(0);
+  targetDate.setSeconds(0);
+
+  const countdownInterval = setInterval(() => {
+    const now = new Date();
+    const difference = targetDate.getTime() - now.getTime();
+
+    if (difference < 0) {
+      clearInterval(countdownInterval);
+      hours.value = "00";
+      minutes.value = "00";
+      seconds.value = "00";
+      return;
+    }
+    const calculatedHours = Math.floor(
+      (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const calculatedMinutes = Math.floor(
+      (difference % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const calculatedSeconds = Math.floor((difference % (1000 * 60)) / 1000);
+    hours.value = calculatedHours.toString().padStart(2, "0");
+    minutes.value = calculatedMinutes.toString().padStart(2, "0");
+    seconds.value = calculatedSeconds.toString().padStart(2, "0");
+  }, 1000);
+
+  return countdownInterval;
+};
+
+let countdownInterval;
+
 onMounted(() => {
+  countdownInterval = calculateCountdown();
   getProducts();
+});
+onUnmounted(() => {
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+  }
 });
 
 const Category = ref([
@@ -51,6 +95,27 @@ const Category = ref([
     id: 5,
     name: "KITCHEN TOOLS",
     category: "kitchen-tools",
+  },
+]);
+
+const flashSaleProducts = ref([
+  {
+    id: 1,
+    name: "Samsung TV",
+    price: 500,
+    discount: 70,
+    category: "home-appliances",
+    image:
+      "https://images.pexels.com/photos/2569997/pexels-photo-2569997.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  },
+  {
+    id: 2,
+    name: "Dress",
+    price: 9000,
+    discount: 50,
+    category: "dress",
+    image:
+      "https://images.pexels.com/photos/157757/wedding-dresses-fashion-character-bride-157757.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 ]);
 </script>
@@ -90,7 +155,7 @@ const Category = ref([
       </nav>
 
       <div
-        class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-48 text-gray-800"
+        class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-48 text-gray-900"
       >
         <div class="m-2">
           <div class="p-2 border bg-gray-800/5">
@@ -105,33 +170,42 @@ const Category = ref([
               <div
                 class="flex text-xs font-semibold justify-start items-center gap-1"
               >
-                <div class="bg-gray-800 text-white px-1 w-5 text-center">
-                  01
+                <div class="bg-gray-800 text-white px-1 w-6 text-center">
+                  {{ hours }}
                 </div>
                 :
-                <div class="bg-gray-800 text-white px-1 w-5 text-center">
-                  01
+                <div class="bg-gray-800 text-white px-1 w-6 text-center">
+                  {{ minutes }}
                 </div>
                 :
-                <div class="bg-gray-800 text-white px-1 w-5 text-center">
-                  01
+                <div class="bg-gray-800 text-white px-1 w-6 text-center">
+                  {{ seconds }}
                 </div>
               </div>
             </div>
-            <div>
-              <div class="size-20 bg-gray-700/50 relative">
-                <div
-                  class="absolute flex bottom-0 left-0 text-xs bg-gray-800 text-white px-0.5 py-0.5"
-                >
-                  <Icon
-                    icon="material-symbols-light:arrow-cool-down"
-                    width="16"
-                    height="16"
+            <div class="flex overflow-y-scroll gap-2 no-scrollbar">
+              <div v-for="item in flashSaleProducts" :key="item.id">
+                <div class="size-20 bg-gray-700/50 relative">
+                  <img
+                    :src="item.image"
+                    alt=""
+                    class="w-full h-full object-cover object-center"
                   />
-                  80%
+                  <div
+                    class="absolute flex bottom-0 left-0 text-xs bg-gray-800 text-white px-0.5 py-0.5"
+                  >
+                    <Icon
+                      icon="material-symbols-light:arrow-cool-down"
+                      width="16"
+                      height="16"
+                    />
+                    {{ item.discount }} %
+                  </div>
+                </div>
+                <div class="text-sm font-bold">
+                  ${{ formatPrice(item.price) }}
                 </div>
               </div>
-              <div class="text-sm font-bold">$ 800.00</div>
             </div>
           </div>
         </div>
