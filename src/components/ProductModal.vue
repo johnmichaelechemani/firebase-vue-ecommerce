@@ -142,13 +142,20 @@ const addToFavorites = async () => {
                 @click="showModal"
                 class="flex gap-1 justify-start items-center my-2"
               >
-                <p class="text-xl font-semibold capitalize hover:underline">
+                <div
+                  class="text-xl flex justify-start items-center gap-1 font-semibold capitalize hover:underline"
+                >
+                  <Icon
+                    icon="material-symbols-light:store"
+                    width="30"
+                    height="30"
+                  />
                   {{ product.mallName }}
-                </p>
+                </div>
                 <Icon
                   icon="material-symbols-light:double-arrow"
-                  width="30"
-                  height="30"
+                  width="20"
+                  height="20"
                 />
               </router-link>
               <ErrorMessage :errMessage="cartErrorMessage" />
