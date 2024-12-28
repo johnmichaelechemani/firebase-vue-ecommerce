@@ -14,7 +14,7 @@ const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
     class="sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
     <div class="flex justify-center items-center h-[calc(100%-5rem)]">
-      <div class="border p-5">
+      <div class="border p-5 min-w-72 sm:min-w-96">
         <ErrorMessage :err-message="loginErrorMessage" />
 
         <h1 class="text-lg font-bold my-3">Login</h1>
@@ -24,7 +24,7 @@ const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
             v-model="email"
             required
             type="text"
-            class="outline-none border p-2 min-w-52 sm:min-w-80"
+            class="outline-none border p-2 w-full"
           />
         </div>
         <div class="my-2">
@@ -33,7 +33,7 @@ const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
             v-model="password"
             required
             type="password"
-            class="outline-none border p-2 min-w-52 sm:min-w-80"
+            class="outline-none border p-2 w-full"
           />
         </div>
 
