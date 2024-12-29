@@ -29,6 +29,9 @@ const props = defineProps({
 const emit = defineEmits(["closeModal"]);
 const cartErrorMessage = ref("");
 const showSuccessMessageFavorites = ref(false);
+const showSuccessMessage = ref(false);
+const showError = ref(false);
+
 const showModal = () => {
   emit("closeModal");
   props.product.value = null;
@@ -39,10 +42,13 @@ const changeSize = (size) => {
   selectedSize.value = size;
 };
 
-const showSuccessMessage = ref(false);
 const addToCart = async () => {
   if (selectedSize.value === "") {
+    showError.value = true;
     cartErrorMessage.value = "Please select a size";
+    setTimeout(() => {
+      showError.value = false;
+    }, 2000);
     return;
   }
   if (isLoggedIn.value === false) {
@@ -158,7 +164,7 @@ const addToFavorites = async () => {
                   height="20"
                 />
               </router-link>
-              <ErrorMessage :errMessage="cartErrorMessage" />
+              <ErrorMessage v-if="showError" :errMessage="cartErrorMessage" />
 
               <div class="flex justify-start items-start gap-4">
                 <div
