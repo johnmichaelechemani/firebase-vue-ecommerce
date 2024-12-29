@@ -2,8 +2,9 @@
 import { Icon } from "@iconify/vue";
 import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { purchaseProducts, getPurchaseProducts } from "@/store";
+import { purchaseProducts, getPurchaseProducts, userData } from "@/store";
 import { formatPrice, Time } from "@/scripts/composables";
+import { getFirestore, collection, doc, updateDoc } from "firebase/firestore";
 
 const router = useRouter();
 const route = useRoute();
@@ -14,9 +15,13 @@ const queryForStat = (query) => {
   });
 };
 
-onMounted(() => {
-  getPurchaseProducts();
-});
+const firestore = getFirestore();
+const purchaseCollection = collection(
+  firestore,
+  "purchase",
+  userData.value.userId,
+  "items"
+);
 
 const purchasesStatus = ref([
   {
@@ -64,13 +69,13 @@ const filteredStats = computed(() => {
   }
   return purchaseProducts.value;
 });
-const getButtonConfig = (status) => {
+const getButtonConfig = (status, id) => {
   const buttonMap = {
     completed: {
       text: "Buy Again",
       action: () => console.log("Buy Again Clicked"),
     },
-    pay: { text: "Cancel", action: () => console.log("Cancel Clicked") },
+    pay: { text: "Cancel", action: () => cancelOrder(id) },
     ship: {
       text: "Track Order",
       action: () => console.log("Track Order Clicked"),
@@ -86,6 +91,17 @@ const getButtonConfig = (status) => {
   };
   return buttonMap[status] || null;
 };
+
+const cancelOrder = async (id) => {
+  const purchaseDoc = doc(purchaseCollection, id);
+  await updateDoc(purchaseDoc, {
+    status: "cancelled",
+  });
+};
+
+onMounted(() => {
+  getPurchaseProducts();
+});
 </script>
 
 <template>
@@ -224,7 +240,7 @@ const getButtonConfig = (status) => {
           >
             <button
               class="border text-sm border-gray-700/50 hover:bg-gray-800 transition hover:text-white font-semibold px-4 py-2"
-              @click="getButtonConfig(item.status).action"
+              @click="getButtonConfig(item.status, item.id).action"
             >
               {{ getButtonConfig(item.status).text }}
             </button>
