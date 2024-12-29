@@ -4,7 +4,13 @@ import { ref, computed, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { purchaseProducts, getPurchaseProducts, userData } from "@/store";
 import { formatPrice, Time } from "@/scripts/composables";
-import { getFirestore, collection, doc, updateDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  doc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
 
 const router = useRouter();
 const route = useRoute();
@@ -22,6 +28,7 @@ const purchaseCollection = collection(
   userData.value.userId,
   "items"
 );
+const productCollection = collection(firestore, "products");
 
 const purchasesStatus = ref([
   {
@@ -69,13 +76,13 @@ const filteredStats = computed(() => {
   }
   return purchaseProducts.value;
 });
-const getButtonConfig = (status, id) => {
+const getButtonConfig = (status, item) => {
   const buttonMap = {
     completed: {
       text: "Buy Again",
       action: () => console.log("Buy Again Clicked"),
     },
-    pay: { text: "Cancel", action: () => cancelOrder(id) },
+    pay: { text: "Cancel", action: () => cancelOrder(item) },
     ship: {
       text: "Track Order",
       action: () => console.log("Track Order Clicked"),
@@ -92,10 +99,16 @@ const getButtonConfig = (status, id) => {
   return buttonMap[status] || null;
 };
 
-const cancelOrder = async (id) => {
-  const purchaseDoc = doc(purchaseCollection, id);
+const cancelOrder = async (item) => {
+  console.log(item);
+  const purchaseDoc = doc(purchaseCollection, item.id);
+  const productDoc = doc(productCollection, item.productId);
   await updateDoc(purchaseDoc, {
     status: "cancelled",
+  });
+
+  await updateDoc(productDoc, {
+    inventory: increment(-item.quantity),
   });
 };
 
@@ -240,7 +253,7 @@ onMounted(() => {
           >
             <button
               class="border text-sm border-gray-700/50 hover:bg-gray-800 transition hover:text-white font-semibold px-4 py-2"
-              @click="getButtonConfig(item.status, item.id).action"
+              @click="getButtonConfig(item.status, item).action"
             >
               {{ getButtonConfig(item.status).text }}
             </button>
