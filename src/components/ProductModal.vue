@@ -266,9 +266,19 @@ const addToFavorites = async () => {
                   <div class="my-2">
                     <button
                       @click="addToCart"
-                      class="bg-gray-800 text-white font-semibold text-sm py-2 w-full"
+                      :disabled="props.product.inventory === 0"
+                      :class="
+                        props.product.inventory === 0
+                          ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                          : 'bg-gray-800 text-white'
+                      "
+                      class="font-semibold text-sm py-2 w-full"
                     >
-                      Add to Cart
+                      {{
+                        props.product.inventory === 0
+                          ? "Out of Stock"
+                          : "Add to Cart"
+                      }}
                     </button>
                   </div>
                 </div>

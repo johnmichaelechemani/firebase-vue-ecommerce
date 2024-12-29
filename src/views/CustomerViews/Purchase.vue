@@ -107,7 +107,7 @@ const cancelOrder = async (item) => {
   });
 
   await updateDoc(productDoc, {
-    inventory: increment(-item.quantity),
+    inventory: increment(item.quantity),
   });
 };
 

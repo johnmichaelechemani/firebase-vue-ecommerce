@@ -5,13 +5,21 @@ import { RouterLink } from "vue-router";
 import { formatPrice, incerment, decrement } from "@/scripts/composables";
 import { userData } from "@/store";
 import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  updateDoc,
+  increment,
+  doc
+} from "firebase/firestore";
 import ErrorMessage from "./ErrorMessage.vue";
 const props = defineProps({
   isShowModal: Boolean,
   product: Array,
 });
 const db = getFirestore();
+const productCollection = collection(db, "products");
 const quantity = ref(1);
 const selectedPaymentMethod = ref(null);
 const paymentErrMessage = ref("");
@@ -55,6 +63,7 @@ const placeOrder = async () => {
 
   try {
     const productPromises = props.product.map(async (item) => {
+      const productDoc = doc(productCollection, item.id);
       await addDoc(collection(db, `purchase/${userData.value.userId}/items`), {
         productId: item.id,
         userId: userData.value.userId,
@@ -76,7 +85,12 @@ const placeOrder = async () => {
         },
       });
       deleteItems("carts", item.cartItemId);
+
+      await updateDoc(productDoc, {
+        inventory: increment(-item.quantity),
+      });
     });
+
     await Promise.all(productPromises);
     emit("closeModal");
     props.product = [];
