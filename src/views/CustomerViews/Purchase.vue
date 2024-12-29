@@ -100,7 +100,6 @@ const getButtonConfig = (status, item) => {
 };
 
 const cancelOrder = async (item) => {
-  console.log(item);
   const purchaseDoc = doc(purchaseCollection, item.id);
   const productDoc = doc(productCollection, item.productId);
   await updateDoc(purchaseDoc, {
