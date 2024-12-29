@@ -57,7 +57,7 @@ export const getProducts = () => {
         ...doc.data(),
       }));
       isProductLoading.value = false;
-      console.log("Products updated in real-time:", products.value);
+      //console.log("Products updated in real-time:", products.value);
     });
 
     return products.value;
@@ -79,7 +79,7 @@ export const getCartProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("carts updated in real-time:", cartItems.value);
+      //console.log("carts updated in real-time:", cartItems.value);
     });
     return cartItems.value;
   } catch (error) {
@@ -99,7 +99,7 @@ export const getFavoritesProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("fav updated in real-time:", favoritesItem.value);
+      //console.log("fav updated in real-time:", favoritesItem.value);
     });
     return favoritesItem.value;
   } catch (error) {
@@ -119,7 +119,7 @@ export const getPurchaseProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("purchase updated in real-time:", purchaseProducts.value);
+      //console.log("purchase updated in real-time:", purchaseProducts.value);
     });
     return purchaseProducts.value;
   } catch (error) {
