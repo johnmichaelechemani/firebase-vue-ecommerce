@@ -12,36 +12,68 @@ import {
   where,
   serverTimestamp,
 } from "firebase/firestore";
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
+
 const { user } = useAuth();
+const storage = getStorage();
 const firestore = getFirestore();
 const products = ref([]);
 const productName = ref("");
 const productDiscription = ref("");
 const productPrice = ref("");
 const productDiscount = ref("");
-const productImage = ref(" https://via.placeholder.com/150?text=Nothing");
+const productImage = ref("");
 const productCategory = ref("");
 const productInventory = ref(0);
+const productImagePreview = ref(null);
+const productImageInput = ref(null);
 
-const clear = () => {
-  productName.value = "";
-  productDiscription.value = "";
-  productPrice.value = "";
-  productDiscount.value = "";
-  productImage.value = null;
-  productCategory.value = "";
-  productInventory.value = 0;
-  console.log("Cleared");
+const triggerProfileImageUpload = () => {
+  productImageInput.value.click();
 };
+const handleProductImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      productImagePreview.value = e.target.result;
+      productImage.value = file;
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
 const add = async () => {
+  let productImageUpload = "";
+  if (productImage.value instanceof File) {
+    try {
+      const imageUrl = await uploadImageToStorage(
+        productImage.value,
+        `products/${user.value.uid}/${Date.now()}_image`
+      );
+      if (imageUrl) {
+        productImageUpload = imageUrl;
+      }
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return;
+    }
+  }
   try {
     await addDoc(collection(firestore, "products"), {
       name: productName.value,
       discription: productDiscription.value,
       price: productPrice.value,
-      image: productImage.value,
+      image: productImageUpload,
       discount: productDiscount.value,
       inventory: productInventory.value,
+      shipping: 0,
+      quantity: 1,
       mall: true,
       ratings: 0,
       sold: 0,
@@ -51,10 +83,10 @@ const add = async () => {
       timestamp: serverTimestamp(),
     });
 
-    console.log("Adding Success");
+    console.log("Product Added Successfully");
     clear();
   } catch (e) {
-    console.log("Error", e);
+    console.error("Error adding product:", e);
   }
 
   console.log(
@@ -67,7 +99,18 @@ const add = async () => {
     userData.value.userName
   );
 };
-
+const uploadImageToStorage = async (file, path) => {
+  if (!file || !user.value) return null;
+  try {
+    const imageRef = storageRef(storage, path);
+    const snapshot = await uploadBytes(imageRef, file);
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    return downloadURL;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    return null;
+  }
+};
 const getProducts = () => {
   const productsQuery = query(
     collection(firestore, "products"),
@@ -80,12 +123,23 @@ const getProducts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-        console.log("Products updated in real-time:", products.value);
+      console.log("Products updated in real-time:", products.value);
     },
     (error) => {
       console.error("Error fetching products:", error);
     }
   );
+};
+const clear = () => {
+  productName.value = "";
+  productDiscription.value = "";
+  productPrice.value = "";
+  productDiscount.value = "";
+  productImage.value = null;
+  productCategory.value = "";
+  productInventory.value = 0;
+  productImagePreview.value = null;
+  console.log("Cleared");
 };
 onMounted(() => {
   getProducts();
@@ -102,6 +156,32 @@ onMounted(() => {
       <p class="text-sm font-semibold py-2">Add Products</p>
       <form action="">
         <div class="flex flex-wrap gap-2">
+          <div class="relative sm:size-20 size-10 bg-gray-500/50">
+            <input
+              type="file"
+              ref="productImageInput"
+              @change="handleProductImageUpload"
+              accept="image/*"
+              class="hidden"
+            />
+            <img
+              v-if="productImagePreview"
+              :src="productImagePreview"
+              alt="productimage"
+              loading="lazy"
+              class="w-full h-full object-cover object-center"
+            />
+            <button
+              @click.prevent="triggerProfileImageUpload"
+              class="absolute bottom-0 shadow right-0 border-2 bg-white"
+            >
+              <Icon
+                icon="material-symbols-light:edit-outline"
+                width="24"
+                height="24"
+              />
+            </button>
+          </div>
           <div class="border p-2">
             <label
               for="name"
