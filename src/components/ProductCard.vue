@@ -64,9 +64,11 @@ watch(isShowModal, (newValue) => {
         </div>
       </div>
       <div
-        class="sm:text-sm text-xs font-semibold flex justify-start gap-0.5 items-center truncate whitespace-break-spaces max-w-28"
+        class="sm:text-sm text-xs flex justify-start gap-0.5 items-center max-w-28"
       >
-        <span v-if="item.mall" class="text-[9px] bg-gray-800 text-white px-1"
+        <span
+          v-if="item.mall"
+          class="text-[9px] w-7 bg-gray-800 text-white px-1"
           >Mall</span
         >
         <div
@@ -79,6 +81,10 @@ watch(isShowModal, (newValue) => {
             height="18"
           />Free
         </div>
+      </div>
+      <div
+        class="sm:text-sm text-xs font-semibold capitalize whitespace-pre-line"
+      >
         {{ item.name }}
       </div>
       <div class="flex justify-start gap-1 items-center">
