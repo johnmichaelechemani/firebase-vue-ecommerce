@@ -79,6 +79,7 @@ onMounted(async () => {
                     <img
                       v-if="mall.userPhotoURL"
                       :src="mall.userPhotoURL"
+                      loading="lazy"
                       alt=""
                       class="w-full h-full object-cover object-center"
                     />

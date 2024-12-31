@@ -94,6 +94,13 @@ const save = async () => {
         ...userData.value,
         ...updateData,
       };
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          ...userData.value,
+          ...updateData,
+        })
+      );
       console.log("Profile updated successfully");
     }
   } catch (error) {

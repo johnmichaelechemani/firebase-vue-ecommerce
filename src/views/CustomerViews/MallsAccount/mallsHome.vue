@@ -61,6 +61,7 @@ onMounted(initializeData);
         <router-link :to="{ name: 'mallStore', params: { id: mall.userId } }">
           <img
             :src="mall.userPhotoURL"
+            loading="lazy"
             :alt="`${mall.mallType} mall logo`"
             class="w-16 h-16 object-cover mr-4"
           />

@@ -95,6 +95,7 @@ const logout = () => {
             <img
               v-if="userData.userPhotoURL"
               :src="userData.userPhotoURL"
+              loading="lazy"
               alt=""
               class="h-full w-full object-cover rounded-full object-center"
             />

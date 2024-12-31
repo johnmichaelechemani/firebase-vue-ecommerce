@@ -42,6 +42,7 @@ onMounted(async () => {
             v-if="mallData && mallData.userPhotoURL"
             :src="mallData.userPhotoURL"
             alt="mall profile"
+            loading="lazy"
             class="w-full h-full object-center object-cover"
           />
           <div v-else class="flex justify-center items-center">

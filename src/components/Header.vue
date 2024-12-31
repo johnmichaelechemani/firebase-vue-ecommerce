@@ -151,6 +151,7 @@ onMounted(() => {
             <img
               :src="userData.userPhotoURL"
               alt=""
+               loading="lazy"
               class="h-full w-full object-cover rounded-full object-center"
             />
           </button>
