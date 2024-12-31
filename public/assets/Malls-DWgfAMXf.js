@@ -1,0 +1,1 @@
+import{c as e,a as s,b as a,d as l,o as c,R as o}from"./index-CDMhr0U-.js";const r={class:"sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"},t={class:"p-2 relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32 w-full"},f={__name:"Malls",setup(m){return(_,n)=>(c(),e("div",r,[s("div",t,[a(l(o))])]))}};export{f as default};

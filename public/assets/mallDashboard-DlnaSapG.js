@@ -1,0 +1,1 @@
+import{a1 as e,c,o as s}from"./index-CDMhr0U-.js";const a={},o={class:"sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"};function t(l,r){return s(),c("div",o," hey ")}const n=e(a,[["render",t]]);export{n as default};
