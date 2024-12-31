@@ -68,7 +68,7 @@ watch(isShowModal, (newValue) => {
       >
         <span
           v-if="item.mall"
-          class="text-[9px] w-7 bg-gray-800 text-white px-1"
+          class="text-[9px] w-7 bg-gray-800 text-center text-white px-1"
           >Mall</span
         >
         <div

@@ -208,7 +208,7 @@ const flashSaleProducts = ref([
                       width="16"
                       height="16"
                     />
-                    {{ item.discount }} %
+                    {{ item.discount }}%
                   </div>
                 </div>
                 <div class="text-sm font-bold">
