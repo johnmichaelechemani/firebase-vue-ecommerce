@@ -130,6 +130,7 @@ export const useAuth = () => {
       const userDataFromFirestore = userDoc.data();
       const userDetails = {
         userName: userDataFromFirestore.userName,
+        bgImage: userDataFromFirestore.bgImage || null,
         userId: res.user.uid,
         userPhotoURL: userDataFromFirestore.userPhotoURL,
         email: userDataFromFirestore.email,
