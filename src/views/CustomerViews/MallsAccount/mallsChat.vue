@@ -39,8 +39,8 @@ onMounted(async () => {
           class="flex justify-center bg-gray-700/10 border size-8 items-center"
         >
           <img
-            v-if="mallData && mallData.image"
-            :src="mallData.image"
+            v-if="mallData && mallData.userPhotoURL"
+            :src="mallData.userPhotoURL"
             alt="mall profile"
             class="w-full h-full object-center object-cover"
           />

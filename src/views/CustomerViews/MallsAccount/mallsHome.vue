@@ -60,7 +60,7 @@ onMounted(initializeData);
       <div class="flex items-center mb-4">
         <router-link :to="{ name: 'mallStore', params: { id: mall.userId } }">
           <img
-            :src="mall.image"
+            :src="mall.userPhotoURL"
             :alt="`${mall.mallType} mall logo`"
             class="w-16 h-16 object-cover mr-4"
           />

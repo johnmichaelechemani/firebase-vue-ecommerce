@@ -96,7 +96,7 @@ onMounted(async () => {
     <div class="relative sm:mb-14 mb-5">
       <div class="w-full h-32 sm:h-52 bg-gray-700/50">
         <img
-          v-if="mallData.image"
+          v-if="mallData.bgImage"
           :src="mallData.bgImage"
           loading="lazy"
           alt="Background Image"
@@ -105,8 +105,8 @@ onMounted(async () => {
       </div>
       <div class="sm:size-20 size-10 absolute sm:-bottom-10 -bottom-5 left-2">
         <img
-          v-if="mallData.image"
-          :src="mallData.image"
+          v-if="mallData.userPhotoURL"
+          :src="mallData.userPhotoURL"
           alt="profile"
           loading="lazy"
           class="w-full h-full object-cover object-center"
@@ -117,7 +117,7 @@ onMounted(async () => {
       </div>
     </div>
     <div class="mb-3 flex justify-start items-center gap-2">
-      <h1 class="font-semibold text-lg drop-shadow-lg">
+      <h1 class="font-semibold text-lg capitalize drop-shadow-lg">
         {{ mallData.userName }}
       </h1>
       <router-link
