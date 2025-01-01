@@ -26,28 +26,31 @@ const { user } = useAuth();
 const storage = getStorage();
 const firestore = getFirestore();
 const products = ref([]);
-const productName = ref("");
-const productDiscription = ref("");
-const productPrice = ref("");
-const productDiscount = ref("");
-const productImage = ref("");
-const productCategory = ref("");
-const productInventory = ref(0);
-const productImagePreview = ref(null);
-const productImageInput = ref(null);
 const isLoading = ref(false);
 const successMessage = ref("");
+const product = ref({
+  name: "",
+  description: "",
+  price: "",
+  discount: "",
+  image: null,
+  category: "",
+  inventory: 0,
+  imagePreview: null,
+});
+const productImageInput = ref(null);
 
 const triggerProfileImageUpload = () => {
   productImageInput.value.click();
 };
+
 const handleProductImageUpload = (event) => {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      productImagePreview.value = e.target.result;
-      productImage.value = file;
+      product.value.imagePreview = e.target.result;
+      product.value.image = file;
     };
     reader.readAsDataURL(file);
   }
@@ -56,10 +59,10 @@ const handleProductImageUpload = (event) => {
 const add = async () => {
   isLoading.value = true;
   let productImageUpload = "";
-  if (productImage.value instanceof File) {
+  if (product.value.image instanceof File) {
     try {
       const imageUrl = await uploadImageToStorage(
-        productImage.value,
+        product.value.image,
         `products/${user.value.uid}/${Date.now()}_image`
       );
       if (imageUrl) {
@@ -73,18 +76,18 @@ const add = async () => {
   }
   try {
     await addDoc(collection(firestore, "products"), {
-      name: productName.value,
-      discription: productDiscription.value,
-      price: productPrice.value,
+      name: product.value.name,
+      description: product.value.description,
+      price: product.value.price,
       image: productImageUpload,
-      discount: productDiscount.value,
-      inventory: productInventory.value,
+      discount: product.value.discount,
+      inventory: product.value.inventory,
       shipping: 0,
       quantity: 1,
       mall: true,
       ratings: 0,
       sold: 0,
-      category: productCategory.value,
+      category: product.value.category,
       mallId: user.value.uid,
       mallName: userData.value.userName,
       timestamp: serverTimestamp(),
@@ -99,17 +102,8 @@ const add = async () => {
   } finally {
     isLoading.value = false;
   }
-
-  console.log(
-    productName.value,
-    productDiscription.value,
-    productPrice.value,
-    productDiscount.value,
-    productCategory.value,
-    user.value.uid,
-    userData.value.userName
-  );
 };
+
 const uploadImageToStorage = async (file, path) => {
   if (!file || !user.value) return null;
   try {
@@ -122,6 +116,7 @@ const uploadImageToStorage = async (file, path) => {
     return null;
   }
 };
+
 const getProducts = () => {
   const productsQuery = query(
     collection(firestore, "products"),
@@ -142,15 +137,18 @@ const getProducts = () => {
     }
   );
 };
+
 const clear = () => {
-  productName.value = "";
-  productDiscription.value = "";
-  productPrice.value = "";
-  productDiscount.value = "";
-  productImage.value = null;
-  productCategory.value = "";
-  productInventory.value = 0;
-  productImagePreview.value = null;
+  product.value = {
+    name: "",
+    description: "",
+    price: "",
+    discount: "",
+    image: null,
+    category: "",
+    inventory: 0,
+    imagePreview: null,
+  };
   console.log("Cleared");
 };
 
@@ -190,8 +188,8 @@ onMounted(() => {
               class="hidden"
             />
             <img
-              v-if="productImagePreview"
-              :src="productImagePreview"
+              v-if="product.imagePreview"
+              :src="product.imagePreview"
               alt="productimage"
               loading="lazy"
               class="w-full h-full object-cover object-center"
@@ -217,7 +215,7 @@ onMounted(() => {
             <input
               required
               type="text"
-              v-model="productName"
+              v-model="product.name"
               class="border p-1 w-full"
             />
           </div>
@@ -230,7 +228,7 @@ onMounted(() => {
             >
             <input
               type="text"
-              v-model="productDiscription"
+              v-model="product.description"
               class="border p-1 w-full"
             />
           </div>
@@ -246,7 +244,7 @@ onMounted(() => {
               $
               <input
                 type="number"
-                v-model="productPrice"
+                v-model="product.price"
                 class="w-full outline-none p-1"
               />
             </div>
@@ -262,7 +260,7 @@ onMounted(() => {
             <div class="border flex items-center gap-1 px-3 w-full">
               <input
                 type="number"
-                v-model="productDiscount"
+                v-model="product.discount"
                 class="w-full outline-none p-1"
               />
               %
@@ -280,7 +278,7 @@ onMounted(() => {
               x
               <input
                 type="number"
-                v-model="productInventory"
+                v-model="product.inventory"
                 class="w-full outline-none p-1"
               />
             </div>
@@ -295,7 +293,7 @@ onMounted(() => {
             <select
               name=""
               required
-              v-model="productCategory"
+              v-model="product.category"
               id=""
               class="border text-sm p-1 w-full"
             >
