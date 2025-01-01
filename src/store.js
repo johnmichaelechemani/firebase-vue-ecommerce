@@ -7,6 +7,7 @@ import {
   query,
   where,
   onSnapshot,
+  orderBy,
 } from "firebase/firestore";
 
 // global variables and storages
@@ -50,7 +51,10 @@ export const getProducts = () => {
   const db = getFirestore();
   isProductLoading.value = true;
   try {
-    const productsQuery = query(collection(db, "products"));
+    const productsQuery = query(
+      collection(db, "products"),
+      orderBy("timestamp", "desc")
+    );
     onSnapshot(productsQuery, (querySnapshot) => {
       products.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,

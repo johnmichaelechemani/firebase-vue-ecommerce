@@ -11,6 +11,7 @@ import {
   onSnapshot,
   where,
   serverTimestamp,
+  orderBy,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -18,7 +19,7 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
-import { deleteProducts } from "@/scripts/firebaseDeleteApi";
+import { deleteProducts, deleteMessage } from "@/scripts/firebaseDeleteApi";
 import AlertMessage from "@/components/AlertMessage.vue";
 
 const { user } = useAuth();
@@ -34,6 +35,8 @@ const productCategory = ref("");
 const productInventory = ref(0);
 const productImagePreview = ref(null);
 const productImageInput = ref(null);
+const isLoading = ref(false);
+const successMessage = ref("");
 
 const triggerProfileImageUpload = () => {
   productImageInput.value.click();
@@ -51,6 +54,7 @@ const handleProductImageUpload = (event) => {
 };
 
 const add = async () => {
+  isLoading.value = true;
   let productImageUpload = "";
   if (productImage.value instanceof File) {
     try {
@@ -63,6 +67,7 @@ const add = async () => {
       }
     } catch (error) {
       console.error("Image upload failed:", error);
+      isLoading.value = false;
       return;
     }
   }
@@ -84,11 +89,15 @@ const add = async () => {
       mallName: userData.value.userName,
       timestamp: serverTimestamp(),
     });
-
-    console.log("Product Added Successfully");
+    successMessage.value = "Product Added Successfully";
+    setTimeout(() => {
+      successMessage.value = "";
+    }, 2000);
     clear();
   } catch (e) {
     console.error("Error adding product:", e);
+  } finally {
+    isLoading.value = false;
   }
 
   console.log(
@@ -116,6 +125,7 @@ const uploadImageToStorage = async (file, path) => {
 const getProducts = () => {
   const productsQuery = query(
     collection(firestore, "products"),
+    orderBy("timestamp", "desc"),
     where("mallId", "==", userData.value.userId)
   );
   onSnapshot(
@@ -153,8 +163,11 @@ onMounted(() => {
   <div
     class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
-    <div class="absolute top-2 right-2">
-      <AlertMessage message="Product Added Successfully!" color="green" />
+    <div class="absolute top-2 right-2" v-if="successMessage !== ''">
+      <AlertMessage :message="successMessage" color="green" />
+    </div>
+    <div class="absolute top-2 right-2" v-if="deleteMessage !== ''">
+      <AlertMessage :message="deleteMessage" color="red" />
     </div>
     <div
       class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] pb-32"
@@ -299,9 +312,12 @@ onMounted(() => {
         </button>
         <button
           @click="add"
-          class="text-sm text-white font-semibold bg-gray-800 w-32 py-2 my-2 px-5"
+          class="text-sm text-center flex justify-center items-center text-white font-semibold bg-gray-800 w-32 py-2 my-2 px-5"
         >
-          Add
+          <span v-if="!isLoading">Add</span>
+          <span v-else>
+            <Icon icon="eos-icons:loading" width="20" height="20" />
+          </span>
         </button>
       </div>
 
@@ -319,7 +335,7 @@ onMounted(() => {
                 <th scope="col" class="px-6 py-3">Action</th>
               </tr>
             </thead>
-            <tbody v-for="(item, index) in products" :key="index">
+            <tbody v-for="item in products" :key="item.id">
               <tr class="border-b">
                 <th
                   scope="row"

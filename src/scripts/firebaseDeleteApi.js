@@ -8,6 +8,8 @@ import {
 import { userData } from "./../store";
 import { ref, watch, computed } from "vue";
 
+export const deleteMessage = ref("");
+
 export const deleteItems = (folderName, productId) => {
   const db = getFirestore();
   try {
@@ -30,7 +32,10 @@ export const deleteProducts = (folderName, productId) => {
   try {
     const prodRef = doc(db, folderName, productId);
     deleteDoc(prodRef);
-    console.log("product successfully deleted");
+    deleteMessage.value = "Product successfully deleted!";
+    setTimeout(() => {
+      deleteMessage.value = "";
+    }, 2000);
   } catch (error) {
     console.error("Error deleting product:", error);
   }
