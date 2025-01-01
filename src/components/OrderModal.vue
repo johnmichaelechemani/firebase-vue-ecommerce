@@ -54,10 +54,16 @@ const paymentMethods = [
 const placeOrder = async () => {
   if (!selectedPaymentMethod.value) {
     paymentErrMessage.value = "Please select a payment method";
+    setTimeout(() => {
+      paymentErrMessage.value = "";
+    }, 2000);
     return;
   }
   if (!props.product || props.product.length === 0) {
     paymentErrMessage.value = "No products to purchase.";
+    setTimeout(() => {
+      paymentErrMessage.value = "";
+    }, 2000);
     return;
   }
 
@@ -101,6 +107,9 @@ const placeOrder = async () => {
     console.error("Error placing order:", error);
     paymentErrMessage.value =
       "An error occurred while placing the order. Please try again.";
+    setTimeout(() => {
+      paymentErrMessage.value = "";
+    }, 2000);
   }
 };
 </script>

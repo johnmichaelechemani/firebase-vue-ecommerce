@@ -114,6 +114,9 @@ export const useAuth = () => {
   const loginAccount = async () => {
     if (email.value.trim() === "" || password.value.trim() === "") {
       loginErrorMessage.value = "Enter your account!";
+      setTimeout(() => {
+        loginErrorMessage.value = "";
+      }, 2000);
       return;
     }
     try {
@@ -156,6 +159,10 @@ export const useAuth = () => {
       }
     } catch (error) {
       loginErrorMessage.value = "Invalid credentials!";
+      setTimeout(() => {
+        loginErrorMessage.value = "";
+      }, 2000);
+
       console.error("Login error:", error);
     }
   };
@@ -168,6 +175,10 @@ export const useAuth = () => {
       role.value.trim() === ""
     ) {
       registerErrorMessage.value = "Enter your information.";
+      setTimeout(() => {
+        registerErrorMessage.value = "";
+      }, 2000);
+
       return;
     }
     await createUserWithEmailAndPassword(
@@ -192,6 +203,9 @@ export const useAuth = () => {
       })
       .catch(() => {
         registerErrorMessage.value = "Invalid information.";
+        setTimeout(() => {
+          registerErrorMessage.value = "";
+        }, 2000);
       });
   };
 

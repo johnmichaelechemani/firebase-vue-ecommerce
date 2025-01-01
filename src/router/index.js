@@ -120,6 +120,10 @@ router.beforeEach((to, from, next) => {
     if (!isLoggedIn.value && !userData.value) {
       console.warn("Redirecting to login - not authenticated");
       loginErrorMessage.value = "Please login first!";
+      setTimeout(() => {
+        loginErrorMessage.value = "";
+      }, 2000);
+
       next("/login");
       return;
     }
@@ -129,6 +133,10 @@ router.beforeEach((to, from, next) => {
     if (!isLoggedIn.value && !userData.value) {
       console.warn("Redirecting to login - not authenticated");
       loginErrorMessage.value = "Please login first!";
+      setTimeout(() => {
+        loginErrorMessage.value = "";
+      }, 2000);
+      
       next("/login");
       return;
     }

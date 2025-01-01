@@ -15,7 +15,11 @@ const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
   >
     <div class="flex justify-center items-center h-[calc(100%-5rem)]">
       <div class="border p-5 min-w-72 sm:min-w-96">
-        <ErrorMessage :message="loginErrorMessage" color="red" />
+        <ErrorMessage
+          v-if="loginErrorMessage"
+          :message="loginErrorMessage"
+          color="red"
+        />
 
         <h1 class="text-lg font-bold mb-3">Login</h1>
         <div class="my-2">
