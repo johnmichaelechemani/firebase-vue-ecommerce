@@ -163,11 +163,17 @@ onMounted(() => {
   <div
     class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
-    <div class="absolute top-2 right-2" v-if="successMessage !== ''">
-      <AlertMessage :message="successMessage" color="green" />
-    </div>
-    <div class="absolute top-2 right-2" v-if="deleteMessage !== ''">
-      <AlertMessage :message="deleteMessage" color="red" />
+    <div class="absolute top-2 right-2">
+      <AlertMessage
+        v-if="deleteMessage !== ''"
+        :message="deleteMessage"
+        color="red"
+      />
+      <AlertMessage
+        v-if="successMessage !== ''"
+        :message="successMessage"
+        color="green"
+      />
     </div>
     <div
       class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] pb-32"
