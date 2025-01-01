@@ -1,7 +1,7 @@
 <script setup>
 import ProductCard from "./ProductCard.vue";
 import { useRouter, useRoute } from "vue-router";
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { products, getProducts, isProductLoading } from "@/store";
 import ProductLoading from "./ProductLoading.vue";
 import FlashSale from "./FlashSale.vue";
@@ -22,51 +22,8 @@ const filteredProducts = computed(() => {
   return products.value;
 });
 
-const hours = ref("00");
-const minutes = ref("00");
-const seconds = ref("00");
-const calculateCountdown = () => {
-  const targetDate = new Date();
-  targetDate.setHours(targetDate.getHours() + 2);
-  targetDate.setMinutes(0);
-  targetDate.setSeconds(0);
-
-  const countdownInterval = setInterval(() => {
-    const now = new Date();
-    const difference = targetDate.getTime() - now.getTime();
-
-    if (difference < 0) {
-      clearInterval(countdownInterval);
-      hours.value = "00";
-      minutes.value = "00";
-      seconds.value = "00";
-      return;
-    }
-    const calculatedHours = Math.floor(
-      (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const calculatedMinutes = Math.floor(
-      (difference % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const calculatedSeconds = Math.floor((difference % (1000 * 60)) / 1000);
-    hours.value = calculatedHours.toString().padStart(2, "0");
-    minutes.value = calculatedMinutes.toString().padStart(2, "0");
-    seconds.value = calculatedSeconds.toString().padStart(2, "0");
-  }, 1000);
-
-  return countdownInterval;
-};
-
-let countdownInterval;
-
 onMounted(() => {
-  countdownInterval = calculateCountdown();
   getProducts();
-});
-onUnmounted(() => {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
-  }
 });
 
 const Category = ref([
@@ -166,12 +123,7 @@ const flashSaleProducts = ref([
         class="relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-48 text-gray-900"
       >
         <div class="m-2">
-          <FlashSale
-            :saleProducts="flashSaleProducts"
-            :hours="hours"
-            :minutes="minutes"
-            :seconds="seconds"
-          />
+          <FlashSale :saleProducts="flashSaleProducts" />
         </div>
         <div class="m-2">
           <h1 class="text-lg font-semibold my-2">Products</h1>
