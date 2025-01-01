@@ -149,7 +149,10 @@ const clear = () => {
     inventory: 0,
     imagePreview: null,
   };
-  console.log("Cleared");
+  successMessage.value = "Cleared Successfully";
+  setTimeout(() => {
+    successMessage.value = "";
+  }, 2000);
 };
 
 onMounted(() => {
