@@ -18,6 +18,7 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+import { deleteProducts } from "@/scripts/firebaseDeleteApi";
 
 const { user } = useAuth();
 const storage = getStorage();
@@ -141,6 +142,7 @@ const clear = () => {
   productImagePreview.value = null;
   console.log("Cleared");
 };
+
 onMounted(() => {
   getProducts();
 });
@@ -155,8 +157,8 @@ onMounted(() => {
     >
       <p class="text-sm font-semibold py-2">Add Products</p>
       <form action="">
-        <div class="flex flex-wrap gap-2">
-          <div class="relative sm:size-20 size-10 bg-gray-500/50">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div class="relative sm:size-20 col-span-1 size-10 bg-gray-500/50">
             <input
               type="file"
               ref="productImageInput"
@@ -193,7 +195,7 @@ onMounted(() => {
               required
               type="text"
               v-model="productName"
-              class="border p-1"
+              class="border p-1 w-full"
             />
           </div>
           <div class="border p-2">
@@ -206,7 +208,7 @@ onMounted(() => {
             <input
               type="text"
               v-model="productDiscription"
-              class="border p-1"
+              class="border p-1 w-full"
             />
           </div>
           <div class="border p-2">
@@ -217,7 +219,7 @@ onMounted(() => {
               Price:</label
             >
 
-            <div class="border flex items-center gap-1 px-3 max-w-32">
+            <div class="border flex items-center gap-1 px-3 w-full">
               $
               <input
                 type="number"
@@ -234,7 +236,7 @@ onMounted(() => {
               Discount:</label
             >
 
-            <div class="border flex items-center gap-1 px-3 max-w-32">
+            <div class="border flex items-center gap-1 px-3 w-full">
               <input
                 type="number"
                 v-model="productDiscount"
@@ -251,7 +253,7 @@ onMounted(() => {
               Inventory:</label
             >
 
-            <div class="border flex items-center gap-1 px-3 max-w-32">
+            <div class="border flex items-center gap-1 px-3 w-full">
               x
               <input
                 type="number"
@@ -272,7 +274,7 @@ onMounted(() => {
               required
               v-model="productCategory"
               id=""
-              class="border text-sm p-1"
+              class="border text-sm p-1 w-full"
             >
               <option value="Electronics" class="text-xs font-semibold">
                 Electronics
@@ -315,13 +317,13 @@ onMounted(() => {
             </thead>
             <tbody v-for="(item, index) in products" :key="index">
               <tr class="border-b">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                <th scope="row" class="px-6 py-4 uppercase font-medium whitespace-nowrap">
                   {{ item.name }}
                 </th>
                 <td class="px-6 py-4">{{ item.category }}</td>
                 <td class="px-6 py-4">{{ item.inventory }}</td>
                 <td class="px-6 py-4">{{ item.discount }}</td>
-                <td class="px-6 py-4">$ {{ item.price }}</td>
+                <td class="px-6 py-4">${{ item.price }}</td>
                 <td class="px-6 py-4 flex justify-start items-center gap-2">
                   <button
                     class="font-medium text-green-500 border border-green-500/20 p-1"
@@ -333,6 +335,7 @@ onMounted(() => {
                     />
                   </button>
                   <button
+                    @click="deleteProducts('products', item.id)"
                     class="font-medium text-red-500 border border-red-500/20 p-1"
                   >
                     <Icon

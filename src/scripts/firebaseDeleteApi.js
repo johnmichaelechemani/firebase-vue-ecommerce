@@ -24,3 +24,14 @@ export const deleteItems = (folderName, productId) => {
     console.error("Error deleting item:", error);
   }
 };
+
+export const deleteProducts = (folderName, productId) => {
+  const db = getFirestore();
+  try {
+    const prodRef = doc(db, folderName, productId);
+    deleteDoc(prodRef);
+    console.log("product successfully deleted");
+  } catch (error) {
+    console.error("Error deleting product:", error);
+  }
+};
