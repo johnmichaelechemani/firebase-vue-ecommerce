@@ -15,7 +15,7 @@ import {
   incerment,
   decrement,
 } from "@/scripts/composables.js";
-import ErrorMessage from "./ErrorMessage.vue";
+import ErrorMessage from "./AlertMessage.vue";
 
 const firestore = getFirestore();
 const route = useRouter();
@@ -164,7 +164,7 @@ const addToFavorites = async () => {
                   height="20"
                 />
               </router-link>
-              <ErrorMessage v-if="showError" :errMessage="cartErrorMessage" />
+              <ErrorMessage v-if="showError" color="red" :message="cartErrorMessage" />
 
               <div class="flex justify-start items-start gap-4">
                 <div

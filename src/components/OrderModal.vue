@@ -11,9 +11,9 @@ import {
   addDoc,
   updateDoc,
   increment,
-  doc
+  doc,
 } from "firebase/firestore";
-import ErrorMessage from "./ErrorMessage.vue";
+import ErrorMessage from "./AlertMessage.vue";
 const props = defineProps({
   isShowModal: Boolean,
   product: Array,
@@ -247,7 +247,7 @@ const placeOrder = async () => {
           <div>
             <div class="p-2 border my-2">
               <p class="text-sm font-semibold pb-2">Payment method</p>
-              <ErrorMessage :errMessage="paymentErrMessage" />
+              <ErrorMessage color="red" :message="paymentErrMessage" />
 
               <div
                 v-for="method in paymentMethods"

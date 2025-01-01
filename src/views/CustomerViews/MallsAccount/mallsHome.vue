@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from "vue";
 import ProductCard from "@/components/ProductCard.vue";
 import { products, mallsAccount, getProducts, useMallsAccount } from "@/store";
 import ProductLoading from "@/components/ProductLoading.vue";
-import ErrorMessage from "@/components/ErrorMessage.vue";
+import ErrorMessage from "@/components/AlertMessage.vue";
 
 const isLoading = ref(true);
 const error = ref(null);

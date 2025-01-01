@@ -19,6 +19,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { deleteProducts } from "@/scripts/firebaseDeleteApi";
+import AlertMessage from "@/components/AlertMessage.vue";
 
 const { user } = useAuth();
 const storage = getStorage();
@@ -152,6 +153,9 @@ onMounted(() => {
   <div
     class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
+    <div class="absolute top-2 right-2">
+      <AlertMessage message="Product Added Successfully!" color="green" />
+    </div>
     <div
       class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] pb-32"
     >
@@ -317,7 +321,10 @@ onMounted(() => {
             </thead>
             <tbody v-for="(item, index) in products" :key="index">
               <tr class="border-b">
-                <th scope="row" class="px-6 py-4 uppercase font-medium whitespace-nowrap">
+                <th
+                  scope="row"
+                  class="px-6 py-4 uppercase font-medium whitespace-nowrap"
+                >
                   {{ item.name }}
                 </th>
                 <td class="px-6 py-4">{{ item.category }}</td>

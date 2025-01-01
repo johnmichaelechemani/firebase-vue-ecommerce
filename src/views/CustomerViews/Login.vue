@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { loginErrorMessage } from "../../store.js";
 import { Icon } from "@iconify/vue";
 import { useAuth } from "@/firebase.auth";
-import ErrorMessage from "@/components/ErrorMessage.vue";
+import ErrorMessage from "@/components/AlertMessage.vue";
 
 const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
   useAuth();
@@ -15,7 +15,7 @@ const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
   >
     <div class="flex justify-center items-center h-[calc(100%-5rem)]">
       <div class="border p-5 min-w-72 sm:min-w-96">
-        <ErrorMessage :err-message="loginErrorMessage" />
+        <ErrorMessage :message="loginErrorMessage" color="red" />
 
         <h1 class="text-lg font-bold mb-3">Login</h1>
         <div class="my-2">
