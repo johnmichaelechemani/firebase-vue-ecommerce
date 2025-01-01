@@ -28,6 +28,7 @@ const firestore = getFirestore();
 const products = ref([]);
 const isLoading = ref(false);
 const successMessage = ref("");
+const errorMessage = ref("");
 const product = ref({
   name: "",
   description: "",
@@ -57,6 +58,13 @@ const handleProductImageUpload = (event) => {
 };
 
 const add = async () => {
+  if (!validateProduct(product.value)) {
+    errorMessage.value = "Please fill all required fields.";
+    setTimeout(() => {
+      errorMessage.value = "";
+    }, 2000);
+    return;
+  }
   isLoading.value = true;
   let productImageUpload = "";
   if (product.value.image instanceof File) {
@@ -137,7 +145,15 @@ const getProducts = () => {
     }
   );
 };
-
+const validateProduct = (product) => {
+  return (
+    product.name &&
+    product.description &&
+    product.price &&
+    product.category &&
+    product.inventory >= 0
+  );
+};
 const clear = () => {
   product.value = {
     name: "",
@@ -149,10 +165,6 @@ const clear = () => {
     inventory: 0,
     imagePreview: null,
   };
-  successMessage.value = "Cleared Successfully";
-  setTimeout(() => {
-    successMessage.value = "";
-  }, 2000);
 };
 
 onMounted(() => {
@@ -168,6 +180,11 @@ onMounted(() => {
       <AlertMessage
         v-if="deleteMessage !== ''"
         :message="deleteMessage"
+        color="red"
+      />
+      <AlertMessage
+        v-if="errorMessage !== ''"
+        :message="errorMessage"
         color="red"
       />
       <AlertMessage
