@@ -7,12 +7,13 @@
     >
       <p class="text-sm font-semibold capitalize border-b pb-2">My Addresses</p>
       <div>
-        <p class="text-sm font-semibold py-1 px-2">Address</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <p class="text-sm font-semibold py-1">Address</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
           <div
             v-for="address in addresses"
             :key="address.id"
-            class="border border-gray-800/50 bg-gray-600/5 px-2 py-1"
+            :class="address.default ? 'border-gray-800/50 bg-gray-600/5' : ''"
+            class="border px-2 py-1"
           >
             <div class="flex justify-start items-center gap-2">
               <p class="text-sm font-semibold py-1">{{ address.name }}</p>
@@ -118,6 +119,17 @@ const addresses = ref([
     label: "Home",
     description: "This is my home address",
     default: true,
+  },
+  {
+    id: 2,
+    name: "John Michael",
+    phone: "9895627812",
+    rpcb: "Sount Luzon, Albay, Legazpi City, Brgy. 1",
+    zip: "4500",
+    shb: "Block 3 Lot 2, 102, 10 Apple Appartment",
+    label: "Home",
+    description: null,
+    default: false,
   },
 ]);
 </script>
