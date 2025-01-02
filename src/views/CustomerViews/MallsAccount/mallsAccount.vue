@@ -103,7 +103,7 @@ onMounted(async () => {
           class="w-full h-full object-cover object-center"
         />
       </div>
-      <div class="sm:size-20 size-10 absolute sm:-bottom-10 -bottom-5 left-2">
+      <div class="sm:size-20 size-10 shadow absolute sm:-bottom-10 -bottom-5 left-2">
         <img
           v-if="mallData.userPhotoURL"
           :src="mallData.userPhotoURL"

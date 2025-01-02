@@ -164,7 +164,11 @@ const addToFavorites = async () => {
                   height="20"
                 />
               </router-link>
-              <ErrorMessage v-if="showError" color="red" :message="cartErrorMessage" />
+              <ErrorMessage
+                v-if="showError"
+                color="red"
+                :message="cartErrorMessage"
+              />
 
               <div class="flex justify-start items-start gap-4">
                 <div
@@ -177,17 +181,34 @@ const addToFavorites = async () => {
                     class="object-center h-full w-full object-cover"
                   />
                   <div
-                    class="absolute top-0 right-0 py-0.5 px-1 bg-gray-800 text-white font-medium text-center text-xs"
+                    style="
+                      clip-path: polygon(
+                        0 0,
+                        100% 0,
+                        100% 100%,
+                        51% 68%,
+                        0 100%
+                      );
+                    "
+                    class="absolute top-0 right-0 pb-4 px-1 bg-gray-800 text-white font-medium text-center"
                   >
-                    <span>{{ product.discount }} %</span>
-                    <p>OFF</p>
+                    <div class="relative flex">
+                      <span class="text-[9px] pt-0.5"
+                        >{{ product.discount }}%</span
+                      >
+                    </div>
+                    <div class="flex justify-center items-start">
+                      <p class="text-[10px]">OFF</p>
+                    </div>
                   </div>
                 </div>
                 <div>
-                  <p class="text-sm font-semibold">{{ product.name }}</p>
+                  <p class="text-sm font-semibold capitalize">
+                    {{ product.name }}
+                  </p>
                   <div class="flex justify-start items-center gap-2">
                     <p class="text-lg font-bold">
-                      $ {{ formatPrice(product.price) }}
+                      ${{ formatPrice(product.price) }}
                     </p>
                   </div>
                   <div class="font-medium flex flex-wrap gap-2 my-2">

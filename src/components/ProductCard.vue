@@ -40,10 +40,15 @@ watch(isShowModal, (newValue) => {
         class="object-center h-full w-full object-cover"
       />
       <div
-        class="absolute top-0 right-0 py-0.5 px-1 bg-gray-800 text-white font-medium text-center text-xs"
+        style="clip-path: polygon(0 0, 100% 0, 100% 100%, 51% 68%, 0 100%)"
+        class="absolute top-0 right-0 pb-4 px-1 bg-gray-800 text-white font-medium text-center"
       >
-        <span>{{ item.discount }} % </span>
-        <p>OFF</p>
+        <div class="relative flex">
+          <span class="text-[9px] pt-0.5">{{ item.discount }}%</span>
+        </div>
+        <div class="flex justify-center items-start">
+          <p class="text-[10px]">OFF</p>
+        </div>
       </div>
     </div>
     <div class="p-1">
