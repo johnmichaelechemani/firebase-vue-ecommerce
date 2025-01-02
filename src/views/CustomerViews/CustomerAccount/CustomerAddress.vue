@@ -2,7 +2,7 @@
   <div
     class="sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
-    <div class="absolute top-2 right-2">
+    <div class="absolute top-2 z-10 right-2">
       <AlertMessage
         v-if="alert !== ''"
         :message="alert.message"
@@ -53,13 +53,13 @@
                 v-model="formData.name"
                 type="text"
                 placeholder="Full Name"
-                class="border w-full text-sm p-1 my-1"
+                class="border placeholder:text-xs w-full text-sm p-1 my-1"
               />
               <input
                 v-model="formData.phone"
                 type="number"
                 placeholder="Phone Number"
-                class="border w-full text-sm p-1 my-1"
+                class="border placeholder:text-xs w-full text-sm p-1 my-1"
               />
             </div>
             <div class="border p-2 col-span-2">
@@ -69,25 +69,25 @@
                 v-model="formData.shb"
                 type="text"
                 placeholder="Street/House/Building"
-                class="border w-full text-sm p-1 my-1"
+                class="border placeholder:text-xs w-full text-sm p-1 my-1"
               />
               <input
                 v-model="formData.description"
                 type="text"
                 placeholder="Additional Details"
-                class="border w-full text-sm p-1 my-1"
+                class="border placeholder:text-xs w-full text-sm p-1 my-1"
               />
               <input
                 v-model="formData.rpcb"
                 type="text"
                 placeholder="Region/Province/City/Barangay"
-                class="border w-full text-sm p-1 my-1"
+                class="border placeholder:text-xs w-full text-sm p-1 my-1"
               />
               <input
                 v-model="formData.zip"
                 type="text"
                 placeholder="ZIP Code"
-                class="border w-full text-sm p-1 my-1"
+                class="border placeholder:text-xs w-full text-sm p-1 my-1"
               />
             </div>
             <div class="border p-2">
@@ -97,8 +97,12 @@
               >
                 <p>Label As:</p>
                 <div class="flex gap-2">
-                  <button class="border px-2">Work</button>
-                  <button class="border px-2">Home</button>
+                  <button class="border px-2" @click="addLabel('work')">
+                    Work
+                  </button>
+                  <button class="border px-2" @click="addLabel('home')">
+                    Home
+                  </button>
                 </div>
               </div>
               <div class="flex justify-between text-xs pt-1 items-center gap-2">
@@ -163,10 +167,15 @@ const formData = ref({
   description: "",
   rpcb: "",
   zip: "",
+  label: "",
   default: false,
 });
 
 const alert = ref({ message: "", color: "" });
+
+const addLabel = (label) => {
+  formData.value.label = label;
+};
 
 const handleSubmit = async () => {
   try {
