@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="props.message"
-    class="text-xs font-semibold mb-2 p-2 border"
+    class="text-xs font-semibold mb-2 p-2 border capitalize"
     :class="[textColor, borderColor, backgroundColor]"
   >
     {{ props.message }}

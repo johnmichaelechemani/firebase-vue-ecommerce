@@ -2,6 +2,13 @@
   <div
     class="sm:ml-72 ml-20 fixed top-14 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
+    <div class="absolute top-2 right-2">
+      <AlertMessage
+        v-if="alert !== ''"
+        :message="alert.message"
+        :color="alert.color"
+      />
+    </div>
     <div
       class="p-2 relative overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32 w-full"
     >
@@ -43,39 +50,44 @@
             <div class="border p-2">
               <div class="text-gray-700 text-sm">Contact</div>
               <input
+                v-model="formData.name"
                 type="text"
-                class="border w-full p-1 mb-1 placeholder:text-xs"
                 placeholder="Full Name"
+                class="border w-full text-sm p-1 my-1"
               />
               <input
+                v-model="formData.phone"
                 type="number"
-                class="border w-full p-1 placeholder:text-xs"
                 placeholder="Phone Number"
-                name=""
-                id=""
+                class="border w-full text-sm p-1 my-1"
               />
             </div>
             <div class="border p-2 col-span-2">
               <div class="text-gray-700 text-sm">Address</div>
 
               <input
+                v-model="formData.shb"
                 type="text"
-                class="border w-full p-1 placeholder:text-xs mb-1"
-                placeholder="Region / Province / City / Barangay"
+                placeholder="Street/House/Building"
+                class="border w-full text-sm p-1 my-1"
               />
               <input
-                type="number"
-                class="border w-full p-1 placeholder:text-xs mb-1"
-                placeholder="Postal Code"
-                name=""
-                id=""
+                v-model="formData.description"
+                type="text"
+                placeholder="Additional Details"
+                class="border w-full text-sm p-1 my-1"
               />
               <input
-                type=""
-                class="border w-full p-1 placeholder:text-xs"
-                placeholder="Street Name / House Number / Building"
-                name=""
-                id=""
+                v-model="formData.rpcb"
+                type="text"
+                placeholder="Region/Province/City/Barangay"
+                class="border w-full text-sm p-1 my-1"
+              />
+              <input
+                v-model="formData.zip"
+                type="text"
+                placeholder="ZIP Code"
+                class="border w-full text-sm p-1 my-1"
               />
             </div>
             <div class="border p-2">
@@ -90,14 +102,24 @@
                 </div>
               </div>
               <div class="flex justify-between text-xs pt-1 items-center gap-2">
-                <p>Set as Default Address</p>
-                <input type="checkbox" class="accent-gray-800 text-gray-800" />
+                <label for="defaultAddress" class="text-sm text-gray-700"
+                  >Set as default address</label
+                >
+
+                <input
+                  v-model="formData.default"
+                  type="checkbox"
+                  id="defaultAddress"
+                />
               </div>
             </div>
           </div>
           <div class="my-2 flex justify-end">
-            <button class="text-sm font-bold bg-gray-800 text-white px-4 py-2">
-              Submit
+            <button
+              @click="handleSubmit"
+              class="text-sm font-bold bg-gray-800 text-white px-4 py-2"
+            >
+              Save Address
             </button>
           </div>
         </div>
@@ -107,6 +129,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import AlertMessage from "@/components/AlertMessage.vue";
 
 const addresses = ref([
   {
@@ -132,4 +155,52 @@ const addresses = ref([
     default: false,
   },
 ]);
+
+const formData = ref({
+  name: "",
+  phone: "",
+  shb: "",
+  description: "",
+  rpcb: "",
+  zip: "",
+  default: false,
+});
+
+const alert = ref({ message: "", color: "" });
+
+const handleSubmit = async () => {
+  try {
+    if (!validateForm()) return;
+    addresses.value.push(formData.value);
+    console.log(formData.value);
+    alert.value = { message: "Address saved successfully", color: "green" };
+    resetForm();
+  } catch (error) {
+    alert.value = { message: "Error saving address", color: "red" };
+    console.error("Error:", error);
+  }
+};
+
+const validateForm = () => {
+  const required = ["name", "phone", "shb", "rpcb", "zip"];
+  for (const field of required) {
+    if (!formData.value[field]) {
+      alert.value = { message: `${field} is required`, color: "red" };
+      return false;
+    }
+  }
+  return true;
+};
+
+const resetForm = () => {
+  formData.value = {
+    name: "",
+    phone: "",
+    shb: "",
+    description: "",
+    rpcb: "",
+    zip: "",
+    default: false,
+  };
+};
 </script>
