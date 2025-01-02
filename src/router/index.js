@@ -70,6 +70,14 @@ const router = createRouter({
           name: "notifications",
           component: () => import("../views/CustomerViews/Notifications.vue"),
         },
+        {
+          path: "/address",
+          name: "address",
+          component: () =>
+            import(
+              "../views/CustomerViews/CustomerAccount/CustomerAddress.vue"
+            ),
+        },
       ],
     },
     {
@@ -136,7 +144,7 @@ router.beforeEach((to, from, next) => {
       setTimeout(() => {
         loginErrorMessage.value = "";
       }, 2000);
-      
+
       next("/login");
       return;
     }

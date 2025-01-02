@@ -25,18 +25,20 @@ import { userData } from "../../store.js";
     </div>
     <p class="text-sm font-semibold text-gray-700">Account</p>
   </button>
-  <button
-    class="flex justify-start items-center gap-2 my-2 hover:bg-gray-700/10 w-full"
-  >
-    <div class="border p-1 shadow place-items-center">
-      <Icon
-        icon="material-symbols-light:location-on-outline"
-        width="24"
-        height="24"
-      />
-    </div>
-    <p class="text-sm font-semibold text-gray-700">Addresses</p>
-  </button>
+  <RouterLink to="/address">
+    <button
+      class="flex justify-start items-center gap-2 my-2 hover:bg-gray-700/10 w-full"
+    >
+      <div class="border p-1 shadow place-items-center">
+        <Icon
+          icon="material-symbols-light:location-on-outline"
+          width="24"
+          height="24"
+        />  
+      </div>
+      <p class="text-sm font-semibold text-gray-700">Addresses</p>
+    </button>
+  </RouterLink>
   <p class="text-xs font-semibold text-gray-500">Support</p>
   <button
     class="flex justify-start items-center gap-2 my-2 hover:bg-gray-700/10 w-full"
