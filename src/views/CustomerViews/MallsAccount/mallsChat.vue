@@ -128,7 +128,7 @@ onMounted(async () => {
                   :src="userPhoto"
                   loading="lazy"
                   alt=""
-                  class="rounded-full"
+                 class="rounded-full h-full w-full object-cover object-center"
                 />
               </div>
             </div>
