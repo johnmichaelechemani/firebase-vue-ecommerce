@@ -63,14 +63,11 @@ onMounted(async () => {
             >
               {{ Time(message.timestamp) }}
             </div>
-
             <div
               class="flex justify-start items-end font-medium text-gray-800 gap-2"
             >
-              <div class="size-6 bg-gray-800"></div>
-              <div
-                class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)] min-w-32"
-              >
+              <div class="size-6 bg-gray-800 rounded-full"></div>
+              <div class="sm:max-w-[calc(100%-10rem)] max-w-[calc(100%-5rem)]">
                 <div class="pl-3 pr-2 pb-1 pt-2 text-sm bg-gray-700/10">
                   {{ message.message }}
                 </div>
@@ -102,7 +99,12 @@ onMounted(async () => {
                 </div>
               </div>
               <div class="size-6 bg-gray-800 rounded-full">
-                <img v-if="userPhoto" :src="userPhoto" alt="" class="rounded-full" />
+                <img
+                  v-if="userPhoto"
+                  :src="userPhoto"
+                  alt=""
+                  class="rounded-full"
+                />
               </div>
             </div>
           </div>
