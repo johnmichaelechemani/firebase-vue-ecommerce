@@ -199,7 +199,9 @@ onMounted(() => {
       <p class="text-sm font-semibold py-2">Add Products</p>
       <form action="">
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <div class="relative sm:size-20 col-span-1 size-10 bg-gray-500/50">
+          <div
+            class="relative bg-gray-500/50 col-span-1 max-w-70 items-center row-span-2"
+          >
             <input
               type="file"
               ref="productImageInput"
@@ -224,6 +226,18 @@ onMounted(() => {
                 height="24"
               />
             </button>
+            <div
+              class="text-sm h-full text-gray-700 items-center flex justify-center font-semibold py-2"
+            >
+              <div>
+                Upload image
+                <Icon
+                  icon="material-symbols-light:upload"
+                  width="40"
+                  height="40"
+                />
+              </div>
+            </div>
           </div>
           <div class="border p-2">
             <label
