@@ -5,13 +5,13 @@ import { Icon } from "@iconify/vue";
 import { mallsAccount, useMallsAccount, userData } from "@/store";
 import { chatFunctions, messages } from "@/scripts/chatFunctions";
 import { Time } from "@/scripts/composables";
-
+import UserLoading from "@/components/UserLoading.vue";
 const { message, sendMessage } = chatFunctions();
 const route = useRoute();
 const mallId = ref(route.params.id);
 const userId = userData.value.userId;
 const userPhoto = userData.value.userPhotoURL;
-
+const isMallLoading = ref(false);
 watch(
   () => route.params.id,
   (newId) => {
@@ -24,8 +24,16 @@ const currentMall = computed(() => {
 const mallData = computed(() => {
   return currentMall.value;
 });
+
 onMounted(async () => {
-  await useMallsAccount();
+  isMallLoading.value = true;
+  try {
+    await useMallsAccount();
+  } catch (e) {
+    console.log(e);
+  } finally {
+    isMallLoading.value = false;
+  }
 });
 </script>
 
@@ -35,28 +43,36 @@ onMounted(async () => {
   >
     <div>
       <div class="flex gap-2 justify-start items-center shadow-sm p-2 border-b">
-        <div
-          class="flex justify-center rounded-full bg-gray-700/10 border size-8 items-center"
-        >
-          <img
-            v-if="mallData && mallData.userPhotoURL"
-            :src="mallData.userPhotoURL"
-            alt="mall profile"
-            loading="lazy"
-            class="w-full h-full object-center rounded-full object-cover"
-          />
-          <div v-else class="flex justify-center items-center">
-            <Icon icon="material-symbols-light:store" width="30" height="30" />
+        <div v-if="!isMallLoading" class="flex gap-2 items-center">
+          <div
+            class="flex justify-center rounded-full bg-gray-700/10 border size-8 items-center"
+          >
+            <img
+              v-if="mallData && mallData.userPhotoURL"
+              :src="mallData.userPhotoURL"
+              alt="mall profile"
+              loading="lazy"
+              class="w-full h-full object-center rounded-full object-cover"
+            />
+          </div>
+          <div>
+            <p class="text-sm font-semibold capitalize" v-if="mallData">
+              {{ mallData.userName }}
+            </p>
           </div>
         </div>
-        <div>
-          <p class="text-sm font-semibold capitalize" v-if="mallData">
-            {{ mallData.userName }}
-          </p>
+        <div v-else class="flex justify-start gap-2 w-full items-center">
+          <div class="size-10 animate-pulse bg-gray-300 rounded-full"></div>
+          <div class="h-4 w-1/4 animate-pulse bg-gray-300 rounded-full"></div>
         </div>
       </div>
+
       <div class="h-[calc(100vh-10rem)] overflow-y-auto pb-14 mx-2 py-2">
-        <div v-for="(message, index) in messages" :key="index">
+        <div
+          v-if="!isMallLoading"
+          v-for="(message, index) in messages"
+          :key="index"
+        >
           <div class="my-2" v-if="message.senderId !== userId">
             <div
               class="flex justify-center items-center text-[9px] text-gray-500"
@@ -117,6 +133,9 @@ onMounted(async () => {
               </div>
             </div>
           </div>
+        </div>
+        <div v-else class="max-w-52">
+          <UserLoading />
         </div>
       </div>
       <div class="absolute bottom-0 left-0 z-10 w-full bg-gray-50">

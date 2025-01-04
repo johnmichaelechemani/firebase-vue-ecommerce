@@ -8,6 +8,7 @@ import {
   latestMessages,
   getChatId,
 } from "@/scripts/chatFunctions";
+import UserLoading from "@/components/UserLoading.vue";
 
 const { selectedMall } = chatFunctions();
 
@@ -26,9 +27,16 @@ watch(
 function toggleMenu() {
   isMenuToggled.value = !isMenuToggled.value;
 }
-
+const isMallLoading = ref(false);
 onMounted(async () => {
-  await useMallsAccount();
+  isMallLoading.value = true;
+  try {
+    await useMallsAccount();
+  } catch (e) {
+    console.log(e);
+  } finally {
+    isMallLoading.value = false;
+  }
   selectedMall(route.params.id);
 });
 </script>
@@ -58,6 +66,7 @@ onMounted(async () => {
             class="my-2 bg-gray-400/5 border shadow-xl w-16 sm:w-72 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)]"
           >
             <div
+              v-if="!isMallLoading"
               v-for="mall in mallsAccount"
               :key="mall.userId"
               @click="selectedMall(mall.userId)"
@@ -74,7 +83,7 @@ onMounted(async () => {
                   class="flex gap-2 justify-center sm:justify-start items-center my-2 sm:mx-2"
                 >
                   <div
-                    class="size-8 sm:size-10 flex  rounded-full justify-center items-center border"
+                    class="size-8 sm:size-10 flex rounded-full justify-center items-center border"
                   >
                     <img
                       v-if="mall.userPhotoURL"
@@ -84,11 +93,7 @@ onMounted(async () => {
                       class="w-full h-full rounded-full object-cover object-center"
                     />
                     <div v-else class="flex justify-center items-center">
-                      <Icon
-                        icon="material-symbols-light:store"
-                        width="30"
-                        height="30"
-                      />
+                      <div class="size-10 bg-gray-300 rounded-full"></div>
                     </div>
                   </div>
 
@@ -103,6 +108,7 @@ onMounted(async () => {
                 </div></router-link
               >
             </div>
+            <UserLoading v-else />
           </div>
         </transition>
 
