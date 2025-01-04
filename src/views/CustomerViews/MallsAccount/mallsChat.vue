@@ -36,14 +36,14 @@ onMounted(async () => {
     <div>
       <div class="flex gap-2 justify-start items-center shadow-sm p-2 border-b">
         <div
-          class="flex justify-center bg-gray-700/10 border size-8 items-center"
+          class="flex justify-center rounded-full bg-gray-700/10 border size-8 items-center"
         >
           <img
             v-if="mallData && mallData.userPhotoURL"
             :src="mallData.userPhotoURL"
             alt="mall profile"
             loading="lazy"
-            class="w-full h-full object-center object-cover"
+            class="w-full h-full object-center rounded-full object-cover"
           />
           <div v-else class="flex justify-center items-center">
             <Icon icon="material-symbols-light:store" width="30" height="30" />
@@ -101,8 +101,8 @@ onMounted(async () => {
                   Delivered
                 </div>
               </div>
-              <div class="size-6 bg-gray-800">
-                <img v-if="userPhoto" :src="userPhoto" alt="" />
+              <div class="size-6 bg-gray-800 rounded-full">
+                <img v-if="userPhoto" :src="userPhoto" alt="" class="rounded-full" />
               </div>
             </div>
           </div>
