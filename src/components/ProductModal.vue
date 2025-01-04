@@ -345,8 +345,8 @@ const addToFavorites = async () => {
 
               <div class="my-1">
                 <div class="text-sm font-semibold">
-                  Decription:
-                  <p>{{ product.discription }}</p>
+                  Description:
+                  <p>{{ product.description }}</p>
                 </div>
                 <hr />
                 <div class="text-sm font-semibold">Reviews:</div>
