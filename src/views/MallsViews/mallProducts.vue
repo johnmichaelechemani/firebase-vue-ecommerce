@@ -227,15 +227,18 @@ onMounted(() => {
               />
             </button>
             <div
+              v-if="!product.imagePreview"
               class="text-sm h-full text-gray-700 items-center flex justify-center font-semibold py-2"
             >
               <div>
                 Upload image
-                <Icon
-                  icon="material-symbols-light:upload"
-                  width="40"
-                  height="40"
-                />
+                <div class="flex flex-col items-center gap-2">
+                  <Icon
+                    icon="material-symbols-light:upload"
+                    width="24"
+                    height="24"
+                  />
+                </div>
               </div>
             </div>
           </div>
