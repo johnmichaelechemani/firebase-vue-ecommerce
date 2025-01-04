@@ -2,12 +2,22 @@
   <aside
     class="w-20 sm:w-72 border-r border-gray-800/50 fixed top-0 left-0 h-full"
   >
-    <div class="m-2">
-      <h2 class="text-lg font-bold text-gray-800">Store Ni Mike</h2>
-    </div>
+    <div class="m-2"></div>
     <div
       class="my-2 sm:m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-0rem)] pb-32"
     >
+      <div class="h-28 w-full relative">
+        <img
+          :src="userData.bgImage"
+          alt=""
+          class="w-full h-full object-cover object-center"
+        />
+        <h2
+          class="text-xs truncate sm:text-lg font-bold absolute bottom-0 left-0 border backdrop-blur-2xl px-4 text-gray-800 capitalize"
+        >
+          {{ userData.userName }}
+        </h2>
+      </div>
       <p
         class="text-xs my-2 font-semibold text-gray-500 text-center sm:text-start"
       >
@@ -104,5 +114,6 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { Icon } from "@iconify/vue";
+import { userData } from "@/store";
 import router from "@/router";
 </script>
