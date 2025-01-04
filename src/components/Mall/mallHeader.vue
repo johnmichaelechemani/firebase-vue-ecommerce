@@ -29,18 +29,7 @@ const logout = () => {
           Jm's Shops
         </h1>
       </div>
-      <div
-        class="border border-gray-700/50 py-1.5 px-1 ml-2 text-sm sm:w-1/3 flex"
-      >
-        <div class="px-1">
-          <Icon icon="material-symbols-light:search" width="20" height="20" />
-        </div>
-        <input
-          type="text"
-          class="w-full outline-none hidden sm:flex placeholder:text-sm placeholder:text-gray-700"
-          placeholder="Search.."
-        />
-      </div>
+
       <div class="flex justify-end items-center gap-1">
         <div v-if="isLoggedIn" class="flex justify-end items-center gap-1 m-2">
           <RouterLink to="/chats" @click.native="showPanel(null)">
