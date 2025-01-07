@@ -228,27 +228,11 @@ onMounted(() => {
   </aside>
 
   <!-- settings side -->
-  <aside
+  <Settings
     v-if="openPanel === 'settings'"
-    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
-  >
-    <button @click="showPanel(null)">
-      <Icon
-        icon="material-symbols-light:close-small-outline"
-        width="24"
-        height="24"
-      />
-    </button>
-    <div class="mx-2 mb-2">
-      <Settings />
-      <button
-        @click="logout"
-        class="border p-2 my-4 bg-gray-800 shadow-sm w-full text-white text-sm font-semibold place-items-center"
-      >
-        Logout
-      </button>
-    </div>
-  </aside>
+    :showPanel="showPanel"
+    :logout="logout"
+  />
 
   <!-- Search Component -->
   <SearchProduct v-if="openPanel === 'search'" :showPanel="showPanel" />
