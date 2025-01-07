@@ -54,6 +54,15 @@
               </div>
             </div>
           </div>
+          <div class="flex justify-end">
+            <button class="p-1 border my-1">
+              <Icon
+                icon="material-symbols-light:close-rounded"
+                width="20"
+                height="20"
+              />
+            </button>   
+          </div>
         </div>
       </div>
     </div>
