@@ -1,14 +1,19 @@
 <template>
-  <div class="space-y-4">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-      <div
-        v-for="n in 4"
-        :key="n"
-        class="animate-pulse bg-gray-200 rounded-lg p-4"
-      >
-        <div class="bg-gray-300 h-10 rounded-lg mb-4"></div>
-        <div class="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-        <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+  <div class="m-2">
+    <div class="flex flex-wrap gap-1">
+      <div v-for="n in 4" :key="n" class="animate-pulse">
+        <div class="bg-gray-300 size-32 sm:size-40"></div>
+        <div class="my-0.5 flex gap-2">
+          <div class="h-3 bg-gray-300 rounded w-5"></div>
+          <div class="h-3 bg-gray-300 rounded w-10"></div>
+          <div class="h-3 bg-gray-300 rounded w-14"></div>
+        </div>
+        <div class="my-1 flex gap-2">
+          <div class="h-4 bg-gray-300 rounded w-10"></div>
+          <div class="h-4 bg-gray-300 rounded w-10"></div>
+        </div>
+        <div class="h-4 bg-gray-300 rounded w-[80%]"></div>
+        <div class="h-5 bg-gray-300 rounded w-1/2 my-1"></div>
       </div>
     </div>
   </div>

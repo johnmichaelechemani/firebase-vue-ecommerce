@@ -139,6 +139,7 @@ const flashSaleProducts = ref([
           </div>
           <ProductLoading v-else />
         </div>
+        <ProductLoading />
 
         <div class="m-2">
           <h1 class="text-lg font-semibold my-2">Discover</h1>
