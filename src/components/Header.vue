@@ -251,5 +251,5 @@ onMounted(() => {
   </aside>
 
   <!-- Search Component -->
-  <SearchProduct v-if="openPanel === 'search'" />
+  <SearchProduct v-if="openPanel === 'search'" :showPanel="showPanel" />
 </template>
