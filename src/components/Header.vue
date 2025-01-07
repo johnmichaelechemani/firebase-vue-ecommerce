@@ -194,38 +194,10 @@ onMounted(() => {
   </nav>
 
   <!-- cart side -->
-  <aside
-    v-if="openPanel === 'cart'"
-    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
-  >
-    <button @click="showPanel(null)">
-      <Icon
-        icon="material-symbols-light:close-small-outline"
-        width="24"
-        height="24"
-      />
-    </button>
-    <div class="mx-2 mb-2">
-      <Cart />
-    </div>
-  </aside>
+  <Cart v-if="openPanel === 'cart'" :showPanel="showPanel" />
 
   <!-- favorite side -->
-  <aside
-    v-if="openPanel === 'favorite'"
-    class="w-72 border-l bg-gray-100 border-gray-800/50 fixed z-10 top-14 right-0 h-full"
-  >
-    <button @click="showPanel(null)">
-      <Icon
-        icon="material-symbols-light:close-small-outline"
-        width="24"
-        height="24"
-      />
-    </button>
-    <div class="mx-2 mb-2">
-      <Favorite />
-    </div>
-  </aside>
+  <Favorite v-if="openPanel === 'favorite'" :showPanel="showPanel" />
 
   <!-- settings side -->
   <Settings
