@@ -58,3 +58,13 @@ export const decrement = (item) => {
     item.quantity -= 1;
   }
 };
+
+export const debounce = (fn, delay) => {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
+};

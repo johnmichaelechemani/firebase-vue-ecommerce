@@ -14,10 +14,25 @@
               />
             </div>
             <input
-              type="text"
+              type="search"
+              v-model="search"
+              @input="handleSearch"
               class="w-full outline-none bg-transparent py-1 placeholder:text-sm placeholder:text-gray-700"
               placeholder="Search.."
             />
+            <!-- Loading Spinner -->
+            <div
+              v-if="loading"
+              class="px-1 flex justify-center text-green-500 items-center"
+            >
+              <Icon icon="eos-icons:loading" width="24" height="24" />
+            </div>
+          </div>
+          <div
+            v-if="search.trim()"
+            class="sm:max-w-96 w-full text-white text-sm font-semibold my-1 p-2 border backdrop-blur-md bg-gray-500/10 max-h-80"
+          >
+            Search for "{{ search }}"
           </div>
           <div
             class="sm:max-w-96 w-full p-2 border backdrop-blur-md bg-gray-500/10 max-h-80"
@@ -68,11 +83,30 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { Icon } from "@iconify/vue";
-import { defineProps } from "vue";
+import { defineProps, ref, watch } from "vue";
+import { debounce } from "@/scripts/composables";
 
 const props = defineProps({
   showPanel: Function,
+});
+const search = ref("");
+const loading = ref(false);
+
+const handleSearch = debounce(() => {
+  loading.value = true;
+  console.log("searching for:", search.value);
+
+  setTimeout(() => {
+    loading.value = false;
+  }, 1000);
+}, 500);
+
+watch(search, (newValue) => {
+  if (newValue.trim()) {
+    handleSearch();
+  }
 });
 </script>
