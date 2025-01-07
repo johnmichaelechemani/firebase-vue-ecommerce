@@ -46,7 +46,8 @@ onMounted(() => {
           Jm's Shops
         </h1>
       </div>
-      <div
+      <button
+        @click="showPanel('search')"
         class="border border-gray-700/50 py-1.5 px-1 ml-2 text-sm sm:w-1/3 flex"
       >
         <div class="px-1">
@@ -54,10 +55,11 @@ onMounted(() => {
         </div>
         <input
           type="text"
+          readonly
           class="w-full outline-none hidden sm:flex placeholder:text-sm placeholder:text-gray-700"
           placeholder="Search.."
         />
-      </div>
+      </button>
       <div class="flex justify-end items-center gap-1">
         <div v-if="isLoggedIn" class="flex justify-end items-center gap-1 m-2">
           <RouterLink to="/chats" @click.native="showPanel(null)">
@@ -249,5 +251,5 @@ onMounted(() => {
   </aside>
 
   <!-- Search Component -->
-  <SearchProduct />
+  <SearchProduct v-if="openPanel === 'search'" />
 </template>
