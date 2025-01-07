@@ -15,6 +15,7 @@ import {
   getFavoritesProducts,
 } from "../store.js";
 import { useAuth } from "@/firebase.auth";
+import SearchProduct from "./SearchProduct.vue";
 
 const { logoutAccount } = useAuth();
 const openPanel = ref(null);
@@ -151,7 +152,7 @@ onMounted(() => {
             <img
               :src="userData.userPhotoURL"
               alt=""
-               loading="lazy"
+              loading="lazy"
               class="h-full w-full object-cover rounded-full object-center"
             />
           </button>
@@ -246,4 +247,7 @@ onMounted(() => {
       </button>
     </div>
   </aside>
+
+  <!-- Search Component -->
+  <SearchProduct />
 </template>
