@@ -2,8 +2,9 @@
 import { ref } from "vue";
 import {
   getFirestore,
+  getDoc,
+  doc,
   collection,
-  getDocs,
   query,
   where,
   onSnapshot,
@@ -14,16 +15,18 @@ import {
 export const cartItems = ref([]);
 export const favoritesItem = ref([]);
 export const messages = ref([]);
-export const notifications = ref(23);
-export const loginErrorMessage = ref("");
-export const registerErrorMessage = ref("");
-export const showSidebar = ref(false);
-export const isLoggedIn = ref(null);
-export const userData = ref(null);
 export const mallsAccount = ref([]);
 export const products = ref([]);
 export const purchaseProducts = ref([]);
+export const loginErrorMessage = ref("");
+export const registerErrorMessage = ref("");
+export const userData = ref(null);
+export const notifications = ref(1);
+export const userBalanced = ref(null);
 export const isProductLoading = ref(false);
+export const isLoggedIn = ref(false);
+export const showSidebar = ref(false);
+
 const storedUserData = localStorage.getItem("userData");
 
 // fetch global data
@@ -48,8 +51,8 @@ export const useMallsAccount = async () => {
 };
 
 export const getProducts = () => {
-  const db = getFirestore();
   isProductLoading.value = true;
+  const db = getFirestore();
   try {
     const productsQuery = query(
       collection(db, "products"),
@@ -129,6 +132,20 @@ export const getPurchaseProducts = () => {
   } catch (error) {
     console.error("Error fetching fav items:", error);
     return [];
+  }
+};
+
+export const getBalanced = async () => {
+  const db = getFirestore();
+  if (userData.value) {
+    const userDocRef = doc(db, "users", userData.value.userId);
+    try {
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        const userDataFromFirestore = userDoc.data();
+        userBalanced.value = userDataFromFirestore.jmPay;
+      }
+    } catch (e) {}
   }
 };
 

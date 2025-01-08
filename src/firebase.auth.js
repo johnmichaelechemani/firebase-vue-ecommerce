@@ -48,16 +48,21 @@ export const useAuth = () => {
     try {
       const res = await signInWithPopup(auth, authGoogle);
       const userDocRef = doc(usersCollection, res.user.uid);
-
-      await setDoc(userDocRef, {
-        userName: res.user.displayName,
-        userId: res.user.uid,
-        userPhotoURL: res.user.photoURL,
-        userOnline: true,
-        email: res.user.email,
-        role: "customer",
-      });
-
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        await updateDoc(userDocRef, {
+          userOnline: true,
+        });
+      } else {
+        await setDoc(userDocRef, {
+          userName: res.user.displayName,
+          userId: res.user.uid,
+          userPhotoURL: res.user.photoURL,
+          userOnline: true,
+          email: res.user.email,
+          role: "customer",
+        });
+      }
       const userDetails = {
         userName: res.user.displayName,
         userId: res.user.uid,
@@ -67,7 +72,6 @@ export const useAuth = () => {
         timestamp: Date.now(),
         accessToken: generateSecureToken(),
       };
-
       isLoggedIn.value = true;
       user.value = res.user;
       userData.value = userDetails;

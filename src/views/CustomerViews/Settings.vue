@@ -1,10 +1,14 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { userData } from "../../store.js";
-import { defineProps } from "vue";
+import { userData, getBalanced, userBalanced } from "../../store.js";
+import { defineProps, onMounted } from "vue";
 const props = defineProps({
   showPanel: Function,
   logout: Function,
+});
+
+onMounted(() => {
+  getBalanced();
 });
 </script>
 
@@ -30,7 +34,10 @@ const props = defineProps({
             class="object-center w-full h-full rounded-full object-cover"
           />
         </div>
-        <h1 class="text-sm font-semibold">{{ userData.userName }}</h1>
+        <div>
+          <h1 class="text-sm font-semibold">{{ userData.userName }}</h1>
+          <p class="text-xs font-semibold">$ {{ userBalanced }}</p>
+        </div>
       </div>
       <p class="text-xs font-semibold text-gray-500">My Account</p>
       <button
