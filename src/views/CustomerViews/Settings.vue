@@ -1,14 +1,23 @@
 <script setup>
 import { Icon } from "@iconify/vue";
 import { userData, getBalanced, userBalanced } from "../../store.js";
-import { defineProps, onMounted } from "vue";
+import { defineProps, onMounted, ref } from "vue";
+import { formatPrice } from "@/scripts/composables.js";
 const props = defineProps({
   showPanel: Function,
   logout: Function,
 });
 
-onMounted(() => {
-  getBalanced();
+const isBalancedLoading = ref(false);
+
+onMounted(async () => {
+  try {
+    isBalancedLoading.value = true;
+    await getBalanced();
+    isBalancedLoading.value = false;
+  } catch (e) {
+    console.error(e);
+  }
 });
 </script>
 
@@ -36,7 +45,12 @@ onMounted(() => {
         </div>
         <div>
           <h1 class="text-sm font-semibold">{{ userData.userName }}</h1>
-          <p class="text-xs font-semibold">$ {{ userBalanced }}</p>
+          <p v-if="!isBalancedLoading" class="text-xs font-semibold">
+            $ {{ formatPrice(userBalanced) }}
+          </p>
+          <span v-else
+            ><Icon icon="eos-icons:loading" width="16" height="16" />
+          </span>
         </div>
       </div>
       <p class="text-xs font-semibold text-gray-500">My Account</p>
