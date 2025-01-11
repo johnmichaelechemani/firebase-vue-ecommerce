@@ -32,6 +32,8 @@ const cartErrorMessage = ref("");
 const showSuccessMessageFavorites = ref(false);
 const showSuccessMessage = ref(false);
 const showError = ref(false);
+const isLoading = ref(false);
+const isFavLoading = ref(false);
 
 const showModal = () => {
   emit("closeModal");
@@ -55,6 +57,7 @@ const addToCart = async () => {
     route.push("/login");
     return;
   }
+  isLoading.value = true;
   try {
     const cartItemData = {
       id: props.product.id,
@@ -82,9 +85,11 @@ const addToCart = async () => {
     });
 
     selectedSize.value = "";
+    isLoading.value = false;
   } catch (e) {
     cartErrorMessage.value = "Error adding to cart";
     console.error("Error adding to cart", e);
+    isLoading.value = false;
   }
   showSuccessMessage.value = true;
   clearAlert(showSuccessMessage);
@@ -95,6 +100,7 @@ const addToFavorites = async () => {
     route.push("/login");
     return;
   }
+  isFavLoading.value = true;
   try {
     const favItemRef = await addDoc(
       collection(firestore, "favorites", userData.value.userId, "items"),
@@ -106,6 +112,7 @@ const addToFavorites = async () => {
     await updateDoc(favItemRef, {
       favoriteId: favItemRef.id,
     });
+    isFavLoading.value = false;
   } catch (e) {
     console.log("Error", e);
   }
@@ -298,17 +305,24 @@ const addToFavorites = async () => {
                       @click="addToCart"
                       :disabled="props.product.inventory === 0"
                       :class="
-                        props.product.inventory === 0
+                        props.product.inventory === 0 || isLoading
                           ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
                           : 'bg-gray-800 text-white'
                       "
-                      class="font-semibold text-sm py-2 w-full"
+                      class="font-semibold flex justify-center items-center gap-2 text-sm py-2 w-full"
                     >
                       {{
                         props.product.inventory === 0
                           ? "Out of Stock"
                           : "Add to Cart"
                       }}
+                      <span v-if="isLoading"
+                        ><Icon
+                          icon="eos-icons:loading"
+                          width="16"
+                          height="16"
+                        />
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -317,13 +331,22 @@ const addToFavorites = async () => {
               <div class="flex justify-start items-center">
                 <button
                   @click="addToFavorites"
+                  :class="
+                    isFavLoading
+                      ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                      : ''
+                  "
                   class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
                 >
                   <Icon
+                    v-if="!isFavLoading"
                     icon="material-symbols-light:favorite-outline"
                     width="24"
                     height="24"
                   />
+                  <span v-else
+                    ><Icon icon="eos-icons:loading" width="24" height="24" />
+                  </span>
                 </button>
                 <div
                   class="flex justify-start items-center"
