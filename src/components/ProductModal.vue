@@ -13,6 +13,7 @@ import {
   formatSoldNumber,
   formatPrice,
   incerment,
+  clearAlert,
   decrement,
 } from "@/scripts/composables.js";
 import ErrorMessage from "./AlertMessage.vue";
@@ -46,9 +47,7 @@ const addToCart = async () => {
   if (selectedSize.value === "") {
     showError.value = true;
     cartErrorMessage.value = "Please select a size";
-    setTimeout(() => {
-      showError.value = false;
-    }, 2000);
+    clearAlert(cartErrorMessage);
     return;
   }
   if (isLoggedIn.value === false) {
@@ -82,17 +81,13 @@ const addToCart = async () => {
       cartItemId: cartItemRef.id,
     });
 
-    console.log("Adding to cart Success");
-    emit("closeModal");
     selectedSize.value = "";
   } catch (e) {
     cartErrorMessage.value = "Error adding to cart";
     console.error("Error adding to cart", e);
   }
   showSuccessMessage.value = true;
-  setTimeout(() => {
-    showSuccessMessage.value = false;
-  }, 2000);
+  clearAlert(showSuccessMessage);
 };
 const addToFavorites = async () => {
   if (isLoggedIn.value === false) {
@@ -111,16 +106,11 @@ const addToFavorites = async () => {
     await updateDoc(favItemRef, {
       favoriteId: favItemRef.id,
     });
-    console.log("Adding to favorate Success");
-    emit("closeModal");
   } catch (e) {
     console.log("Error", e);
   }
-
   showSuccessMessageFavorites.value = true;
-  setTimeout(() => {
-    showSuccessMessageFavorites.value = false;
-  }, 2000);
+  clearAlert(showSuccessMessageFavorites);
 };
 </script>
 
@@ -169,7 +159,16 @@ const addToFavorites = async () => {
                 color="red"
                 :message="cartErrorMessage"
               />
-
+              <ErrorMessage
+                v-if="showSuccessMessage"
+                color="green"
+                message="Added to Cart!"
+              />
+              <ErrorMessage
+                v-if="showSuccessMessageFavorites"
+                color="green"
+                message="Added to Favorites!"
+              />
               <div class="flex justify-start items-start gap-4">
                 <div
                   class="sm:size-40 size-32 bg-gray-700/10 border-gray-700/20 border relative"
@@ -353,22 +352,6 @@ const addToFavorites = async () => {
               </div>
             </div>
           </div>
-          <transition>
-            <div
-              v-if="showSuccessMessage"
-              class="absolute bottom-0 right-0 text-sm text-green-500 font-semibold border border-green-500/50 px-4 py-2"
-            >
-              Added to Cart!
-            </div>
-          </transition>
-          <transition>
-            <div
-              v-if="showSuccessMessageFavorites"
-              class="absolute bottom-0 right-0 text-sm text-green-500 font-semibold border border-green-500/50 px-4 py-2"
-            >
-              Added to Favorites!
-            </div>
-          </transition>
         </div>
       </div>
     </div>

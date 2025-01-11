@@ -69,8 +69,14 @@ export const debounce = (fn, delay) => {
   };
 };
 
-export const clearAlert = (message) => {
-  setTimeout(() => {
-    message.value = "";
-  }, 2000);
+export const clearAlert = (input) => {
+  if (typeof input === "boolean") {
+    setTimeout(() => {
+      input = false;
+    }, 2000);
+  } else if (input && typeof input === "object" && "value" in input) {
+    setTimeout(() => {
+      input.value = "";
+    }, 2000);
+  }
 };
