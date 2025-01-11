@@ -25,6 +25,7 @@ import {
   loginErrorMessage,
   registerErrorMessage,
 } from "./store";
+import { clearAlert } from "./scripts/composables";
 
 export const useAuth = () => {
   const auth = getAuth();
@@ -118,9 +119,7 @@ export const useAuth = () => {
   const loginAccount = async () => {
     if (email.value.trim() === "" || password.value.trim() === "") {
       loginErrorMessage.value = "Enter your account!";
-      setTimeout(() => {
-        loginErrorMessage.value = "";
-      }, 2000);
+      clearAlert(loginErrorMessage);
       return;
     }
     try {
@@ -163,10 +162,7 @@ export const useAuth = () => {
       }
     } catch (error) {
       loginErrorMessage.value = "Invalid credentials!";
-      setTimeout(() => {
-        loginErrorMessage.value = "";
-      }, 2000);
-
+      clearAlert(loginErrorMessage);
       console.error("Login error:", error);
     }
   };
@@ -179,10 +175,7 @@ export const useAuth = () => {
       role.value.trim() === ""
     ) {
       registerErrorMessage.value = "Enter your information.";
-      setTimeout(() => {
-        registerErrorMessage.value = "";
-      }, 2000);
-
+      clearAlert(registerErrorMessage);
       return;
     }
     await createUserWithEmailAndPassword(
@@ -207,9 +200,7 @@ export const useAuth = () => {
       })
       .catch(() => {
         registerErrorMessage.value = "Invalid information.";
-        setTimeout(() => {
-          registerErrorMessage.value = "";
-        }, 2000);
+        clearAlert(registerErrorMessage);
       });
   };
 
