@@ -154,6 +154,8 @@ const addToFavorites = async () => {
                   height="20"
                 />
               </router-link>
+
+              <!-- alert messages -->
               <ErrorMessage
                 v-if="showError"
                 color="red"
@@ -169,6 +171,8 @@ const addToFavorites = async () => {
                 color="green"
                 message="Added to Favorites!"
               />
+              <!-- alert messages -->
+
               <div class="flex justify-start items-start gap-4">
                 <div
                   class="sm:size-40 size-32 bg-gray-700/10 border-gray-700/20 border relative"
