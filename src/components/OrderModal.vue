@@ -20,6 +20,7 @@ const props = defineProps({
 });
 const db = getFirestore();
 const productCollection = collection(db, "products");
+const userCollection = collection(db, "users");
 const quantity = ref(1);
 const selectedPaymentMethod = ref(null);
 const paymentErrMessage = ref("");
@@ -43,6 +44,11 @@ const paymentMethods = [
     id: "cod",
     name: "Cash on Delivery",
     icon: "mdi:cash-on-delivery",
+  },
+  {
+    id: "jmpay",
+    name: "JmPay",
+    icon: "material-symbols-light:credit-card",
   },
   {
     id: "gcash",
@@ -70,6 +76,7 @@ const placeOrder = async () => {
   try {
     const productPromises = props.product.map(async (item) => {
       const productDoc = doc(productCollection, item.id);
+      const userDoc = doc(userCollection, userData.value.userId);
       await addDoc(collection(db, `purchase/${userData.value.userId}/items`), {
         productId: item.id,
         userId: userData.value.userId,
@@ -91,6 +98,12 @@ const placeOrder = async () => {
         },
       });
       deleteItems("carts", item.cartItemId);
+
+      if (selectedPaymentMethod.value === "jmpay") {
+        await updateDoc(userDoc, {
+          jmPay: increment(-item.price * item.quantity),
+        });
+      }
 
       await updateDoc(productDoc, {
         inventory: increment(-item.quantity),
