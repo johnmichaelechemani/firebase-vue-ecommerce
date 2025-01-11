@@ -45,19 +45,16 @@ const paymentMethods = [
     id: "cod",
     name: "Cash on Delivery",
     icon: "mdi:cash-on-delivery",
-    balance: true,
   },
   {
     id: "jmpay",
     name: "JmPay",
     icon: "material-symbols-light:credit-card",
-    balance: isPriceisLessThanBalanced,
   },
   {
     id: "gcash",
     name: "GCASH",
     icon: "arcticons:gcash",
-    balance: true,
   },
 ];
 
@@ -169,9 +166,7 @@ onMounted(async () => {
               />
             </button>
           </div>
-          <p class="text-sm font-semibold py-3">
-            Order Summary {{ isPriceisLessThanBalanced }}
-          </p>
+          <p class="text-sm font-semibold py-3">Order Summary</p>
           <div class="bg-gray-700/5 p-2 shadow">
             <div
               class="text-sm font-semibold gap-2 flex justify-between items-center"
