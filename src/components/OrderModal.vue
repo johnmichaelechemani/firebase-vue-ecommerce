@@ -26,20 +26,16 @@ const selectedPaymentMethod = ref(null);
 const paymentErrMessage = ref("");
 const totalPrice = computed(() => {
   if (!props.product || props.product.length === 0) return 0;
-
   return props.product.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
 });
-
 const emit = defineEmits(["closeModal"]);
-
 const showModal = () => {
   emit("closeModal");
   props.product.value = null;
   quantity.value = 1;
 };
-
 const paymentMethods = [
   {
     id: "cod",
@@ -61,16 +57,10 @@ const paymentMethods = [
 const getErrors = () => {
   if (!selectedPaymentMethod.value) {
     paymentErrMessage.value = "Please select a payment method";
-    setTimeout(() => {
-      paymentErrMessage.value = "";
-    }, 2000);
     return false;
   }
   if (!props.product || props.product.length === 0) {
     paymentErrMessage.value = "No products to purchase.";
-    setTimeout(() => {
-      paymentErrMessage.value = "";
-    }, 2000);
     return false;
   }
   if (
@@ -78,9 +68,6 @@ const getErrors = () => {
     selectedPaymentMethod.value === "jmpay"
   ) {
     paymentErrMessage.value = "Insufficient balance";
-    setTimeout(() => {
-      paymentErrMessage.value = "";
-    }, 2000);
     return false;
   }
   return true;
@@ -135,9 +122,6 @@ const placeOrder = async () => {
     console.error("Error placing order:", error);
     paymentErrMessage.value =
       "An error occurred while placing the order. Please try again.";
-    setTimeout(() => {
-      paymentErrMessage.value = "";
-    }, 2000);
   }
 };
 
@@ -147,6 +131,9 @@ onMounted(async () => {
   } catch (e) {
     console.error(e);
   }
+  setTimeout(() => {
+    paymentErrMessage.value = "";
+  }, 2000);
 });
 </script>
 
