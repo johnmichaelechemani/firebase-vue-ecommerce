@@ -1,7 +1,7 @@
 <script setup>
 import { isLoggedIn, loginErrorMessage, userData } from "../store.js";
 import { Icon } from "@iconify/vue";
-import { ref, defineEmits, computed, defineProps } from "vue";
+import { ref, defineEmits, defineProps } from "vue";
 import { useRouter } from "vue-router";
 import {
   collection,
