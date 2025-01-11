@@ -22,7 +22,7 @@ export const loginErrorMessage = ref("");
 export const registerErrorMessage = ref("");
 export const userData = ref(null);
 export const notifications = ref(1);
-export const userBalanced = ref(null);
+export const userBalance = ref(null);
 export const isProductLoading = ref(false);
 export const isLoggedIn = ref(false);
 export const showSidebar = ref(false);
@@ -143,7 +143,7 @@ export const getBalanced = async () => {
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists()) {
         const userDataFromFirestore = userDoc.data();
-        userBalanced.value = userDataFromFirestore.jmPay;
+        userBalance.value = userDataFromFirestore.jmPay;
       }
     } catch (e) {}
   }

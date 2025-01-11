@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { userData, getBalanced, userBalanced } from "../../store.js";
+import { userData, getBalanced, userBalance } from "../../store.js";
 import { defineProps, onMounted, ref } from "vue";
 import { formatPrice } from "@/scripts/composables.js";
 const props = defineProps({
@@ -46,7 +46,7 @@ onMounted(async () => {
         <div>
           <h1 class="text-sm font-semibold">{{ userData.userName }}</h1>
           <p v-if="!isBalancedLoading" class="text-xs font-semibold">
-            $ {{ formatPrice(userBalanced) }}
+            $ {{ formatPrice(userBalance) }}
           </p>
           <span v-else
             ><Icon icon="eos-icons:loading" width="16" height="16" />

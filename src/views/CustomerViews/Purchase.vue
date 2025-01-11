@@ -22,6 +22,7 @@ const queryForStat = (query) => {
 };
 
 const firestore = getFirestore();
+const userCollection = collection(firestore, "users");
 const purchaseCollection = collection(
   firestore,
   "purchase",
@@ -102,9 +103,15 @@ const getButtonConfig = (status, item) => {
 const cancelOrder = async (item) => {
   const purchaseDoc = doc(purchaseCollection, item.id);
   const productDoc = doc(productCollection, item.productId);
+  const userDoc = doc(userCollection, userData.value.userId);
   await updateDoc(purchaseDoc, {
     status: "cancelled",
   });
+  if (item.paymentMethod === "jmpay") {
+    await updateDoc(userDoc, {
+      jmPay: increment(item.totalPrice),
+    });
+  }
 
   await updateDoc(productDoc, {
     inventory: increment(item.quantity),
@@ -240,7 +247,7 @@ onMounted(() => {
                   <p
                     class="text-sm font-bold px-2 py-0.5 bg-gray-800 text-white"
                   >
-                    $ {{ formatPrice(item.quantity * item.price) }}
+                    $ {{ formatPrice(item.totalPrice) }}
                   </p>
                 </div>
               </div>
