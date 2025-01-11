@@ -68,3 +68,9 @@ export const debounce = (fn, delay) => {
     }, delay);
   };
 };
+
+export const clearAlert = (message) => {
+  setTimeout(() => {
+    message.value = "";
+  }, 2000);
+};

@@ -2,7 +2,12 @@
 import { Transition, defineEmits, ref, computed, onMounted } from "vue";
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
-import { formatPrice, incerment, decrement } from "@/scripts/composables";
+import {
+  formatPrice,
+  incerment,
+  decrement,
+  clearAlert,
+} from "@/scripts/composables";
 import { userData, userBalance, getBalance } from "@/store";
 import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
 import {
@@ -57,10 +62,12 @@ const paymentMethods = [
 const getErrors = () => {
   if (!selectedPaymentMethod.value) {
     paymentErrMessage.value = "Please select a payment method";
+    clearAlert(paymentErrMessage);
     return false;
   }
   if (!props.product || props.product.length === 0) {
     paymentErrMessage.value = "No products to purchase.";
+    clearAlert(paymentErrMessage);
     return false;
   }
   if (
@@ -68,6 +75,7 @@ const getErrors = () => {
     selectedPaymentMethod.value === "jmpay"
   ) {
     paymentErrMessage.value = "Insufficient balance";
+    clearAlert(paymentErrMessage);
     return false;
   }
   return true;
@@ -122,6 +130,7 @@ const placeOrder = async () => {
     console.error("Error placing order:", error);
     paymentErrMessage.value =
       "An error occurred while placing the order. Please try again.";
+    clearAlert(paymentErrMessage);
   }
 };
 
@@ -131,9 +140,6 @@ onMounted(async () => {
   } catch (e) {
     console.error(e);
   }
-  setTimeout(() => {
-    paymentErrMessage.value = "";
-  }, 2000);
 });
 </script>
 
