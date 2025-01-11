@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from "@iconify/vue";
-import { userData, getBalanced, userBalance } from "../../store.js";
+import { userData, getBalance, userBalance } from "../../store.js";
 import { defineProps, onMounted, ref } from "vue";
 import { formatPrice } from "@/scripts/composables.js";
 const props = defineProps({
@@ -13,7 +13,7 @@ const isBalancedLoading = ref(false);
 onMounted(async () => {
   try {
     isBalancedLoading.value = true;
-    await getBalanced();
+    await getBalance();
     isBalancedLoading.value = false;
   } catch (e) {
     console.error(e);

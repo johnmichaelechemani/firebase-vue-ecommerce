@@ -135,7 +135,7 @@ export const getPurchaseProducts = () => {
   }
 };
 
-export const getBalanced = async () => {
+export const getBalance = async () => {
   const db = getFirestore();
   if (userData.value) {
     const userDocRef = doc(db, "users", userData.value.userId);

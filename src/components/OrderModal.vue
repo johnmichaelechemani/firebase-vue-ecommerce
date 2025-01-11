@@ -3,7 +3,7 @@ import { Transition, defineEmits, ref, computed, onMounted } from "vue";
 import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
 import { formatPrice, incerment, decrement } from "@/scripts/composables";
-import { userData, userBalance, getBalanced } from "@/store";
+import { userData, userBalance, getBalance } from "@/store";
 import { deleteItems } from "@/scripts/firebaseDeleteApi.js";
 import {
   getFirestore,
@@ -142,7 +142,7 @@ const placeOrder = async () => {
 
 onMounted(async () => {
   try {
-    await getBalanced();
+    await getBalance();
   } catch (e) {
     console.error(e);
   }
