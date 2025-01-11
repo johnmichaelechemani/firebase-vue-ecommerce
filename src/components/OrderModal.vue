@@ -64,14 +64,14 @@ const getErrors = () => {
     setTimeout(() => {
       paymentErrMessage.value = "";
     }, 2000);
-    return;
+    return false;
   }
   if (!props.product || props.product.length === 0) {
     paymentErrMessage.value = "No products to purchase.";
     setTimeout(() => {
       paymentErrMessage.value = "";
     }, 2000);
-    return;
+    return false;
   }
   if (
     totalPrice.value > userBalance.value &&
@@ -81,12 +81,13 @@ const getErrors = () => {
     setTimeout(() => {
       paymentErrMessage.value = "";
     }, 2000);
-    return;
+    return false;
   }
+  return true;
 };
 
 const placeOrder = async () => {
-  getErrors();
+  if (!getErrors()) return;
   try {
     const productPromises = props.product.map(async (item) => {
       const productDoc = doc(productCollection, item.id);
@@ -115,7 +116,7 @@ const placeOrder = async () => {
 
       if (selectedPaymentMethod.value === "jmpay") {
         await updateDoc(userDoc, {
-          jmPay: increment(-item.price * item.quantity),
+          jmPay: increment(-totalPrice.value),
         });
       }
 

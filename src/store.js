@@ -3,6 +3,7 @@ import { ref } from "vue";
 import {
   getFirestore,
   getDoc,
+  getDocs,
   doc,
   collection,
   query,
