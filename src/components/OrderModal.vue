@@ -81,6 +81,12 @@ const getErrors = () => {
   return true;
 };
 
+const updateData = async (doc, rate, dataToUpdate) => {
+  await updateDoc(doc, {
+    [dataToUpdate]: increment(rate),
+  });
+};
+
 const placeOrder = async () => {
   if (!getErrors()) return;
   try {
@@ -111,17 +117,11 @@ const placeOrder = async () => {
       deleteItems("carts", item.cartItemId);
 
       if (selectedPaymentMethod.value === "jmpay") {
-        await updateDoc(userDoc, {
-          jmPay: increment(-totalPrice.value),
-        });
-        await updateDoc(sellerDoc, {
-          earns: increment(totalPrice.value),
-        });
+        updateData(userDoc, -totalPrice.value, "jmPay");
+        updateData(sellerDoc, totalPrice.value, "earns");
       }
 
-      await updateDoc(productDoc, {
-        inventory: increment(-item.quantity),
-      });
+      updateData(productDoc, -item.quantity, "inventory");
     });
 
     await Promise.all(productPromises);
