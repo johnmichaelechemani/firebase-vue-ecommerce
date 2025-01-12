@@ -232,7 +232,7 @@ const addToFavorites = async () => {
                           selectedSize === item
                             ? 'bg-gray-700 text-white'
                             : 'border',
-                          ' px-2 shadow w-10 text-center cursor-pointer uppercase  transition text-xs font-semibold',
+                          ' px-2 w-10 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
                         ]"
                         >{{ item }}</span
                       >
@@ -303,10 +303,30 @@ const addToFavorites = async () => {
                 </div>
               </div>
 
-              <div v-if="props.product.color">
-                <p class="text-xs font-medium text-gray-600">Color:</p>
+              <div v-if="props.product.specs">
+                <p class="text-xs font-medium text-gray-600">
+                  Storage Capacity:
+                </p>
                 <div class="font-medium flex flex-wrap gap-2">
                   <span
+                    v-for="item in props.product.specs"
+                    :key="item.id"
+                    @click="changeSize(item)"
+                    :class="[
+                      selectedSize === item
+                        ? 'bg-gray-700 text-white'
+                        : 'border',
+                      ' px-2 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
+                    ]"
+                    >{{ item }}</span
+                  >
+                </div>
+              </div>
+
+              <div v-if="props.product.color" class="mb-1">
+                <p class="text-xs font-medium text-gray-600">Color:</p>
+                <div class="font-medium flex flex-wrap gap-2">
+                  <div
                     v-for="item in props.product.color"
                     :key="item.id"
                     @click="changeSize(item)"
@@ -314,10 +334,18 @@ const addToFavorites = async () => {
                       selectedSize === item
                         ? 'bg-gray-700 text-white'
                         : 'border',
-                      ' px-2 shadow text-center cursor-pointer uppercase  transition text-xs font-semibold',
+                      ' text-center cursor-pointer max-h-20 w-18 uppercase  transition text-xs border-gray-700/50',
                     ]"
-                    >{{ item }}</span
                   >
+                    <div class="size-14 w-16 bg-gray-600">
+                      <img
+                        :src="props.product.image"
+                        alt=""
+                        class="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                    {{ item }}
+                  </div>
                 </div>
               </div>
 
