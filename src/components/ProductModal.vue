@@ -209,7 +209,7 @@ onMounted(async () => {
                 </div>
               </router-link>
 
-              <div class="h-[30rem] overflow-y-scroll no-scrollbar">
+              <div class="h-[30rem] overflow-y-scroll no-scrollbar pb-20">
                 <!-- alert messages -->
                 <ErrorMessage
                   v-if="showError"
@@ -406,7 +406,13 @@ onMounted(async () => {
                           class="w-full h-full object-cover object-center"
                         />
                       </div>
-                      {{ item }}
+                      <div class="flex justify-center items-center">
+                        <div
+                          class="whitespace-pre-line truncate text-center max-w-14 px-2"
+                        >
+                          {{ item }}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -437,7 +443,7 @@ onMounted(async () => {
                 </div>
               </div>
               <div
-                class="absolute bottom-0 left-0 w-full border-b-4 border-gray-800"
+                class="absolute bottom-0 left-0 w-full border-b-4 border border-b-gray-800"
               >
                 <div
                   class="w-full flex justify-start items-center px-2 backdrop-blur-2xl"
