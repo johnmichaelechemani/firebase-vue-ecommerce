@@ -88,7 +88,7 @@ watch(isShowModal, (newValue) => {
         </div>
       </div>
       <div
-        class="sm:text-sm text-xs font-semibold capitalize whitespace-pre-line"
+        class="sm:text-sm text-xs font-semibold capitalize sm:max-w-40 max-w-32 whitespace-pre-line"
       >
         {{ item.name }}
       </div>

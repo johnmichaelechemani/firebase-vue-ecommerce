@@ -150,8 +150,8 @@ onMounted(async () => {
       v-if="props.isShowModal"
       class="fixed inset-0 z-50 bg-gray-800/30 backdrop-blur"
     >
-      <div class="relative flex justify-center items-center h-full">
-        <div class="relative">
+      <div class="flex justify-center items-center h-full">
+        <div class="relative max-w-96 bg-gray-100">
           <div class="absolute top-0 right-0">
             <button @click="showModal">
               <Icon
@@ -162,7 +162,7 @@ onMounted(async () => {
             </button>
           </div>
           <div>
-            <div class="p-2 bg-gray-100 min-w-80">
+            <div class="p-2 min-w-80">
               <router-link
                 :to="{ name: 'mallStore', params: { id: product.mallId } }"
                 @click="showModal"
@@ -209,120 +209,242 @@ onMounted(async () => {
                 </div>
               </router-link>
 
-              <!-- alert messages -->
-              <ErrorMessage
-                v-if="showError"
-                color="red"
-                :message="cartErrorMessage"
-              />
-              <ErrorMessage
-                v-if="showSuccessMessage"
-                color="green"
-                message="Added to Cart!"
-              />
-              <ErrorMessage
-                v-if="showSuccessMessageFavorites"
-                color="green"
-                message="Added to Favorites!"
-              />
-              <!-- alert messages -->
+              <div class="h-[30rem] overflow-y-scroll no-scrollbar">
+                <!-- alert messages -->
+                <ErrorMessage
+                  v-if="showError"
+                  color="red"
+                  :message="cartErrorMessage"
+                />
+                <ErrorMessage
+                  v-if="showSuccessMessage"
+                  color="green"
+                  message="Added to Cart!"
+                />
+                <ErrorMessage
+                  v-if="showSuccessMessageFavorites"
+                  color="green"
+                  message="Added to Favorites!"
+                />
+                <!-- alert messages -->
 
-              <div class="flex justify-start items-start gap-4">
-                <div
-                  class="sm:size-40 size-32 bg-gray-700/10 border-gray-700/20 border relative"
-                >
-                  <img
-                    :src="product.image"
-                    loading="lazy"
-                    alt=""
-                    class="object-center h-full w-full object-cover"
-                  />
+                <div class="flex justify-start items-start gap-4">
                   <div
-                    style="
-                      clip-path: polygon(
-                        0 0,
-                        100% 0,
-                        100% 100%,
-                        51% 68%,
-                        0 100%
-                      );
-                    "
-                    class="absolute top-0 right-0 pb-4 px-1 bg-gray-800 text-white font-medium text-center"
+                    class="min-sm:size-40 h-auto min-w-32 bg-gray-700/10 border-gray-700/20 border relative"
                   >
-                    <div class="relative flex">
-                      <span class="text-[9px] pt-0.5"
-                        >{{ product.discount }}%</span
-                      >
+                    <img
+                      :src="product.image"
+                      loading="lazy"
+                      alt=""
+                      class="object-center h-full w-full object-cover"
+                    />
+                    <div
+                      style="
+                        clip-path: polygon(
+                          0 0,
+                          100% 0,
+                          100% 100%,
+                          51% 68%,
+                          0 100%
+                        );
+                      "
+                      class="absolute top-0 right-0 pb-4 px-1 bg-gray-800 text-white font-medium text-center"
+                    >
+                      <div class="relative flex">
+                        <span class="text-[9px] pt-0.5"
+                          >{{ product.discount }}%</span
+                        >
+                      </div>
+                      <div class="flex justify-center items-start">
+                        <p class="text-[10px]">OFF</p>
+                      </div>
                     </div>
-                    <div class="flex justify-center items-start">
-                      <p class="text-[10px]">OFF</p>
+                  </div>
+                  <div class="w-full">
+                    <p class="text-sm font-semibold capitalize">
+                      {{ product.name }}
+                    </p>
+                    <div class="flex justify-start items-center gap-2">
+                      <p class="text-lg font-bold">
+                        ${{ formatPrice(product.price) }}
+                      </p>
+                    </div>
+                    <div class="mb-1" v-if="props.product.size">
+                      <p class="text-xs font-medium text-gray-600">Size:</p>
+                      <div class="font-medium grid grid-cols-4 gap-1">
+                        <span
+                          v-for="item in props.product.size"
+                          :key="item.id"
+                          @click="changeSize(item)"
+                          :class="[
+                            selectedSize === item
+                              ? 'bg-gray-700 text-white'
+                              : 'border',
+                            ' px-2 w-10 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
+                          ]"
+                          >{{ item }}</span
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="font-semibold flex justify-start items-center gap-2"
+                    >
+                      <span class="font-semibold text-sm">
+                        <Icon
+                          icon="material-symbols-light:production-quantity-limits"
+                          width="20"
+                          height="20"
+                      /></span>
+                      <div class="flex justify-start items-center">
+                        <button
+                          @click="decrement(props.product)"
+                          :class="
+                            props.product.quantity === 1
+                              ? 'cursor-not-allowed text-gray-500'
+                              : ''
+                          "
+                          class="hover:bg-gray-700/20 px-4 py-1 transition"
+                        >
+                          <Icon icon="mdi-light:minus" width="20" height="20" />
+                        </button>
+                        <div class="py-1 text-sm w-10 text-center border">
+                          {{ props.product.quantity }}
+                        </div>
+                        <button
+                          @click="incerment(props.product)"
+                          :class="
+                            props.product.inventory === props.product.quantity
+                              ? 'cursor-not-allowed text-gray-500'
+                              : ''
+                          "
+                          class="hover:bg-gray-700/20 px-4 py-1 transition"
+                        >
+                          <Icon icon="mdi-light:plus" width="20" height="20" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <p class="text-sm font-semibold capitalize">
-                    {{ product.name }}
+
+                <div v-if="props.product.specs">
+                  <p class="text-xs font-medium text-gray-600">
+                    Storage Capacity:
                   </p>
-                  <div class="flex justify-start items-center gap-2">
-                    <p class="text-lg font-bold">
-                      ${{ formatPrice(product.price) }}
-                    </p>
+                  <div class="font-medium flex flex-wrap gap-2">
+                    <span
+                      v-for="item in props.product.specs"
+                      :key="item.id"
+                      @click="changeSize(item)"
+                      :class="[
+                        selectedSize === item
+                          ? 'bg-gray-700 text-white'
+                          : 'border',
+                        ' px-2 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
+                      ]"
+                      >{{ item }}</span
+                    >
                   </div>
-                  <div class="mb-1" v-if="props.product.size">
-                    <p class="text-xs font-medium text-gray-600">Size:</p>
-                    <div class="font-medium flex flex-wrap gap-2">
-                      <span
-                        v-for="item in props.product.size"
-                        :key="item.id"
-                        @click="changeSize(item)"
-                        :class="[
-                          selectedSize === item
-                            ? 'bg-gray-700 text-white'
-                            : 'border',
-                          ' px-2 w-10 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
-                        ]"
-                        >{{ item }}</span
-                      >
+                </div>
+
+                <div v-if="props.product.color" class="mb-1">
+                  <p class="text-xs font-medium text-gray-600">Color:</p>
+                  <div class="font-medium flex flex-wrap gap-2">
+                    <div
+                      v-for="item in props.product.color"
+                      :key="item.id"
+                      @click="changeSize(item)"
+                      :class="[
+                        selectedSize === item
+                          ? 'bg-gray-700 text-white'
+                          : 'border',
+                        ' text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
+                      ]"
+                    >
+                      <div class="size-14 w-auto bg-gray-600">
+                        <img
+                          :src="props.product.image"
+                          alt=""
+                          class="w-full h-full object-cover object-center"
+                        />
+                      </div>
+                      {{ item }}
                     </div>
+                  </div>
+                </div>
+
+                <div class="flex justify-start items-center">
+                  <button
+                    @click="addToFavorites"
+                    :class="
+                      isFavLoading
+                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                        : ''
+                    "
+                    class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
+                  >
+                    <Icon
+                      v-if="!isFavLoading"
+                      icon="material-symbols-light:favorite-outline"
+                      width="24"
+                      height="24"
+                    />
+                    <span v-else
+                      ><Icon icon="eos-icons:loading" width="24" height="24" />
+                    </span>
+                  </button>
+                  <div
+                    class="flex justify-start items-center"
+                    v-if="product.ratings"
+                  >
+                    <Icon
+                      icon="material-symbols-light:star"
+                      width="20"
+                      height="20"
+                    />
+                    <span class="text-gray-600 font-semibold text-sm pr-1"
+                      >{{ product.ratings.toFixed(1) }}
+                    </span>
                   </div>
                   <div
-                    class="font-semibold flex justify-start items-center gap-2"
+                    v-if="product.sold"
+                    class="flex justify-start items-center text-gray-600 font-semibold text-sm"
                   >
-                    <span class="font-semibold text-sm">
-                      <Icon
-                        icon="material-symbols-light:production-quantity-limits"
-                        width="20"
-                        height="20"
-                    /></span>
-                    <div class="flex justify-start items-center">
-                      <button
-                        @click="decrement(props.product)"
-                        :class="
-                          props.product.quantity === 1
-                            ? 'cursor-not-allowed text-gray-500'
-                            : ''
-                        "
-                        class="hover:bg-gray-700/20 px-4 py-1 transition"
-                      >
-                        <Icon icon="mdi-light:minus" width="20" height="20" />
-                      </button>
-                      <div class="py-1 text-sm w-10 text-center border">
-                        {{ props.product.quantity }}
-                      </div>
-                      <button
-                        @click="incerment(props.product)"
-                        :class="
-                          props.product.inventory === props.product.quantity
-                            ? 'cursor-not-allowed text-gray-500'
-                            : ''
-                        "
-                        class="hover:bg-gray-700/20 px-4 py-1 transition"
-                      >
-                        <Icon icon="mdi-light:plus" width="20" height="20" />
-                      </button>
-                    </div>
+                    | {{ formatSoldNumber(product.sold) }} Sold
                   </div>
-                  <div class="my-2">
+                </div>
+
+                <div class="my-1">
+                  <div class="text-sm font-semibold">
+                    Description:
+                    <p>{{ product.description }}</p>
+                  </div>
+                  <hr />
+                  <div class="text-sm font-semibold">
+                    Reviews: Lorem ipsum is placeholder text commonly used in
+                    the graphic, print, and publishing industries for previewing
+                    layouts and visual mockups.Lorem ipsum is placeholder text
+                    commonly used in the graphic, print, and publishing
+                    industries for previewing layouts and visual mockups.Lorem
+                    ipsum is placeholder text commonly used in the graphic,
+                    print, and publishing industries for previewing layouts and
+                    visual mockups.Lorem ipsum is placeholder text commonly used
+                    in the graphic, print, and publishing industries for
+                    previewing layouts and visual mockups.Lorem ipsum is
+                    placeholder text commonly used in the graphic, print, and
+                    publishing industries for previewing layouts and visual
+                    mockups.Lorem ipsum is placeholder text commonly used in the
+                    graphic, print, and publishing industries for previewing
+                    layouts and visual mockups.
+                  </div>
+                </div>
+              </div>
+              <div class="absolute bottom-0 left-0 w-full">
+                <div
+                  class="w-full flex justify-start items-center gap-2 px-2 bg-gray-700/5 backdrop-blur-2xl"
+                >
+                  <div>shop</div>
+                  <div>chat</div>
+                  <div class="py-2 w-full">
                     <button
                       @click="addToCart"
                       :disabled="props.product.inventory === 0"
@@ -331,7 +453,7 @@ onMounted(async () => {
                           ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
                           : 'bg-gray-800 text-white'
                       "
-                      class="font-semibold flex justify-center items-center gap-2 text-sm py-2 w-full"
+                      class="font-semibold flex justify-center rounded-sm items-center gap-2 text-sm py-2 w-full"
                     >
                       {{
                         props.product.inventory === 0
@@ -348,102 +470,6 @@ onMounted(async () => {
                     </button>
                   </div>
                 </div>
-              </div>
-
-              <div v-if="props.product.specs">
-                <p class="text-xs font-medium text-gray-600">
-                  Storage Capacity:
-                </p>
-                <div class="font-medium flex flex-wrap gap-2">
-                  <span
-                    v-for="item in props.product.specs"
-                    :key="item.id"
-                    @click="changeSize(item)"
-                    :class="[
-                      selectedSize === item
-                        ? 'bg-gray-700 text-white'
-                        : 'border',
-                      ' px-2 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
-                    ]"
-                    >{{ item }}</span
-                  >
-                </div>
-              </div>
-
-              <div v-if="props.product.color" class="mb-1">
-                <p class="text-xs font-medium text-gray-600">Color:</p>
-                <div class="font-medium flex flex-wrap gap-2">
-                  <div
-                    v-for="item in props.product.color"
-                    :key="item.id"
-                    @click="changeSize(item)"
-                    :class="[
-                      selectedSize === item
-                        ? 'bg-gray-700 text-white'
-                        : 'border',
-                      ' text-center cursor-pointer max-h-20 w-18 uppercase  transition text-xs border-gray-700/50',
-                    ]"
-                  >
-                    <div class="size-14 w-16 bg-gray-600">
-                      <img
-                        :src="props.product.image"
-                        alt=""
-                        class="w-full h-full object-cover object-center"
-                      />
-                    </div>
-                    {{ item }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="flex justify-start items-center">
-                <button
-                  @click="addToFavorites"
-                  :class="
-                    isFavLoading
-                      ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
-                      : ''
-                  "
-                  class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
-                >
-                  <Icon
-                    v-if="!isFavLoading"
-                    icon="material-symbols-light:favorite-outline"
-                    width="24"
-                    height="24"
-                  />
-                  <span v-else
-                    ><Icon icon="eos-icons:loading" width="24" height="24" />
-                  </span>
-                </button>
-                <div
-                  class="flex justify-start items-center"
-                  v-if="product.ratings"
-                >
-                  <Icon
-                    icon="material-symbols-light:star"
-                    width="20"
-                    height="20"
-                  />
-                  <span class="text-gray-600 font-semibold text-sm pr-1"
-                    >{{ product.ratings.toFixed(1) }}
-                  </span>
-                </div>
-                <div
-                  v-if="product.sold"
-                  class="flex justify-start items-center text-gray-600 font-semibold text-sm"
-                >
-                  | {{ formatSoldNumber(product.sold) }} Sold
-                </div>
-              </div>
-
-              <div class="my-1">
-                <div class="text-sm font-semibold">
-                  Description:
-                  <p>{{ product.description }}</p>
-                </div>
-                <hr />
-                <div class="text-sm font-semibold">Reviews:</div>
               </div>
             </div>
           </div>
