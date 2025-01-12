@@ -19,21 +19,23 @@ import {
   doc,
 } from "firebase/firestore";
 import ErrorMessage from "./AlertMessage.vue";
-const props = defineProps({
-  isShowModal: Boolean,
-  product: Array,
-});
+
 const db = getFirestore();
 const productCollection = collection(db, "products");
 const userCollection = collection(db, "users");
 const quantity = ref(1);
 const selectedPaymentMethod = ref(null);
 const paymentErrMessage = ref("");
+
 const totalPrice = computed(() => {
   if (!props.product || props.product.length === 0) return 0;
   return props.product.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
+});
+const props = defineProps({
+  isShowModal: Boolean,
+  product: Array,
 });
 const emit = defineEmits(["closeModal"]);
 const showModal = () => {
@@ -120,7 +122,6 @@ const placeOrder = async () => {
         updateData(userDoc, -totalPrice.value, "jmPay");
         updateData(sellerDoc, totalPrice.value, "earns");
       }
-
       updateData(productDoc, -item.quantity, "inventory");
     });
 
