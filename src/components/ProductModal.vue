@@ -286,6 +286,25 @@ onMounted(async () => {
                         >
                       </div>
                     </div>
+                    <div v-if="props.product.specs" class="mb-1">
+                      <p class="text-xs font-medium text-gray-600">
+                        Storage Capacity:
+                      </p>
+                      <div class="font-medium flex flex-wrap gap-2">
+                        <span
+                          v-for="item in props.product.specs"
+                          :key="item.id"
+                          @click="changeSize(item)"
+                          :class="[
+                            selectedSize === item
+                              ? 'bg-gray-700 text-white'
+                              : 'border',
+                            ' px-2 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
+                          ]"
+                          >{{ item }}</span
+                        >
+                      </div>
+                    </div>
                     <div
                       class="font-semibold flex justify-start items-center gap-2"
                     >
@@ -323,26 +342,6 @@ onMounted(async () => {
                         </button>
                       </div>
                     </div>
-                  </div>
-                </div>
-
-                <div v-if="props.product.specs">
-                  <p class="text-xs font-medium text-gray-600">
-                    Storage Capacity:
-                  </p>
-                  <div class="font-medium flex flex-wrap gap-2">
-                    <span
-                      v-for="item in props.product.specs"
-                      :key="item.id"
-                      @click="changeSize(item)"
-                      :class="[
-                        selectedSize === item
-                          ? 'bg-gray-700 text-white'
-                          : 'border',
-                        ' px-2 text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
-                      ]"
-                      >{{ item }}</span
-                    >
                   </div>
                 </div>
 
