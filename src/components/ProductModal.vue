@@ -438,12 +438,40 @@ onMounted(async () => {
                   </div>
                 </div>
               </div>
-              <div class="absolute bottom-0 left-0 w-full">
+              <div
+                class="absolute bottom-0 left-0 w-full border-b-4 border-gray-800"
+              >
                 <div
-                  class="w-full flex justify-start items-center gap-2 px-2 bg-gray-700/5 backdrop-blur-2xl"
+                  class="w-full flex justify-start items-center px-2 backdrop-blur-2xl"
                 >
-                  <div>shop</div>
-                  <div>chat</div>
+                  <router-link
+                    :to="{ name: 'mallStore', params: { id: product.mallId } }"
+                  >
+                    <div class="text-xs text-center pr-2">
+                      <div class="flex justify-center items-center">
+                        <Icon
+                          icon="material-symbols-light:store-outline-rounded"
+                          width="18"
+                          height="18"
+                        />
+                      </div>
+                      Shop
+                    </div>
+                  </router-link>
+                  <router-link
+                    :to="{ name: 'mallsChat', params: { id: product.mallId } }"
+                  >
+                    <div class="text-xs text-center px-2">
+                      <div class="flex justify-center items-center">
+                        <Icon
+                          icon="material-symbols-light:chat-outline-rounded"
+                          width="16"
+                          height="16"
+                        />
+                      </div>
+                      Chat
+                    </div>
+                  </router-link>
                   <div class="py-2 w-full">
                     <button
                       @click="addToCart"
