@@ -221,47 +221,22 @@ const addToFavorites = async () => {
                       ${{ formatPrice(product.price) }}
                     </p>
                   </div>
-                  <div class="font-medium flex flex-wrap gap-2 my-2">
-                    <span
-                      @click="changeSize('sm')"
-                      :class="[
-                        selectedSize === 'sm'
-                          ? 'bg-gray-700 text-white'
-                          : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
-                      ]"
-                      >SM</span
-                    >
-                    <span
-                      @click="changeSize('md')"
-                      :class="[
-                        selectedSize === 'md'
-                          ? 'bg-gray-700 text-white'
-                          : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
-                      ]"
-                      >MD</span
-                    >
-                    <span
-                      @click="changeSize('lg')"
-                      :class="[
-                        selectedSize === 'lg'
-                          ? 'bg-gray-700 text-white'
-                          : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
-                      ]"
-                      >LG</span
-                    >
-                    <span
-                      @click="changeSize('xl')"
-                      :class="[
-                        selectedSize === 'xl'
-                          ? 'bg-gray-700 text-white'
-                          : 'border',
-                        ' px-2 shadow w-10 text-center cursor-pointer  transition text-xs font-semibold',
-                      ]"
-                      >XL</span
-                    >
+                  <div class="mb-1" v-if="props.product.size">
+                    <p class="text-xs font-medium text-gray-600">Size:</p>
+                    <div class="font-medium flex flex-wrap gap-2">
+                      <span
+                        v-for="item in props.product.size"
+                        :key="item.id"
+                        @click="changeSize(item)"
+                        :class="[
+                          selectedSize === item
+                            ? 'bg-gray-700 text-white'
+                            : 'border',
+                          ' px-2 shadow w-10 text-center cursor-pointer uppercase  transition text-xs font-semibold',
+                        ]"
+                        >{{ item }}</span
+                      >
+                    </div>
                   </div>
                   <div
                     class="font-semibold flex justify-start items-center gap-2"
@@ -325,6 +300,24 @@ const addToFavorites = async () => {
                       </span>
                     </button>
                   </div>
+                </div>
+              </div>
+
+              <div v-if="props.product.color">
+                <p class="text-xs font-medium text-gray-600">Color:</p>
+                <div class="font-medium flex flex-wrap gap-2">
+                  <span
+                    v-for="item in props.product.color"
+                    :key="item.id"
+                    @click="changeSize(item)"
+                    :class="[
+                      selectedSize === item
+                        ? 'bg-gray-700 text-white'
+                        : 'border',
+                      ' px-2 shadow text-center cursor-pointer uppercase  transition text-xs font-semibold',
+                    ]"
+                    >{{ item }}</span
+                  >
                 </div>
               </div>
 
