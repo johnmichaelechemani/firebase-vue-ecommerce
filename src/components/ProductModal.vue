@@ -1,7 +1,13 @@
 <script setup>
-import { isLoggedIn, loginErrorMessage, userData } from "../store.js";
+import {
+  isLoggedIn,
+  loginErrorMessage,
+  userData,
+  mallsAccount,
+  useMallsAccount,
+} from "../store.js";
 import { Icon } from "@iconify/vue";
-import { ref, defineEmits, defineProps } from "vue";
+import { ref, defineEmits, defineProps, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import {
   collection,
@@ -25,6 +31,15 @@ const selectedSize = ref("");
 const props = defineProps({
   isShowModal: Boolean,
   product: Object,
+});
+
+const currentMall = computed(() => {
+  const mallId = props.product.mallId;
+  return mallsAccount.value.find((mall) => mall.userId === mallId);
+});
+
+const mallData = computed(() => {
+  return currentMall.value;
 });
 
 const emit = defineEmits(["closeModal"]);
@@ -119,6 +134,14 @@ const addToFavorites = async () => {
   showSuccessMessageFavorites.value = true;
   clearAlert(showSuccessMessageFavorites);
 };
+
+onMounted(async () => {
+  try {
+    await useMallsAccount();
+  } catch (error) {
+    console.error("Failed to load mall data:", error);
+  }
+});
 </script>
 
 <template>
@@ -143,23 +166,47 @@ const addToFavorites = async () => {
               <router-link
                 :to="{ name: 'mallStore', params: { id: product.mallId } }"
                 @click="showModal"
-                class="flex gap-1 justify-start items-center my-2"
+                class="flex gap-1 justify-between items-center mt-4 mb-2"
               >
-                <div
-                  class="text-xl flex justify-start items-center gap-1 font-semibold capitalize hover:underline"
-                >
-                  <Icon
-                    icon="material-symbols-light:store"
-                    width="30"
-                    height="30"
-                  />
-                  {{ product.mallName }}
+                <div class="flex justify-start items-center">
+                  <div
+                    class="text-sm flex justify-start items-center gap-2 font-bold capitalize"
+                  >
+                    <div class="rounded-full border">
+                      <Icon
+                        v-if="!mallData.userPhotoURL"
+                        icon="material-symbols-light:store"
+                        width="24"
+                        height="24"
+                      />
+                      <div class="size-10 rounded-full">
+                        <img
+                          v-if="mallData.userPhotoURL"
+                          :src="mallData.userPhotoURL"
+                          alt="profile"
+                          loading="lazy"
+                          class="w-full h-full object-cover rounded-full object-center"
+                        />
+                      </div>
+                    </div>
+                    {{ mallData.userName }}
+                    <span
+                      class="text-xs flex justify-center items-center bg-gray-700/5 rounded-sm shadow px-1"
+                    >
+                      <Icon
+                        icon="material-symbols-light:star"
+                        width="14"
+                        height="14"
+                        class="text-green-500"
+                      />{{ mallData.rating }}</span
+                    >
+                  </div>
                 </div>
-                <Icon
-                  icon="material-symbols-light:double-arrow"
-                  width="20"
-                  height="20"
-                />
+                <div
+                  class="border px-4 bg-gray-700/5 text-sm font-semibold rounded-sm"
+                >
+                  Visit
+                </div>
               </router-link>
 
               <!-- alert messages -->
