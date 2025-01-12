@@ -290,7 +290,7 @@ onMounted(async () => {
                       <p class="text-xs font-medium text-gray-600">
                         Storage Capacity:
                       </p>
-                      <div class="font-medium flex flex-wrap gap-2">
+                      <div class="font-medium flex flex-wrap gap-1">
                         <span
                           v-for="item in props.product.specs"
                           :key="item.id"
@@ -345,6 +345,46 @@ onMounted(async () => {
                   </div>
                 </div>
 
+                <div class="flex justify-start items-center">
+                  <button
+                    @click="addToFavorites"
+                    :class="
+                      isFavLoading
+                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                        : ''
+                    "
+                    class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
+                  >
+                    <Icon
+                      v-if="!isFavLoading"
+                      icon="material-symbols-light:favorite-outline"
+                      width="20"
+                      height="20"
+                    />
+                    <span v-else
+                      ><Icon icon="eos-icons:loading" width="24" height="24" />
+                    </span>
+                  </button>
+                  <div
+                    class="flex justify-start items-center"
+                    v-if="product.ratings"
+                  >
+                    <Icon
+                      icon="material-symbols-light:star"
+                      width="16"
+                      height="16"
+                    />
+                    <span class="text-gray-600 font-semibold text-xs pr-1"
+                      >{{ product.ratings.toFixed(1) }}
+                    </span>
+                  </div>
+                  <div
+                    v-if="product.sold"
+                    class="flex justify-start items-center text-gray-600 font-semibold text-xs"
+                  >
+                    | {{ formatSoldNumber(product.sold) }} Sold
+                  </div>
+                </div>
                 <div v-if="props.product.color" class="mb-1">
                   <p class="text-xs font-medium text-gray-600">Color:</p>
                   <div class="font-medium flex flex-wrap gap-2">
@@ -359,7 +399,7 @@ onMounted(async () => {
                         ' text-center cursor-pointer uppercase  transition text-xs border-gray-700/50',
                       ]"
                     >
-                      <div class="size-14 w-auto bg-gray-600">
+                      <div class="size-14 w-auto bg-gray-600/50">
                         <img
                           :src="props.product.image"
                           alt=""
@@ -368,47 +408,6 @@ onMounted(async () => {
                       </div>
                       {{ item }}
                     </div>
-                  </div>
-                </div>
-
-                <div class="flex justify-start items-center">
-                  <button
-                    @click="addToFavorites"
-                    :class="
-                      isFavLoading
-                        ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
-                        : ''
-                    "
-                    class="p-1 border rounded-full shadow-sm hover:bg-gray-700/10 transition"
-                  >
-                    <Icon
-                      v-if="!isFavLoading"
-                      icon="material-symbols-light:favorite-outline"
-                      width="24"
-                      height="24"
-                    />
-                    <span v-else
-                      ><Icon icon="eos-icons:loading" width="24" height="24" />
-                    </span>
-                  </button>
-                  <div
-                    class="flex justify-start items-center"
-                    v-if="product.ratings"
-                  >
-                    <Icon
-                      icon="material-symbols-light:star"
-                      width="20"
-                      height="20"
-                    />
-                    <span class="text-gray-600 font-semibold text-sm pr-1"
-                      >{{ product.ratings.toFixed(1) }}
-                    </span>
-                  </div>
-                  <div
-                    v-if="product.sold"
-                    class="flex justify-start items-center text-gray-600 font-semibold text-sm"
-                  >
-                    | {{ formatSoldNumber(product.sold) }} Sold
                   </div>
                 </div>
 
