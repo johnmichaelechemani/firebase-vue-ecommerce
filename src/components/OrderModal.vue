@@ -87,6 +87,7 @@ const placeOrder = async () => {
     const productPromises = props.product.map(async (item) => {
       const productDoc = doc(productCollection, item.id);
       const userDoc = doc(userCollection, userData.value.userId);
+      const sellerDoc = doc(userCollection, item.mallId, "sales", "summary");
       await addDoc(collection(db, `purchase/${userData.value.userId}/items`), {
         productId: item.id,
         userId: userData.value.userId,
@@ -112,6 +113,9 @@ const placeOrder = async () => {
       if (selectedPaymentMethod.value === "jmpay") {
         await updateDoc(userDoc, {
           jmPay: increment(-totalPrice.value),
+        });
+        await updateDoc(sellerDoc, {
+          earns: increment(totalPrice.value),
         });
       }
 
