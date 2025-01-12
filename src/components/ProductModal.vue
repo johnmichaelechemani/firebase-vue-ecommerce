@@ -287,9 +287,7 @@ onMounted(async () => {
                       </div>
                     </div>
                     <div v-if="props.product.specs" class="mb-1">
-                      <p class="text-xs font-medium text-gray-600">
-                        Storage Capacity:
-                      </p>
+                      <p class="text-xs font-medium text-gray-600">Specs:</p>
                       <div class="font-medium flex flex-wrap gap-1">
                         <span
                           v-for="item in props.product.specs"
@@ -423,23 +421,7 @@ onMounted(async () => {
                     <p>{{ product.description }}</p>
                   </div>
                   <hr />
-                  <div class="text-sm font-semibold">
-                    Reviews: Lorem ipsum is placeholder text commonly used in
-                    the graphic, print, and publishing industries for previewing
-                    layouts and visual mockups.Lorem ipsum is placeholder text
-                    commonly used in the graphic, print, and publishing
-                    industries for previewing layouts and visual mockups.Lorem
-                    ipsum is placeholder text commonly used in the graphic,
-                    print, and publishing industries for previewing layouts and
-                    visual mockups.Lorem ipsum is placeholder text commonly used
-                    in the graphic, print, and publishing industries for
-                    previewing layouts and visual mockups.Lorem ipsum is
-                    placeholder text commonly used in the graphic, print, and
-                    publishing industries for previewing layouts and visual
-                    mockups.Lorem ipsum is placeholder text commonly used in the
-                    graphic, print, and publishing industries for previewing
-                    layouts and visual mockups.
-                  </div>
+                  <div class="text-sm font-semibold">Reviews:</div>
                 </div>
               </div>
               <div
