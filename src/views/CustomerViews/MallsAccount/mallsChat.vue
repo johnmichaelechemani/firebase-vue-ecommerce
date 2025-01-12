@@ -140,7 +140,7 @@ onMounted(async () => {
       </div>
       <div class="absolute bottom-0 left-0 z-10 w-full bg-gray-50">
         <div
-          class="relative shadow-xl p-1 flex justify-between items-center border"
+          class="relative shadow-xl p-1 flex justify-between items-center border-b-4 border-b-gray-800 border"
         >
           <input
             type="text"
