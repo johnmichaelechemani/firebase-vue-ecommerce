@@ -451,8 +451,8 @@ onMounted(async () => {
                       <div class="flex justify-center items-center">
                         <Icon
                           icon="material-symbols-light:chat-outline-rounded"
-                          width="16"
-                          height="16"
+                          width="18"
+                          height="18"
                         />
                       </div>
                       Chat

@@ -22,7 +22,7 @@
       </p>
       <RouterLink to="/">
         <div
-          class="flex sm:justify-start my-2 justify-center items-center gap-1 hover:bg-gray-700/10 transition"
+          class="flex sm:justify-start my-2 justify-center items-center gap-1  transition"
         >
           <div
             :class="[
@@ -41,7 +41,7 @@
       </RouterLink>
       <RouterLink to="/malls">
         <div
-          class="flex sm:justify-start justify-center my-2 items-center gap-1 hover:bg-gray-700/10 transition"
+          class="flex sm:justify-start justify-center my-2 items-center gap-1  transition"
         >
           <div
             :class="[
@@ -63,7 +63,7 @@
 
       <RouterLink to="/purchase">
         <div
-          class="flex sm:justify-start justify-center my-1 items-center gap-1 hover:bg-gray-700/10 transition"
+          class="flex sm:justify-start justify-center my-1 items-center gap-1  transition"
         >
           <div
             :class="[

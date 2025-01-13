@@ -155,7 +155,7 @@ onMounted(async () => {
       class="fixed inset-0 z-50 bg-gray-800/30 backdrop-blur"
     >
       <div class="relative flex justify-center items-center h-full">
-        <div class="bg-white p-2 relative max-w-80">
+        <div class="bg-white p-2 relative min-w-80 max-w-96">
           <div class="absolute top-0 right-0">
             <button @click="showModal">
               <Icon
