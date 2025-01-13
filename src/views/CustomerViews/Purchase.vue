@@ -153,7 +153,7 @@ onMounted(() => {
     <p class="text-sm font-semibold p-2 capitalize">
       {{ Object.keys($route.query).length === 0 ? "All" : route.query.status }}
     </p>
-    <div class="overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] pb-48">
+    <div class="overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] pb-52">
       <div class="mx-2 flex flex-wrap gap-2">
         <div
           v-if="filteredStats"
@@ -170,7 +170,7 @@ onMounted(() => {
             >
               <router-link
                 :to="{ name: 'mallStore', params: { id: item.mallId } }"
-                class="flex justify-start items-center"
+                class="flex justify-start items-center gap-1 uppercase"
               >
                 <span>
                   <Icon
@@ -178,11 +178,11 @@ onMounted(() => {
                     width="24"
                     height="24" /></span
                 >{{ item.store }}
-                <Icon
-                  icon="material-symbols-light:double-arrow"
-                  width="20"
-                  height="20"
-                />
+                <div
+                  class="border px-2 bg-gray-700/5 text-xs font-semibold rounded-sm"
+                >
+                  Visit
+                </div>
               </router-link>
             </div>
             <div
@@ -194,7 +194,7 @@ onMounted(() => {
 
           <div class="flex justify-start items-start gap-2">
             <div
-              class="sm:size-20 size-16 bg-gray-700/10 border-gray-700/20 border relative"
+              class="max-w-16 sm:min-w-20 bg-gray-700/10 border-gray-700/20 border relative"
             >
               <img
                 :src="item.image"
