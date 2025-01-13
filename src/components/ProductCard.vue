@@ -43,7 +43,7 @@ watch(isShowModal, (newValue) => {
         style="clip-path: polygon(0 0, 100% 0, 100% 100%, 51% 68%, 0 100%)"
         class="absolute top-0 right-0 pb-4 px-1 bg-gray-800 text-white font-medium text-center"
       >
-        <div class="relative flex">
+        <div class="relative flex justify-center">
           <span class="text-[9px] pt-0.5">{{ item.discount }}%</span>
         </div>
         <div class="flex justify-center items-start">
