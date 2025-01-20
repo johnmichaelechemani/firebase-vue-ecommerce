@@ -113,9 +113,9 @@ onMounted(() => {
                     <tr>
                       <th scope="col" class="px-4 py-3">Product name</th>
                       <th scope="col" class="px-4 py-3">User Name</th>
+                      <th scope="col" class="px-4 py-3">User Number</th>
                       <th scope="col" class="px-4 py-3">Total Price</th>
                       <th scope="col" class="px-4 py-3">Status</th>
-                      <th colspan="2" scope="col" class="px-4 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody v-for="item in mallOrderProducts" :key="item.id">
@@ -129,33 +129,12 @@ onMounted(() => {
                       <td class="px-4 py-4">
                         {{ item.address.name }}
                       </td>
+                      <td class="px-4 py-4">
+                        {{ item.address.phone }}
+                      </td>
                       <td class="px-4 py-4">{{ item.totalPrice }}</td>
                       <td class="px-4 py-4 uppercase max-w-52">
                         {{ item.status }}
-                      </td>
-
-                      <td
-                        class="px-4 py-4 flex justify-start items-center gap-2"
-                      >
-                        <button
-                          class="font-medium text-green-500 border border-green-500/20 p-1"
-                        >
-                          <Icon
-                            icon="material-symbols-light:edit-outline"
-                            width="20"
-                            height="20"
-                          />
-                        </button>
-                        <button
-                          @click="deleteProducts('products', item.id)"
-                          class="font-medium text-red-500 border border-red-500/20 p-1"
-                        >
-                          <Icon
-                            icon="material-symbols-light:restore-from-trash-outline"
-                            width="20"
-                            height="20"
-                          />
-                        </button>
                       </td>
                     </tr>
                   </tbody>

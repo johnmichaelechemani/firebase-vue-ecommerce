@@ -11,6 +11,7 @@ import { ref } from "vue";
 import { userData } from "@/store";
 
 const firestore = getFirestore();
+const userId = userData.value.userId;
 export const mallProducts = ref([]);
 export const mallOrderProducts = ref([]);
 
@@ -18,7 +19,7 @@ export const getMallProducts = () => {
   const productsQuery = query(
     collection(firestore, "products"),
     orderBy("timestamp", "desc"),
-    where("mallId", "==", userData.value.userId)
+    where("mallId", "==", userId)
   );
   onSnapshot(
     productsQuery,
@@ -38,7 +39,7 @@ export const getMallProducts = () => {
 export const getMallOrderProducts = () => {
   const ordersQuery = query(
     collectionGroup(firestore, "purchaseItems"),
-    where("mallId", "==", userData.value.userId)
+    where("mallId", "==", userId)
   );
 
   onSnapshot(
