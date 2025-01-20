@@ -10,14 +10,14 @@ import { ref, watch, computed } from "vue";
 
 export const deleteMessage = ref("");
 
-export const deleteItems = (folderName, productId) => {
+export const deleteItems = (folderName, productId, productsEndFolder) => {
   const db = getFirestore();
   try {
     const itemRef = doc(
       db,
       folderName,
       userData.value.userId,
-      "items",
+      productsEndFolder,
       productId
     );
     deleteDoc(itemRef);
@@ -27,10 +27,10 @@ export const deleteItems = (folderName, productId) => {
   }
 };
 
-export const deleteProducts = (folderName, productId) => {
+export const deleteProducts = (folderName, productId, productsEndFolder) => {
   const db = getFirestore();
   try {
-    const prodRef = doc(db, folderName, productId);
+    const prodRef = doc(db, folderName, productId, productsEndFolder);
     deleteDoc(prodRef);
     deleteMessage.value = "Product successfully deleted!";
     setTimeout(() => {

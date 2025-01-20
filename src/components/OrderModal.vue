@@ -96,27 +96,30 @@ const placeOrder = async () => {
       const productDoc = doc(productCollection, item.id);
       const userDoc = doc(userCollection, userData.value.userId);
       const sellerDoc = doc(userCollection, item.mallId, "sales", "summary");
-      await addDoc(collection(db, `purchase/${userData.value.userId}/items`), {
-        productId: item.id,
-        userId: userData.value.userId,
-        mallId: item.mallId,
-        paymentMethod: selectedPaymentMethod.value,
-        status: "pay",
-        purchaseDate: new Date(),
-        name: item.name,
-        price: item.price,
-        totalPrice: item.price * item.quantity,
-        quantity: item.quantity,
-        store: item.store,
-        image: item.image,
-        address: {
-          name: userData.value.userName,
-          phone: "(+63)90******89",
-          location:
-            "4d, Legazpi Apartments, Saint Paris Street, Legazpi, Albay, Philippines",
-        },
-      });
-      deleteItems("carts", item.cartItemId);
+      await addDoc(
+        collection(db, `purchase/${userData.value.userId}/purchaseItems`),
+        {
+          productId: item.id,
+          userId: userData.value.userId,
+          mallId: item.mallId,
+          paymentMethod: selectedPaymentMethod.value,
+          status: "pay",
+          purchaseDate: new Date(),
+          name: item.name,
+          price: item.price,
+          totalPrice: item.price * item.quantity,
+          quantity: item.quantity,
+          store: item.store,
+          image: item.image,
+          address: {
+            name: userData.value.userName,
+            phone: "(+63)90******89",
+            location:
+              "4d, Legazpi Apartments, Saint Paris Street, Legazpi, Albay, Philippines",
+          },
+        }
+      );
+      deleteItems("carts", item.cartItemId ,'cartItems');
 
       if (selectedPaymentMethod.value === "jmpay") {
         updateData(userDoc, -totalPrice.value, "jmPay");

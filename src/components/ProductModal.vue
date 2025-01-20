@@ -88,7 +88,7 @@ const addToCart = async () => {
     };
 
     const cartItemRef = await addDoc(
-      collection(firestore, "carts", userData.value.userId, "items"),
+      collection(firestore, "carts", userData.value.userId, "cartItems"),
       {
         ...cartItemData,
         cartItemId: null,
@@ -118,7 +118,7 @@ const addToFavorites = async () => {
   isFavLoading.value = true;
   try {
     const favItemRef = await addDoc(
-      collection(firestore, "favorites", userData.value.userId, "items"),
+      collection(firestore, "favorites", userData.value.userId, "favItems"),
       {
         ...props.product,
         favoriteId: null,

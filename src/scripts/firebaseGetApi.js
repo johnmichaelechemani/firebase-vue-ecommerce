@@ -5,6 +5,7 @@ import {
   onSnapshot,
   where,
   orderBy,
+  collectionGroup,
 } from "firebase/firestore";
 import { ref } from "vue";
 import { userData } from "@/store";
@@ -35,19 +36,20 @@ export const getMallProducts = () => {
 };
 
 export const getMallOrderProducts = () => {
-  const userId = "kclrX5hnGdMaqvvFpys6Q4qNW7G3";
   const ordersQuery = query(
-    collection(firestore, `purchase/${userId}/items`),
+    collectionGroup(firestore, "items"),
     where("mallId", "==", userData.value.userId)
   );
+
   onSnapshot(
     ordersQuery,
     (querySnapshot) => {
       mallOrderProducts.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        userId: doc.ref.parent.parent.id,
         ...doc.data(),
       }));
-      console.log("Orders updated in real-time:", mallOrderProducts.value);
+      console.log("All orders updated in real-time:", mallOrderProducts.value);
     },
     (error) => {
       console.error("Error fetching orders:", error);

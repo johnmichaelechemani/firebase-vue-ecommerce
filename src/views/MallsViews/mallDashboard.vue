@@ -126,9 +126,12 @@ onMounted(() => {
                       >
                         {{ item.name }}
                       </th>
-                      <td class="px-6 py-4">{{ item.address.name }}</td>
+                      <td class="px-6 py-4" v-for="i in item.address">
+                        {{ i.name }}
+                      </td>
                       <td class="px-6 py-4">{{ item.totalPrice }}</td>
                       <td class="px-6 py-4">{{ item.status }}</td>
+                      <td class="px-6 py-4">{{ item.store }}</td>
                       <td class="px-6 py-4">${{ item.price }}</td>
                       <td
                         class="px-6 py-4 flex justify-start items-center gap-2"

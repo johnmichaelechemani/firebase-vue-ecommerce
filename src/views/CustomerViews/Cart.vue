@@ -98,7 +98,7 @@ const props = defineProps({
               </div>
             </div>
             <button
-              @click="deleteItems('carts', product.cartItemId)"
+              @click="deleteItems('carts', product.cartItemId, 'cartItems')"
               class="flex justify-end p-1 hover:bg-gray-700 hover:text-white transition"
             >
               <Icon

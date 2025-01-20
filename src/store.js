@@ -80,7 +80,7 @@ export const getCartProducts = () => {
   const db = getFirestore();
   try {
     const cartsQuery = query(
-      collection(db, "carts", userData.value.userId, "items")
+      collection(db, "carts", userData.value.userId, "cartItems")
     );
     onSnapshot(cartsQuery, (querySnapshot) => {
       cartItems.value = querySnapshot.docs.map((doc) => ({
@@ -100,7 +100,7 @@ export const getFavoritesProducts = () => {
   const db = getFirestore();
   try {
     const favQuery = query(
-      collection(db, "favorites", userData.value.userId, "items")
+      collection(db, "favorites", userData.value.userId, "favItems")
     );
     onSnapshot(favQuery, (querySnapshot) => {
       favoritesItem.value = querySnapshot.docs.map((doc) => ({
@@ -120,7 +120,7 @@ export const getPurchaseProducts = () => {
   const db = getFirestore();
   try {
     const purchaseQuery = query(
-      collection(db, "purchase", userData.value.userId, "items")
+      collection(db, "purchase", userData.value.userId, "purchaseItems")
     );
     onSnapshot(purchaseQuery, (querySnapshot) => {
       purchaseProducts.value = querySnapshot.docs.map((doc) => ({
