@@ -13,7 +13,7 @@
           class="w-full h-full object-cover object-center"
         />
         <h2
-          class="text-xs bg-gray-200 truncate sm:text-sm border-gray-800/50 rounded-sm font-bold absolute bottom-2 left-2 border backdrop-blur-2xl px-4 text-gray-800 capitalize"
+          class="text-xs bg-gray-200 truncate sm:text-sm border-gray-800/50 rounded-sm font-bold absolute bottom-2 left-2 border backdrop-blur-2xl px-4 py-1 text-gray-800 capitalize"
         >
           {{ userData.userName }}
         </h2>
