@@ -98,7 +98,7 @@ onMounted(async () => {
                 <div
                   class="flex justify-start items-center text-xs font-semibold text-gray-500"
                 >
-                  Sending...
+                  Delivered
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@ onMounted(async () => {
                   :src="userPhoto"
                   loading="lazy"
                   alt=""
-                 class="rounded-full h-full w-full object-cover object-center"
+                  class="rounded-full h-full w-full object-cover object-center"
                 />
               </div>
             </div>

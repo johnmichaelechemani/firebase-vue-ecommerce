@@ -1,19 +1,16 @@
 import {
   collection,
   addDoc,
-  where,
   query,
   orderBy,
   onSnapshot,
-  getDoc,
   setDoc,
   doc,
   serverTimestamp,
-  count,
   getFirestore,
 } from "firebase/firestore";
 
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "@/firebase.auth";
 import { userData } from "@/store";
