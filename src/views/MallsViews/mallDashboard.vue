@@ -1,9 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Bar, Pie } from "vue-chartjs";
-import { products } from "@/store";
 import { Icon } from "@iconify/vue";
-import { getMallOrderProducts, mallOrderProducts } from "@/scripts/firebaseGetApi";
+import {
+  getMallOrderProducts,
+  mallOrderProducts,
+} from "@/scripts/firebaseGetApi";
 import {
   Chart as ChartJS,
   Title,
@@ -46,6 +48,10 @@ const chartData = ref({
 
 const chartOptions = ref({
   responsive: true,
+});
+
+onMounted(() => {
+  getMallOrderProducts();
 });
 </script>
 
@@ -95,7 +101,7 @@ const chartOptions = ref({
                       <th scope="col" class="px-6 py-3">Action</th>
                     </tr>
                   </thead>
-                  <tbody v-for="item in products" :key="item.id">
+                  <tbody v-for="item in mallOrderProducts" :key="item.id">
                     <tr class="border-b">
                       <th
                         scope="row"
@@ -132,7 +138,7 @@ const chartOptions = ref({
                       </td>
                     </tr>
                   </tbody>
-                  <tbody v-if="products.length === 0" class="">
+                  <tbody v-if="mallOrderProducts.length === 0" class="">
                     <div class="p-2 text-sm font-semibold text-gray-500">
                       No Orders
                     </div>

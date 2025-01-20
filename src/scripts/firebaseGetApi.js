@@ -35,13 +35,13 @@ export const getMallProducts = () => {
 };
 
 export const getMallOrderProducts = () => {
-  const productsQuery = query(
+  const ordersQuery = query(
     collection(firestore, "purchase"),
     orderBy("timestamp", "desc"),
     where("mallId", "==", userData.value.userId)
   );
   onSnapshot(
-    productsQuery,
+    ordersQuery,
     (querySnapshot) => {
       mallOrderProducts.value = querySnapshot.docs.map((doc) => ({
         id: doc.id,
