@@ -6,7 +6,7 @@ import {
   where,
   orderBy,
 } from "firebase/firestore";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { userData } from "@/store";
 
 const firestore = getFirestore();
@@ -36,7 +36,7 @@ export const getMallProducts = () => {
 
 export const getMallOrderProducts = () => {
   const ordersQuery = query(
-    collection(firestore, "purchase"),
+    collection(firestore, "purchase", userData.value.userId, "items"),
     orderBy("timestamp", "desc"),
     where("mallId", "==", userData.value.userId)
   );

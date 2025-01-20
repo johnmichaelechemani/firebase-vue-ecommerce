@@ -15,7 +15,6 @@ import {
   ArcElement,
   CategoryScale,
   LinearScale,
-  Colors,
 } from "chart.js";
 
 ChartJS.register(
@@ -43,7 +42,25 @@ const chartData = ref({
     "Nov",
     "Dec",
   ],
-  datasets: [{ data: [40, 20, 12, 10, 55, 100, 400, 233, 788, 411, 800, 200] }],
+  datasets: [
+    {
+      backgroundColor: [
+        "#ffadad",
+        "#ffdfad",
+        "#fff8ad",
+        "#f9ffad",
+        "#e2ffad",
+        "#c3ffad",
+        "#adffcf",
+        "#adffe4",
+        "#adfff8",
+        "#adfbff",
+        "#add6ff",
+        "#adb9ff",
+      ],
+      data: [40, 20, 12, 10, 55, 100, 400, 233, 788, 411, 800, 200],
+    },
+  ],
 });
 
 const chartOptions = ref({
