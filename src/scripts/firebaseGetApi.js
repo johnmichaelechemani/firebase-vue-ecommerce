@@ -14,6 +14,7 @@ const firestore = getFirestore();
 const userId = userData.value.userId;
 export const mallProducts = ref([]);
 export const mallOrderProducts = ref([]);
+export const sale = ref([]);
 
 export const getMallProducts = () => {
   const productsQuery = query(
@@ -54,6 +55,23 @@ export const getMallOrderProducts = () => {
     },
     (error) => {
       console.error("Error fetching orders:", error);
+    }
+  );
+};
+
+export const getMallSales = () => {
+  const mallSalesQuery = query(collection(firestore, "users", userId, "sales"));
+  onSnapshot(
+    mallSalesQuery,
+    (querySnapshot) => {
+      sale.value = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("sales updated in real-time:", sale.value);
+    },
+    (error) => {
+      console.error("Error fetching sales:", error);
     }
   );
 };

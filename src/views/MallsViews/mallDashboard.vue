@@ -5,6 +5,8 @@ import { Icon } from "@iconify/vue";
 import {
   getMallOrderProducts,
   mallOrderProducts,
+  getMallSales,
+  sale,
 } from "@/scripts/firebaseGetApi";
 import {
   Chart as ChartJS,
@@ -69,6 +71,7 @@ const chartOptions = ref({
 
 onMounted(() => {
   getMallOrderProducts();
+  getMallSales();
 });
 </script>
 
@@ -99,6 +102,14 @@ onMounted(() => {
               <div class="max-h-52">
                 <Pie :options="chartOptions" :data="chartData" />
               </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex justify-start my-2">
+            <div class="border p-2">
+              <p class="text-sm font-semibold">Sales</p>
+              <div v-if="sale.length !== 0">Earns: {{ sale[0].earns }}</div>
             </div>
           </div>
         </div>
