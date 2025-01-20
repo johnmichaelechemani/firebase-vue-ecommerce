@@ -21,11 +21,11 @@ import {
 } from "firebase/storage";
 import { deleteProducts, deleteMessage } from "@/scripts/firebaseDeleteApi";
 import AlertMessage from "@/components/AlertMessage.vue";
+import { getMallProducts, mallProducts } from "@/scripts/firebaseGetApi";
 
 const { user } = useAuth();
 const storage = getStorage();
 const firestore = getFirestore();
-const products = ref([]);
 const isLoading = ref(false);
 const successMessage = ref("");
 const errorMessage = ref("");
@@ -125,26 +125,6 @@ const uploadImageToStorage = async (file, path) => {
   }
 };
 
-const getProducts = () => {
-  const productsQuery = query(
-    collection(firestore, "products"),
-    orderBy("timestamp", "desc"),
-    where("mallId", "==", userData.value.userId)
-  );
-  onSnapshot(
-    productsQuery,
-    (querySnapshot) => {
-      products.value = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      console.log("Products updated in real-time:", products.value);
-    },
-    (error) => {
-      console.error("Error fetching products:", error);
-    }
-  );
-};
 const validateProduct = (product) => {
   return (
     product.name &&
@@ -168,7 +148,7 @@ const clear = () => {
 };
 
 onMounted(() => {
-  getProducts();
+  getMallProducts();
 });
 </script>
 
@@ -376,7 +356,7 @@ onMounted(() => {
                 <th scope="col" class="px-6 py-3">Action</th>
               </tr>
             </thead>
-            <tbody v-for="item in products" :key="item.id">
+            <tbody v-for="item in mallProducts" :key="item.id">
               <tr class="border-b">
                 <th
                   scope="row"
@@ -411,7 +391,7 @@ onMounted(() => {
                 </td>
               </tr>
             </tbody>
-            <tbody v-if="products.length === 0" class="">
+            <tbody v-if="mallProducts.length === 0" class="">
               <div class="p-2 text-sm font-semibold text-gray-500">
                 No Products
               </div>

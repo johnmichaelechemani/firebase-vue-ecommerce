@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { Bar, Pie } from "vue-chartjs";
+import { products } from "@/store";
+import { Icon } from "@iconify/vue";
+import { getMallOrderProducts, mallOrderProducts } from "@/scripts/firebaseGetApi";
 import {
   Chart as ChartJS,
   Title,
@@ -77,8 +80,66 @@ const chartOptions = ref({
           </div>
         </div>
         <div class="flex justify-start">
-          <div class="border p-2 mt-2">
-            <p class="text-sm font-semibold">Recent Orders</p>
+          <div class="border p-2 mt-2 w-full">
+            <p class="text-sm font-semibold my-2">Recent Orders</p>
+
+            <div class="flex flex-wrap gap-2 w-full">
+              <div class="relative overflow-x-auto shadow-sm w-full">
+                <table class="w-full text-sm text-left rtl:text-right">
+                  <thead class="text-xs text-white uppercase bg-gray-800">
+                    <tr>
+                      <th scope="col" class="px-6 py-3">Product name</th>
+                      <th scope="col" class="px-6 py-3">User Name</th>
+                      <th scope="col" class="px-6 py-3">Total Price</th>
+                      <th scope="col" class="px-6 py-3">Status</th>
+                      <th scope="col" class="px-6 py-3">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody v-for="item in products" :key="item.id">
+                    <tr class="border-b">
+                      <th
+                        scope="row"
+                        class="px-6 py-4 uppercase font-medium whitespace-nowrap"
+                      >
+                        {{ item.name }}
+                      </th>
+                      <td class="px-6 py-4">{{ item.category }}</td>
+                      <td class="px-6 py-4">{{ item.inventory }}</td>
+                      <td class="px-6 py-4">{{ item.discount }}</td>
+                      <td class="px-6 py-4">${{ item.price }}</td>
+                      <td
+                        class="px-6 py-4 flex justify-start items-center gap-2"
+                      >
+                        <button
+                          class="font-medium text-green-500 border border-green-500/20 p-1"
+                        >
+                          <Icon
+                            icon="material-symbols-light:edit-outline"
+                            width="20"
+                            height="20"
+                          />
+                        </button>
+                        <button
+                          @click="deleteProducts('products', item.id)"
+                          class="font-medium text-red-500 border border-red-500/20 p-1"
+                        >
+                          <Icon
+                            icon="material-symbols-light:restore-from-trash-outline"
+                            width="20"
+                            height="20"
+                          />
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody v-if="products.length === 0" class="">
+                    <div class="p-2 text-sm font-semibold text-gray-500">
+                      No Orders
+                    </div>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
