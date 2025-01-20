@@ -360,7 +360,7 @@ onMounted(() => {
               <tr class="border-b">
                 <th
                   scope="row"
-                  class="px-6 py-4 uppercase font-medium whitespace-nowrap"
+                  class="px-6 py-4 truncate max-w-52 uppercase font-medium whitespace-nowrap"
                 >
                   {{ item.name }}
                 </th>

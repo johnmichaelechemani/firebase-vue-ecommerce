@@ -21,7 +21,7 @@ const logout = () => {
 </script>
 <template>
   <nav
-    class="ml-20 sm:ml-72 border-b border-gray-800/50 fixed top-0 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)]"
+    class="ml-20 sm:ml-72 border-b border-gray-800/50 z-50 bg-white fixed top-0 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)]"
   >
     <div class="relative flex justify-between px-1 gap-1 items-center">
       <div class="hidden sm:flex">

@@ -115,7 +115,7 @@ onMounted(() => {
                       <th scope="col" class="px-6 py-3">User Name</th>
                       <th scope="col" class="px-6 py-3">Total Price</th>
                       <th scope="col" class="px-6 py-3">Status</th>
-                      <th scope="col" class="px-6 py-3">Action</th>
+                      <th colspan="2" scope="col" class="px-6 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody v-for="item in mallOrderProducts" :key="item.id">
@@ -126,9 +126,9 @@ onMounted(() => {
                       >
                         {{ item.name }}
                       </th>
-                      <td class="px-6 py-4">{{ item.category }}</td>
-                      <td class="px-6 py-4">{{ item.inventory }}</td>
-                      <td class="px-6 py-4">{{ item.discount }}</td>
+                      <td class="px-6 py-4">{{ item.address.name }}</td>
+                      <td class="px-6 py-4">{{ item.totalPrice }}</td>
+                      <td class="px-6 py-4">{{ item.status }}</td>
                       <td class="px-6 py-4">${{ item.price }}</td>
                       <td
                         class="px-6 py-4 flex justify-start items-center gap-2"

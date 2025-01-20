@@ -35,9 +35,9 @@ export const getMallProducts = () => {
 };
 
 export const getMallOrderProducts = () => {
+  const userId = "kclrX5hnGdMaqvvFpys6Q4qNW7G3";
   const ordersQuery = query(
-    collection(firestore, "purchase", userData.value.userId, "items"),
-    orderBy("timestamp", "desc"),
+    collection(firestore, `purchase/${userId}/items`),
     where("mallId", "==", userData.value.userId)
   );
   onSnapshot(
