@@ -111,30 +111,31 @@ onMounted(() => {
                 <table class="w-full text-sm text-left rtl:text-right">
                   <thead class="text-xs text-white uppercase bg-gray-800">
                     <tr>
-                      <th scope="col" class="px-6 py-3">Product name</th>
-                      <th scope="col" class="px-6 py-3">User Name</th>
-                      <th scope="col" class="px-6 py-3">Total Price</th>
-                      <th scope="col" class="px-6 py-3">Status</th>
-                      <th colspan="2" scope="col" class="px-6 py-3">Action</th>
+                      <th scope="col" class="px-4 py-3">Product name</th>
+                      <th scope="col" class="px-4 py-3">User Name</th>
+                      <th scope="col" class="px-4 py-3">Total Price</th>
+                      <th scope="col" class="px-4 py-3">Status</th>
+                      <th colspan="2" scope="col" class="px-4 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody v-for="item in mallOrderProducts" :key="item.id">
                     <tr class="border-b">
                       <th
                         scope="row"
-                        class="px-6 py-4 uppercase font-medium whitespace-nowrap"
+                        class="px-4 py-4 uppercase truncate max-w-52 font-medium whitespace-nowrap"
                       >
                         {{ item.name }}
                       </th>
-                      <td class="px-6 py-4" v-for="i in item.address">
-                        {{ i.name }}
+                      <td class="px-4 py-4">
+                        {{ item.address.name }}
                       </td>
-                      <td class="px-6 py-4">{{ item.totalPrice }}</td>
-                      <td class="px-6 py-4">{{ item.status }}</td>
-                      <td class="px-6 py-4">{{ item.store }}</td>
-                      <td class="px-6 py-4">${{ item.price }}</td>
+                      <td class="px-4 py-4">{{ item.totalPrice }}</td>
+                      <td class="px-4 py-4 uppercase max-w-52">
+                        {{ item.status }}
+                      </td>
+
                       <td
-                        class="px-6 py-4 flex justify-start items-center gap-2"
+                        class="px-4 py-4 flex justify-start items-center gap-2"
                       >
                         <button
                           class="font-medium text-green-500 border border-green-500/20 p-1"

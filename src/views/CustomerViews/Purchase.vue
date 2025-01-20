@@ -27,7 +27,7 @@ const purchaseCollection = collection(
   firestore,
   "purchase",
   userData.value.userId,
-  "items"
+  "purchaseItems"
 );
 const productCollection = collection(firestore, "products");
 
