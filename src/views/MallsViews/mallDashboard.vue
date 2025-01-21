@@ -159,7 +159,7 @@ onMounted(() => {
         <div>
           <div class="flex justify-start my-2">
             <div class="border p-2">
-              <p class="text-sm font-medium">Sales</p>
+              <p class="text-sm font-semibold">Total Sales</p>
               <div v-if="sale.length !== 0" class="text-2xl font-semibold">
                 ${{ formatPrice(sale[0].earns) }}
               </div>
