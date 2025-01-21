@@ -9,7 +9,7 @@ import { getFirestore, updateDoc, doc } from "firebase/firestore";
 import AlertMessage from "@/components/AlertMessage.vue";
 
 const db = getFirestore();
-const message = ref("");
+const message = ref({ message: "", color: "" });
 
 const status = ref([
   {
@@ -63,10 +63,17 @@ const updateStatus = async (item, newStatus, userId) => {
   try {
     const orderRef = doc(db, "purchase", userId, "purchaseItems", item.id);
     updateData(orderRef, newStatus, "status");
-    message.value = "Status updated successfully";
+    message.value = {
+      color: "green",
+      message: "Status updated successfully",
+    };
     clearAlert(message);
   } catch (error) {
-    console.error("Error updating status:", error);
+    message.value = {
+      color: "red",
+      message: `Error updating status: ${error}`,
+    };
+    clearAlert(message);
   }
 };
 
@@ -80,7 +87,11 @@ onMounted(() => {
     class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
     <div class="absolute top-2 right-2">
-      <AlertMessage v-if="message !== ''" :message="message" color="green" />
+      <AlertMessage
+        v-if="message.message"
+        :message="message.message"
+        :color="message.color"
+      />
     </div>
 
     <div
