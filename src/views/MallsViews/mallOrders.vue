@@ -4,11 +4,14 @@ import {
   getMallOrderProducts,
   mallOrderProducts,
 } from "@/scripts/firebaseGetApi";
-import { Time } from "@/scripts/composables";
+import { Time, clearAlert } from "@/scripts/composables";
+import { getFirestore, updateDoc, doc } from "firebase/firestore";
+import AlertMessage from "@/components/AlertMessage.vue";
+
+const db = getFirestore();
+const message = ref("");
+
 const status = ref([
-  {
-    name: "All",
-  },
   {
     name: "Pending",
   },
@@ -50,6 +53,23 @@ const filteredOrders = computed(() => {
   );
 });
 
+const updateData = async (doc, newData, dataToUpdate) => {
+  await updateDoc(doc, {
+    [dataToUpdate]: newData,
+  });
+};
+
+const updateStatus = async (item, newStatus, userId) => {
+  try {
+    const orderRef = doc(db, "purchase", userId, "purchaseItems", item.id);
+    updateData(orderRef, newStatus, "status");
+    message.value = "Status updated successfully";
+    clearAlert(message);
+  } catch (error) {
+    console.error("Error updating status:", error);
+  }
+};
+
 onMounted(() => {
   getMallOrderProducts();
 });
@@ -59,12 +79,27 @@ onMounted(() => {
   <div
     class="sm:ml-72 ml-20 fixed top-12 left-0 sm:w-[calc(100%-18rem)] w-[calc(100%-5rem)] h-full"
   >
+    <div class="absolute top-2 right-2">
+      <AlertMessage v-if="message !== ''" :message="message" color="green" />
+    </div>
+
     <div
       class="m-2 overflow-y-scroll no-scrollbar h-[calc(100vh-3.5rem)] pb-32"
     >
       <p class="text-sm font-semibold py-2">Order Management</p>
       <div class="mb-2 border w-full overflow-x-scroll no-scrollbar p-2">
         <div class="flex gap-3">
+          <button
+            @click="selected('All')"
+            :class="
+              selectedStatus === 'All'
+                ? 'text-gray-900 border border-b-2 border-b-gray-800 shadow-sm py-1 px-2'
+                : 'text-gray-500'
+            "
+            class="text-sm font-medium"
+          >
+            All
+          </button>
           <button
             @click="selected(i.name)"
             v-for="i in status"
@@ -104,7 +139,7 @@ onMounted(() => {
                   {{ item.name }}
                 </th>
                 <td
-                  class="px-4 py-4 truncate max-w-52"
+                  class="px-4 py-4 truncate max-w-32"
                   :title="item.address.name"
                 >
                   {{ item.address.name }}
@@ -113,10 +148,26 @@ onMounted(() => {
                   {{ item.address.phone }}
                 </td>
                 <td class="px-4 py-4">{{ item.totalPrice }}</td>
-                <td class="px-4 py-4 uppercase max-w-52">
-                  {{ item.status }}
+                <td class="px-4 py-4 uppercase min-w-36 max-w-52">
+                  <select
+                    v-model="item.status"
+                    @change="updateStatus(item, item.status, item.userId)"
+                    class="border p-1 rounded font-semibold text-sm w-full"
+                  >
+                    <option
+                      v-for="i in status"
+                      :key="i"
+                      :value="i.name.toLowerCase()"
+                      :selected="i.name.toLowerCase() === item.status"
+                    >
+                      {{ i.name }}
+                    </option>
+                  </select>
                 </td>
-                <td class="px-4 py-4 max-w-52">
+                <td
+                  class="px-4 py-4 max-w-32 truncate"
+                  :title="Time(item.purchaseDate)"
+                >
                   {{ Time(item.purchaseDate) }}
                 </td>
                 <td class="px-4 py-4 max-w-52">Visayas</td>
