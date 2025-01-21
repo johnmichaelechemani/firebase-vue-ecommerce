@@ -41,6 +41,7 @@ const status = ref([
 ]);
 
 const selectedStatus = ref("All");
+const assignedRider = ref([]);
 const selected = (name) => {
   selectedStatus.value = name;
   console.log(name);
@@ -77,6 +78,29 @@ const updateStatus = async (item, newStatus, userId) => {
     };
     clearAlert(message);
   }
+};
+
+const updateRider = async (item, newStatus, userId) => {
+  try {
+    const orderRef = doc(db, "purchase", userId, "purchaseItems", item.id);
+    await updateDoc(orderRef, {
+      status: newStatus,
+      assignedRider: assignedRider.value,
+    });
+    message.value = {
+      color: "green",
+      message: "Status updated successfully",
+    };
+    clearAlert(message);
+    assignedRider.value = [];
+  } catch (error) {
+    message.value = {
+      color: "red",
+      message: `Error updating status: ${error}`,
+    };
+    clearAlert(message);
+  }
+  console.log(assignedRider.value);
 };
 
 onMounted(() => {
@@ -162,7 +186,7 @@ onMounted(() => {
                   {{ item.address.phone }}
                 </td>
                 <td class="px-4 py-4">{{ item.totalPrice }}</td>
-                <td class="px-4 py-4 uppercase flex gap-1">
+                <td class="px-4 py-4 uppercase flex gap-1 min-w-32">
                   <select
                     v-model="item.status"
                     @change="updateStatus(item, item.status, item.userId)"
@@ -178,19 +202,25 @@ onMounted(() => {
                     </option>
                   </select>
 
-                  <select
-                    v-if="item.status === 'processing'"
-                    class="border p-1 rounded font-semibold text-sm w-52"
-                  >
-                    <option selected hidden>Select A Rider</option>
-                    <option
-                      v-for="i in riders"
-                      :key="i"
-                      class="text-green-500 font-semibold"
+                  <div v-if="item.status === 'processing'" class="text-sm w-52">
+                    <p class="text-xs font-semibold capitalize">
+                      Select a Rider
+                    </p>
+                    <select
+                      v-model="assignedRider"
+                      @change="updateRider(item, 'shipping', item.userId)"
+                      class="border p-1 rounded font-semibold w-full"
                     >
-                      {{ i.userName }}
-                    </option>
-                  </select>
+                      <option
+                        v-for="i in riders"
+                        :key="i"
+                        :value="i"
+                        class="text-green-500 font-semibold"
+                      >
+                        {{ i.userName }}
+                      </option>
+                    </select>
+                  </div>
                 </td>
                 <td
                   class="px-4 py-4 max-w-32 truncate"
