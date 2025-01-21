@@ -360,12 +360,14 @@ onMounted(() => {
             <tbody v-for="item in mallProducts" :key="item.id">
               <tr class="border-b">
                 <td v-if="item.image" class="px-6 py-4">
-                  <img
-                    :src="item.image"
-                    alt=""
-                    loading="lazy"
-                    class="w-full h-full object-cover object-center"
-                  />
+                  <div class="size-10">
+                    <img
+                      :src="item.image"
+                      alt=""
+                      loading="lazy"
+                      class="w-full h-full object-cover object-center"
+                    />
+                  </div>
                 </td>
                 <th
                   scope="row"
