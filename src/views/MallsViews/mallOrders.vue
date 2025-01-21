@@ -3,6 +3,8 @@ import { ref, onMounted, computed } from "vue";
 import {
   getMallOrderProducts,
   mallOrderProducts,
+  getRiders,
+  riders,
 } from "@/scripts/firebaseGetApi";
 import { Time, clearAlert } from "@/scripts/composables";
 import { getFirestore, updateDoc, doc } from "firebase/firestore";
@@ -19,7 +21,7 @@ const status = ref([
     name: "Processing",
   },
   {
-    name: "Shipped",
+    name: "Shipping",
   },
   {
     name: "Delivered",
@@ -79,6 +81,7 @@ const updateStatus = async (item, newStatus, userId) => {
 
 onMounted(() => {
   getMallOrderProducts();
+  getRiders();
 });
 </script>
 
@@ -159,7 +162,7 @@ onMounted(() => {
                   {{ item.address.phone }}
                 </td>
                 <td class="px-4 py-4">{{ item.totalPrice }}</td>
-                <td class="px-4 py-4 uppercase min-w-36 max-w-52">
+                <td class="px-4 py-4 uppercase flex gap-1">
                   <select
                     v-model="item.status"
                     @change="updateStatus(item, item.status, item.userId)"
@@ -172,6 +175,20 @@ onMounted(() => {
                       :selected="i.name.toLowerCase() === item.status"
                     >
                       {{ i.name }}
+                    </option>
+                  </select>
+
+                  <select
+                    v-if="item.status === 'processing'"
+                    class="border p-1 rounded font-semibold text-sm w-52"
+                  >
+                    <option selected hidden>Select A Rider</option>
+                    <option
+                      v-for="i in riders"
+                      :key="i"
+                      class="text-green-500 font-semibold"
+                    >
+                      {{ i.userName }}
                     </option>
                   </select>
                 </td>
