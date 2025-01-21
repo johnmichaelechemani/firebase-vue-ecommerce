@@ -348,6 +348,7 @@ onMounted(() => {
           <table class="w-full text-sm text-left rtl:text-right">
             <thead class="text-xs text-white uppercase bg-gray-800">
               <tr>
+                <th scope="col" class="px-6 py-3">Image</th>
                 <th scope="col" class="px-6 py-3">Product name</th>
                 <th scope="col" class="px-6 py-3">Category</th>
                 <th scope="col" class="px-6 py-3">Inventory</th>
@@ -358,6 +359,14 @@ onMounted(() => {
             </thead>
             <tbody v-for="item in mallProducts" :key="item.id">
               <tr class="border-b">
+                <td v-if="item.image" class="px-6 py-4">
+                  <img
+                    :src="item.image"
+                    alt=""
+                    loading="lazy"
+                    class="w-full h-full object-cover object-center"
+                  />
+                </td>
                 <th
                   scope="row"
                   class="px-6 py-4 truncate max-w-52 uppercase font-medium whitespace-nowrap"
