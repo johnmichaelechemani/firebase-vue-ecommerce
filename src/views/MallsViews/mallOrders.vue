@@ -89,14 +89,14 @@ const updateRider = async (item, newStatus, userId) => {
     });
     message.value = {
       color: "green",
-      message: "Status updated successfully",
+      message: "Rider selecting successfully",
     };
     clearAlert(message);
     assignedRider.value = [];
   } catch (error) {
     message.value = {
       color: "red",
-      message: `Error updating status: ${error}`,
+      message: `Error selecting rider: ${error}`,
     };
     clearAlert(message);
   }
