@@ -136,7 +136,7 @@ onMounted(() => {
                 <th scope="col" class="px-4 py-3">Total Price</th>
                 <th scope="col" class="px-4 py-3">Status</th>
                 <th scope="col" class="px-4 py-3">Date</th>
-                <th scope="col" class="px-4 py-3">Shippment Tracking</th>
+                <th scope="col" class="px-4 py-3">Shipment Tracking</th>
               </tr>
             </thead>
 
