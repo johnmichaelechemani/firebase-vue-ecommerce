@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Bar, Pie } from "vue-chartjs";
-import { Time } from "@/scripts/composables";
+import { Time, formatPrice } from "@/scripts/composables";
 import {
   getMallOrderProducts,
   mallOrderProducts,
@@ -60,11 +60,62 @@ const chartData = ref({
         "#add6ff",
         "#adb9ff",
       ],
-      data: [40, 20, 12, 10, 55, 100, 400, 233, 788, 411, 800, 200],
+      data: [400, 20, 102, 100, 55, 100, 400, 233, 788, 411, 600, 200],
     },
   ],
 });
 
+const orderStatusChartData = ref({
+  labels: [
+    "Pending",
+    "Processing",
+    "Shipped",
+    "Delivered",
+    "Cancelled",
+    "Refunded",
+    "Returned",
+    "Completed",
+  ],
+  datasets: [
+    {
+      backgroundColor: [
+        "#ffadad",
+        "#ffdfad",
+        "#fff8ad",
+        "#f9ffad",
+        "#e2ffad",
+        "#c3ffad",
+        "#adffcf",
+        "#adffe4",
+      ],
+      data: [40, 200, 12, 10, 555, 100, 400, 233],
+    },
+  ],
+});
+
+const productTypesChartData = ref({
+  labels: [
+    "Home Appliances",
+    "Electronics",
+    "Kids Apparels",
+    "Men Apparels",
+    "Women Apparels",
+    "Furniture",
+  ],
+  datasets: [
+    {
+      backgroundColor: [
+        "#ffadad",
+        "#ffdfad",
+        "#fff8ad",
+        "#f9ffad",
+        "#e2ffad",
+        "#c3ffad",
+      ],
+      data: [40, 20, 102, 10, 55, 100, 200, 500],
+    },
+  ],
+});
 const chartOptions = ref({
   responsive: true,
 });
@@ -91,16 +142,16 @@ onMounted(() => {
               <p class="text-sm font-semibold">Order Status</p>
 
               <div class="max-h-52">
-                <Pie :options="chartOptions" :data="chartData" />
+                <Pie :options="chartOptions" :data="orderStatusChartData" />
               </div>
             </div>
           </div>
           <div class="flex justify-start">
             <div class="border p-2">
-              <p class="text-sm font-semibold">Enventory</p>
+              <p class="text-sm font-semibold">Products</p>
 
               <div class="max-h-52">
-                <Pie :options="chartOptions" :data="chartData" />
+                <Pie :options="chartOptions" :data="productTypesChartData" />
               </div>
             </div>
           </div>
@@ -108,8 +159,10 @@ onMounted(() => {
         <div>
           <div class="flex justify-start my-2">
             <div class="border p-2">
-              <p class="text-sm font-semibold">Sales</p>
-              <div v-if="sale.length !== 0">Earns: {{ sale[0].earns }}</div>
+              <p class="text-sm font-medium">Sales</p>
+              <div v-if="sale.length !== 0" class="text-2xl font-semibold">
+                ${{ formatPrice(sale[0].earns) }}
+              </div>
             </div>
           </div>
         </div>
