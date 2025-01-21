@@ -38,7 +38,7 @@ const props = defineProps({
             class="flex justify-between cursor-pointer items-start shadow p-1 border gap-2 my-2"
           >
             <div class="flex justify-start items-start gap-2">
-              <div class="size-10">
+              <div class="size-10 min-w-10">
                 <img
                   :src="product.image"
                   alt=""
@@ -48,7 +48,7 @@ const props = defineProps({
               <div>
                 <p class="text-xs font-medium">
                   {{ product.name }}
-                  <span class="text-xs font-semibold"
+                  <span class="text-xs font-semibold capitalize"
                     >({{ product.mallName }})</span
                   >
                 </p>

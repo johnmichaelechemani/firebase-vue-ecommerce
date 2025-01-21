@@ -75,7 +75,7 @@ const props = defineProps({
                 :checked="selected.some((item) => item.id === product.id)"
                 @change="toggleSelection(product)"
               />
-              <div class="size-10">
+              <div class="size-10 min-w-10">
                 <img
                   :src="product.image"
                   alt=""
@@ -85,7 +85,7 @@ const props = defineProps({
               <div>
                 <p class="text-xs font-medium">
                   {{ product.name }}
-                  <span class="text-xs font-semibold"
+                  <span class="text-xs font-semibold capitalize"
                     >({{ product.store }})</span
                   >
                 </p>
