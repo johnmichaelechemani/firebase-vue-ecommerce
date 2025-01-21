@@ -1,6 +1,10 @@
 <script setup>
-import { ref } from "vue";
-
+import { ref, onMounted } from "vue";
+import {
+  getMallOrderProducts,
+  mallOrderProducts,
+} from "@/scripts/firebaseGetApi";
+import { Time } from "@/scripts/composables";
 const status = ref([
   {
     name: "All",
@@ -36,6 +40,10 @@ const selected = (name) => {
   selectedStatus.value = name;
   console.log(name);
 };
+
+onMounted(() => {
+  getMallOrderProducts();
+});
 </script>
 
 <template>
@@ -60,6 +68,57 @@ const selected = (name) => {
           >
             {{ i.name }}
           </button>
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 w-full">
+        <div class="relative overflow-x-auto shadow-sm w-full">
+          <table class="w-full text-sm text-left rtl:text-right">
+            <thead class="text-xs text-white uppercase bg-gray-800">
+              <tr>
+                <th scope="col" class="px-4 py-3">Product name</th>
+                <th scope="col" class="px-4 py-3">User Name</th>
+                <th scope="col" class="px-4 py-3">User Number</th>
+                <th scope="col" class="px-4 py-3">Total Price</th>
+                <th scope="col" class="px-4 py-3">Status</th>
+                <th scope="col" class="px-4 py-3">Date</th>
+                <th scope="col" class="px-4 py-3">Shippment Tracking</th>
+              </tr>
+            </thead>
+
+            <tbody v-for="item in mallOrderProducts" :key="item.id">
+              <tr class="border-b">
+                <th
+                  scope="row"
+                  :title="item.name"
+                  class="px-4 py-4 uppercase truncate max-w-52 font-medium whitespace-nowrap"
+                >
+                  {{ item.name }}
+                </th>
+                <td
+                  class="px-4 py-4 truncate max-w-52"
+                  :title="item.address.name"
+                >
+                  {{ item.address.name }}
+                </td>
+                <td class="px-4 py-4">
+                  {{ item.address.phone }}
+                </td>
+                <td class="px-4 py-4">{{ item.totalPrice }}</td>
+                <td class="px-4 py-4 uppercase max-w-52">
+                  {{ item.status }}
+                </td>
+                <td class="px-4 py-4 max-w-52">
+                  {{ Time(item.purchaseDate) }}
+                </td>
+                <td class="px-4 py-4 max-w-52">Visayas</td>
+              </tr>
+            </tbody>
+            <tbody v-if="mallOrderProducts.length === 0" class="">
+              <div class="p-2 text-sm font-semibold text-gray-500">
+                No Orders
+              </div>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
