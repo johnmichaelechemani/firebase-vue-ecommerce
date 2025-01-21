@@ -132,7 +132,7 @@ const flashSaleProducts = ref([
           </div>
           <ProductLoading v-else />
         </div>
-        <div class="m-2">
+        <!-- <div class="m-2">
           <h1 class="text-lg font-semibold my-2">Recommendations</h1>
           <div class="flex flex-wrap gap-1" v-if="!isProductLoading">
             <ProductCard :products="filteredProducts" />
@@ -146,7 +146,7 @@ const flashSaleProducts = ref([
             <ProductCard :products="filteredProducts" />
           </div>
           <ProductLoading v-else />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

@@ -44,13 +44,17 @@ onMounted(async () => {
           />
         </div>
         <div>
-          <h1 class="text-sm font-semibold">{{ userData.userName }}</h1>
-          <p v-if="!isBalancedLoading" class="text-xs font-semibold">
-            $ {{ formatPrice(userBalance) }}
-          </p>
-          <span v-else
-            ><Icon icon="eos-icons:loading" width="16" height="16" />
-          </span>
+          <h1 class="text-sm font-semibold capitalize">
+            {{ userData.userName }}
+          </h1>
+          <div v-if="userData.role === 'customer'">
+            <p v-if="!isBalancedLoading" class="text-xs font-semibold">
+              $ {{ formatPrice(userBalance) }}
+            </p>
+            <span v-else
+              ><Icon icon="eos-icons:loading" width="16" height="16" />
+            </span>
+          </div>
         </div>
       </div>
       <p class="text-xs font-semibold text-gray-500">My Account</p>

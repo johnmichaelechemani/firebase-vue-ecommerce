@@ -40,6 +40,7 @@ export const getMallProducts = () => {
 export const getMallOrderProducts = () => {
   const ordersQuery = query(
     collectionGroup(firestore, "purchaseItems"),
+    orderBy("purchaseDate", "desc"),
     where("mallId", "==", userId)
   );
 

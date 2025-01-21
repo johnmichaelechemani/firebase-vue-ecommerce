@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { Bar, Pie } from "vue-chartjs";
-import { Icon } from "@iconify/vue";
+import { Time } from "@/scripts/composables";
 import {
   getMallOrderProducts,
   mallOrderProducts,
@@ -127,6 +127,7 @@ onMounted(() => {
                       <th scope="col" class="px-4 py-3">User Number</th>
                       <th scope="col" class="px-4 py-3">Total Price</th>
                       <th scope="col" class="px-4 py-3">Status</th>
+                      <th scope="col" class="px-4 py-3">Date</th>
                     </tr>
                   </thead>
                   <tbody v-for="item in mallOrderProducts" :key="item.id">
@@ -146,6 +147,9 @@ onMounted(() => {
                       <td class="px-4 py-4">{{ item.totalPrice }}</td>
                       <td class="px-4 py-4 uppercase max-w-52">
                         {{ item.status }}
+                      </td>
+                      <td class="px-4 py-4 max-w-52">
+                        {{ Time(item.purchaseDate) }}
                       </td>
                     </tr>
                   </tbody>
