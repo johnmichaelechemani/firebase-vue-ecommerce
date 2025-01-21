@@ -157,9 +157,15 @@ onMounted(() => {
           </div>
         </div>
         <div>
-          <div class="flex justify-start my-2">
+          <div class="flex flex-wrap gap-2 my-2">
             <div class="border p-2">
               <p class="text-sm font-semibold">Total Sales</p>
+              <div v-if="sale.length !== 0" class="text-2xl font-semibold">
+                ${{ formatPrice(sale[0].earns) }}
+              </div>
+            </div>
+            <div class="border p-2">
+              <p class="text-sm font-semibold">Current Month Sales</p>
               <div v-if="sale.length !== 0" class="text-2xl font-semibold">
                 ${{ formatPrice(sale[0].earns) }}
               </div>
