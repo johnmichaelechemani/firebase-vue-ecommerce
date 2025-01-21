@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import {
   getMallOrderProducts,
   mallOrderProducts,
@@ -40,6 +40,15 @@ const selected = (name) => {
   selectedStatus.value = name;
   console.log(name);
 };
+
+const filteredOrders = computed(() => {
+  if (selectedStatus.value === "All") {
+    return mallOrderProducts.value;
+  }
+  return mallOrderProducts.value.filter(
+    (order) => order.status === selectedStatus.value.toLowerCase()
+  );
+});
 
 onMounted(() => {
   getMallOrderProducts();
@@ -85,7 +94,7 @@ onMounted(() => {
               </tr>
             </thead>
 
-            <tbody v-for="item in mallOrderProducts" :key="item.id">
+            <tbody v-for="item in filteredOrders" :key="item.id">
               <tr class="border-b">
                 <th
                   scope="row"
