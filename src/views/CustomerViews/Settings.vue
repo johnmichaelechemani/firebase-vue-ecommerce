@@ -70,7 +70,7 @@ onMounted(async () => {
         </div>
         <p class="text-sm font-semibold text-gray-700">Account</p>
       </button>
-      <RouterLink to="/address">
+      <RouterLink to="/address" @click="props.showPanel(null)">
         <button
           class="flex justify-start items-center gap-2 my-2 hover:bg-gray-700/10 w-full"
         >
@@ -119,7 +119,11 @@ onMounted(async () => {
             height="24"
           />
         </div>
-        <p class="text-sm font-semibold text-gray-700">Community Rules</p>
+        <RouterLink to="/community" @click="props.showPanel(null)">
+          <p class="text-sm font-semibold text-gray-700">
+            Community Rules
+          </p></RouterLink
+        >
       </button>
       <button
         @click="props.logout"

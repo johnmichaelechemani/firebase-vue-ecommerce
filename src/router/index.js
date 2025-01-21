@@ -78,6 +78,12 @@ const router = createRouter({
               "../views/CustomerViews/CustomerAccount/CustomerAddress.vue"
             ),
         },
+        {
+          path: "/community",
+          name: "community",
+          component: () =>
+            import("../views/CustomerViews/Support/communityRules.vue"),
+        },
       ],
     },
     {
