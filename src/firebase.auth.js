@@ -44,6 +44,7 @@ export const useAuth = () => {
   const password = ref("");
   const name = ref("");
   const role = ref("");
+  const loginLoading = ref(false);
 
   const signInWithGoogle = async () => {
     try {
@@ -117,6 +118,7 @@ export const useAuth = () => {
   };
 
   const loginAccount = async () => {
+    loginLoading.value = true;
     if (email.value.trim() === "" || password.value.trim() === "") {
       loginErrorMessage.value = "Enter your account!";
       clearAlert(loginErrorMessage);
@@ -154,6 +156,7 @@ export const useAuth = () => {
       user.value = res.user;
       userData.value = userDetails;
       localStorage.setItem("userData", JSON.stringify(userDetails));
+      loginLoading.value = false;
 
       if (isValidSellerRole) {
         router.push("/seller");
@@ -261,5 +264,6 @@ export const useAuth = () => {
     role,
     loginAccount,
     auth,
+    loginLoading,
   };
 };

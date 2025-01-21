@@ -5,8 +5,14 @@ import { Icon } from "@iconify/vue";
 import { useAuth } from "@/firebase.auth";
 import ErrorMessage from "@/components/AlertMessage.vue";
 
-const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
-  useAuth();
+const {
+  signInWithGoogle,
+  loginAnonymously,
+  loginAccount,
+  email,
+  password,
+  loginLoading,
+} = useAuth();
 </script>
 
 <template>
@@ -50,9 +56,18 @@ const { signInWithGoogle, loginAnonymously, loginAccount, email, password } =
         <div class="my-2">
           <button
             @click="loginAccount"
-            class="w-full bg-gray-800 hover:bg-gray-900 text-white text-sm font-semibold py-2.5"
+            :class="
+              loginLoading
+                ? 'bg-gray-500 cursor-not-allowed pointer-events-none'
+                : 'bg-gray-800 hover:bg-gray-900'
+            "
+            class="w-full text-white flex justify-center text-sm font-semibold py-2.5"
           >
-            Login
+            <span v-if="!loginLoading">Login</span>
+            <span v-else class="flex justify-center items-center gap-2">
+              <Icon icon="eos-icons:loading" width="16" height="16" /> Logging
+              in...
+            </span>
           </button>
         </div>
         <div>
