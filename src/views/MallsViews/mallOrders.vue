@@ -126,7 +126,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="flex flex-wrap gap-2 w-full">
-        <div class="relative overflow-x-auto shadow-sm w-full">
+        <div class="relative overflow-x-auto no-scrollbar shadow-sm w-full">
           <table class="w-full text-sm text-left rtl:text-right">
             <thead class="text-xs text-white uppercase bg-gray-800">
               <tr>
@@ -184,7 +184,7 @@ onMounted(() => {
                 <td class="px-4 py-4 max-w-52">Visayas</td>
               </tr>
             </tbody>
-            <tbody v-if="mallOrderProducts.length === 0" class="">
+            <tbody v-if="!filteredOrders.length" class="">
               <div class="p-2 text-sm font-semibold text-gray-500">
                 No Orders
               </div>

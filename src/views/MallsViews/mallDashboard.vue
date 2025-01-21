@@ -193,17 +193,19 @@ onMounted(() => {
                     <tr class="border-b">
                       <th
                         scope="row"
-                        class="px-4 py-4 uppercase truncate max-w-52 font-medium whitespace-nowrap"
+                        class="px-4 py-4 uppercase truncate max-w-52 font-medium"
                       >
                         {{ item.name }}
                       </th>
-                      <td class="px-4 py-4">
+                      <td class="px-4 py-4 truncate max-w-52">
                         {{ item.address.name }}
                       </td>
                       <td class="px-4 py-4">
                         {{ item.address.phone }}
                       </td>
-                      <td class="px-4 py-4">{{ item.totalPrice }}</td>
+                      <td class="px-4 py-4">
+                        ${{ formatPrice(item.totalPrice) }}
+                      </td>
                       <td class="px-4 py-4 uppercase max-w-52">
                         {{ item.status }}
                       </td>

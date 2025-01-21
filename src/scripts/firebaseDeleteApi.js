@@ -27,10 +27,10 @@ export const deleteItems = (folderName, productId, productsEndFolder) => {
   }
 };
 
-export const deleteProducts = (folderName, productId, productsEndFolder) => {
+export const deleteProducts = (folderName, productId) => {
   const db = getFirestore();
   try {
-    const prodRef = doc(db, folderName, productId, productsEndFolder);
+    const prodRef = doc(db, folderName, productId);
     deleteDoc(prodRef);
     deleteMessage.value = "Product successfully deleted!";
     setTimeout(() => {
