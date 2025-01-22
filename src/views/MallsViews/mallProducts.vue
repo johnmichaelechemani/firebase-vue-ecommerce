@@ -320,6 +320,15 @@ onMounted(() => {
               <option value="Kitchen" class="text-xs font-semibold">
                 Kitchen Tools
               </option>
+              <option value="Mens" class="text-xs font-semibold">
+                Men Clothing
+              </option>
+              <option value="Womens" class="text-xs font-semibold">
+                Women Clothing
+              </option>
+              <option value="Kids" class="text-xs font-semibold">
+                Kids Clothing
+              </option>
             </select>
           </div>
         </div>
