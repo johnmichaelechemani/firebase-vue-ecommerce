@@ -77,6 +77,7 @@ export const getProducts = () => {
 };
 
 export const getCartProducts = () => {
+  if (!userData.value) return;
   const db = getFirestore();
   try {
     const cartsQuery = query(
@@ -97,6 +98,7 @@ export const getCartProducts = () => {
 };
 
 export const getFavoritesProducts = () => {
+  if (!userData.value) return;
   const db = getFirestore();
   try {
     const favQuery = query(
@@ -117,6 +119,7 @@ export const getFavoritesProducts = () => {
 };
 
 export const getPurchaseProducts = () => {
+  if (!userData.value) return;
   const db = getFirestore();
   try {
     const purchaseQuery = query(

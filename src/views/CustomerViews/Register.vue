@@ -53,8 +53,7 @@ const { registerAccount, name, email, password, role } = useAuth();
             v-model="role"
             class="border w-full text-sm font-semibold text-gray-700 py-2 my-1"
           >
-            <option selected hidden>Choose a type</option>
-            <option value="customer" class="text-xs font-semibold">
+            <option selected value="customer" class="text-xs font-semibold">
               Customer
             </option>
             <option value="seller" class="text-xs font-semibold">Seller</option>
