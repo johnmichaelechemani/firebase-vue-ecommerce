@@ -43,7 +43,7 @@ export const useAuth = () => {
   const email = ref("");
   const password = ref("");
   const name = ref("");
-  const role = ref("");
+  const role = ref("customer");
   const loginLoading = ref(false);
 
   const signInWithGoogle = async () => {
