@@ -42,12 +42,12 @@ export const chatFunctions = () => {
   };
   const message = ref("");
 
-  const sendMessage = async (reciever) => {
-    const chatId = getChatId(userId, reciever);
+  const sendMessage = async (receiver) => {
+    const chatId = getChatId(userId, receiver);
     const tempMessage = {
       id: `temp_${Date.now()}`,
       senderId: userId,
-      recipientId: reciever,
+      recipientId: receiver,
       message: message.value,
       isSending: true,
       timestamp: new Date(),
@@ -60,11 +60,11 @@ export const chatFunctions = () => {
         {
           participants: {
             [userId]: true,
-            [reciever]: true,
+            [receiver]: true,
           },
           lastMessage: message.value,
           sender: userId,
-          reciever: reciever,
+          receiver: receiver,
           timestamp: serverTimestamp(),
         },
         { merge: true }
@@ -74,7 +74,7 @@ export const chatFunctions = () => {
         collection(firestore, `chats/${chatId}/messages`),
         {
           senderId: userId,
-          recipientId: reciever,
+          recipientId: receiver,
           message: message.value,
           timestamp: serverTimestamp(),
         }
@@ -101,9 +101,9 @@ export const chatFunctions = () => {
     }
   };
 
-  const loadMessages = (reciever) => {
+  const loadMessages = (receiver) => {
     try {
-      const chatId = getChatId(userId, reciever);
+      const chatId = getChatId(userId, receiver);
       const cachedMessages = localStorage.getItem(`messages_${chatId}`);
       messages.value = cachedMessages ? JSON.parse(cachedMessages) : [];
       const messagesQuery = query(
@@ -111,7 +111,7 @@ export const chatFunctions = () => {
         orderBy("timestamp", "asc")
       );
       const lastMessagesQuery = doc(firestore, "chats", chatId);
-      const latestMessageUnsub = onSnapshot(lastMessagesQuery, (doc) => {
+      const latestMessageUnsubscribe = onSnapshot(lastMessagesQuery, (doc) => {
         if (doc.exists()) {
           const data = doc.data();
           if (data && data.lastMessage) {
@@ -121,7 +121,7 @@ export const chatFunctions = () => {
           }
         }
       });
-      const messageUnsub = onSnapshot(
+      const messageUnsubscribe = onSnapshot(
         messagesQuery,
         (snapshot) => {
           try {
@@ -148,18 +148,18 @@ export const chatFunctions = () => {
           });
         }
       );
-      unsubscribes.value.push(messageUnsub);
-      unsubscribes.value.push(latestMessageUnsub);
+      unsubscribes.value.push(messageUnsubscribe);
+      unsubscribes.value.push(latestMessageUnsubscribe);
     } catch (generalError) {
       console.error("❌ General Messages Loading Error:", {
         error: generalError.message,
         userId: userId,
-        receiverId: reciever,
+        receiverId: receiver,
       });
     }
   };
   onMounted(() => {
-    unsubscribes.value.forEach((unsub) => unsub());
+    unsubscribes.value.forEach((unsubscribes) => unsubscribes());
     unsubscribes.value = [];
     loadMessages();
   });

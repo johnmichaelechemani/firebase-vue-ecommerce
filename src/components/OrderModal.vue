@@ -4,8 +4,8 @@ import { Icon } from "@iconify/vue";
 import { RouterLink } from "vue-router";
 import {
   formatPrice,
-  incerment,
-  decrement,
+  incrementProduct,
+  decrementProduct,
   clearAlert,
 } from "@/scripts/composables";
 import { userData, userBalance, getBalance } from "@/store";
@@ -234,14 +234,14 @@ onMounted(async () => {
 
                   <div class="flex justify-end items-center mt-4">
                     <button
-                      @click="decrement(item)"
+                      @click="decrementProduct(item)"
                       class="hover:bg-gray-700/20 text-xs border px-2 transition"
                     >
                       -
                     </button>
                     <div class="px-3 border text-xs">{{ item.quantity }}</div>
                     <button
-                      @click="incerment(item)"
+                      @click="incrementProduct(item)"
                       class="hover:bg-gray-700/20 text-xs border px-2 transition"
                     >
                       +

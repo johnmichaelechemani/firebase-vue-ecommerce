@@ -18,9 +18,9 @@ import {
 import {
   formatSoldNumber,
   formatPrice,
-  incerment,
+  incrementProduct,
   clearAlert,
-  decrement,
+  decrementProduct,
 } from "@/scripts/composables.js";
 import ErrorMessage from "./AlertMessage.vue";
 
@@ -314,7 +314,7 @@ onMounted(async () => {
                       /></span>
                       <div class="flex justify-start items-center">
                         <button
-                          @click="decrement(props.product)"
+                          @click="decrementProduct(props.product)"
                           :class="
                             props.product.quantity === 1
                               ? 'cursor-not-allowed text-gray-500'
@@ -328,7 +328,7 @@ onMounted(async () => {
                           {{ props.product.quantity }}
                         </div>
                         <button
-                          @click="incerment(props.product)"
+                          @click="incrementProduct(props.product)"
                           :class="
                             props.product.inventory === props.product.quantity
                               ? 'cursor-not-allowed text-gray-500'

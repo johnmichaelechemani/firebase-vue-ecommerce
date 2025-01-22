@@ -48,12 +48,12 @@ export const Time = (timestamp) => {
   }
   return "";
 };
-export const incerment = (item) => {
+export const incrementProduct = (item) => {
   if (item.quantity < item.inventory) {
     item.quantity += 1;
   }
 };
-export const decrement = (item) => {
+export const decrementProduct = (item) => {
   if (item.quantity > 1) {
     item.quantity -= 1;
   }
