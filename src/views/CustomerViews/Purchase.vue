@@ -31,49 +31,41 @@ const purchaseCollection = collection(
 );
 const productCollection = collection(firestore, "products");
 
-const purchasesStatus = ref([
+const status = ref([
   {
-    id: 1,
-    name: "To Pay",
-    status: "pay",
-    icon: "mdi:credit-card-chip-outline",
+    name: "Pending",
   },
   {
-    id: 2,
-    name: "To Ship",
-    status: "ship",
-    icon: "mdi:ship-wheel",
+    name: "Processing",
   },
   {
-    id: 3,
-    name: "To Recieve",
-    status: "recieve",
-    icon: "mdi:target-account",
+    name: "Shipping",
   },
   {
-    id: 4,
-    name: "To Rate",
-    status: "rate",
-    icon: "mdi:star-outline",
+    name: "Delivered",
   },
   {
-    id: 5,
-    name: "Completed",
-    status: "completed",
-    icon: "mdi:check",
-  },
-  {
-    id: 6,
     name: "Cancelled",
-    status: "cancelled",
-    icon: "mdi:cancel-box-outline",
+  },
+  {
+    name: "Refunded",
+  },
+  {
+    name: "Returned",
+  },
+  {
+    name: "Completed",
   },
 ]);
-
 const filteredStats = computed(() => {
   const stat = route.query.status;
+  if (!stat) {
+    return purchaseProducts.value;
+  }
   if (stat) {
-    return purchaseProducts.value.filter((status) => status.status === stat);
+    return purchaseProducts.value.filter(
+      (status) => status.status === stat.toLowerCase()
+    );
   }
   return purchaseProducts.value;
 });
@@ -129,24 +121,31 @@ onMounted(() => {
   >
     <div class="p-2">
       <p class="text-sm font-semibold">My Purchase</p>
-      <div class="mt-4 flex no-scrollbar overflow-x-auto gap-8">
-        <div
-          class="place-items-center"
-          v-for="item in purchasesStatus"
-          :key="item.id"
-          @click="queryForStat(item.status)"
-        >
-          <div
-            :class="[
-              $route.query.status === item.status
-                ? 'bg-gray-800 text-white'
-                : 'hover:bg-gray-700/10 border',
-              'p-2 transition ',
-            ]"
+      <div class="mt-2 border w-full overflow-x-scroll no-scrollbar p-2">
+        <div class="flex gap-3">
+          <button
+            @click="queryForStat()"
+            :class="
+              !$route.query.status
+                ? 'text-gray-900 border border-b-2 border-b-gray-800 shadow-sm py-1 px-2'
+                : 'text-gray-500'
+            "
+            class="text-sm font-medium"
           >
-            <Icon :icon="item.icon" width="24" height="24" />
-          </div>
-          <p class="text-sm mt-2 text-center font-semibold">{{ item.name }}</p>
+            All
+          </button>
+          <button
+            @click="queryForStat(i.name.toLowerCase())"
+            v-for="i in status"
+            :class="
+              $route.query.status === i.name.toLowerCase()
+                ? 'text-gray-900 border border-b-2 border-b-gray-800 shadow-sm py-1 px-2'
+                : 'text-gray-500'
+            "
+            class="text-sm font-medium"
+          >
+            {{ i.name }}
+          </button>
         </div>
       </div>
     </div>

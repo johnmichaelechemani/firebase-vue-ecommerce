@@ -103,7 +103,7 @@ const placeOrder = async () => {
           userId: userData.value.userId,
           mallId: item.mallId,
           paymentMethod: selectedPaymentMethod.value,
-          status: "pay",
+          status: "pending",
           purchaseDate: new Date(),
           name: item.name,
           price: item.price,
@@ -119,7 +119,7 @@ const placeOrder = async () => {
           },
         }
       );
-      deleteItems("carts", item.cartItemId ,'cartItems');
+      deleteItems("carts", item.cartItemId, "cartItems");
 
       if (selectedPaymentMethod.value === "jmpay") {
         updateData(userDoc, -totalPrice.value, "jmPay");
