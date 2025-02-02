@@ -53,6 +53,7 @@ export const useAuth = () => {
       const userDocRef = doc(usersCollection, res.user.uid);
       const userDoc = await getDoc(userDocRef);
       const userDataFromFirestore = userDoc.data();
+      // todo: fix this
       if (userDoc.exists()) {
         await updateDoc(userDocRef, {
           userOnline: true,
