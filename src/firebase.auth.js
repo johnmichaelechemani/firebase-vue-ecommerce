@@ -74,11 +74,17 @@ export const useAuth = () => {
         timestamp: Date.now(),
         accessToken: generateSecureToken(),
       };
+      const userDataFromFirestore = userDoc.data();
+
       isLoggedIn.value = true;
       user.value = res.user;
       userData.value = userDetails;
       localStorage.setItem("userData", JSON.stringify(userDetails));
-      router.push("/");
+      if (userDataFromFirestore.role.toLowerCase() === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
     } catch (error) {
       console.error("Error signing in with Google:", error);
     }
@@ -147,19 +153,16 @@ export const useAuth = () => {
         accessToken: generateSecureToken(),
       };
 
-      const isValidSellerRole =
-        userDataFromFirestore &&
-        userDataFromFirestore.role &&
-        userDataFromFirestore.role.toLowerCase() === "seller";
-
       isLoggedIn.value = true;
       user.value = res.user;
       userData.value = userDetails;
       localStorage.setItem("userData", JSON.stringify(userDetails));
       loginLoading.value = false;
 
-      if (isValidSellerRole) {
+      if (userDataFromFirestore.role.toLowerCase() === "seller") {
         router.push("/seller");
+      } else if (userDataFromFirestore.role === "admin") {
+        router.push("/admin");
       } else {
         router.push("/");
       }

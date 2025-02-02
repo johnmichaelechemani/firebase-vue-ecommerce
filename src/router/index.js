@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/CustomerViews/HomeView.vue";
 import CustomerLayout from "../layouts/customerLayout.vue";
 import SellerLayout from "../layouts/sellerLayout.vue";
-import { isLoggedIn, userData } from "@/store";
-import { loginErrorMessage } from "@/store";
+import { isLoggedIn, userData, loginErrorMessage } from "@/store";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -115,6 +114,18 @@ const router = createRouter({
           path: "/reports",
           name: "mallReports",
           component: () => import("../views/MallsViews/mallReports.vue"),
+        },
+      ],
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: () => import("../layouts/adminLayout.vue"),
+      children: [
+        {
+          path: "",
+          name: "adminDashboard",
+          component: () => import("../views/AdminViews/Dashboard.vue"),
         },
       ],
     },
