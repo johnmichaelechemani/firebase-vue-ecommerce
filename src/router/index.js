@@ -175,6 +175,25 @@ router.beforeEach((to, from, next) => {
     }
   }
 
+  if (to.path.startsWith("/admin")) {
+    if (!userData.value || !userData.value.role) {
+      console.warn("Redirecting to login - not authenticated");
+      loginErrorMessage.value = "Please login first!";
+      setTimeout(() => {
+        loginErrorMessage.value = "";
+      }, 2000);
+      next("/login");
+      return;
+    }
+
+    const userRole = userData.value.role?.toLowerCase();
+    if (userRole !== "admin") {
+      console.warn("Unauthorized access - not an admin");
+      next("/");
+      return;
+    }
+  }
+
   next();
 });
 
