@@ -77,11 +77,7 @@
               'place-items-center p-1 border shadow ',
             ]"
           >
-            <Icon
-              icon="material-symbols-light:remove-shopping-cart-rounded"
-              width="30"
-              height="30"
-            />
+            <Icon icon="mynaui:user" width="30" height="30" />
           </div>
           <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
             USER MANAGEMENT
@@ -91,7 +87,7 @@
 
       <RouterLink to="orderManagement">
         <div
-          class="flex sm:justify-start justify-center my-1 items-center gap-1 hover:bg-gray-700/10 transition"
+          class="flex sm:justify-start justify-center my-2 items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
@@ -114,7 +110,7 @@
       </RouterLink>
       <RouterLink to="paymentManagement">
         <div
-          class="flex sm:justify-start justify-center my-1 items-center gap-1 hover:bg-gray-700/10 transition"
+          class="flex sm:justify-start justify-center my-2 items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
@@ -124,11 +120,7 @@
               'place-items-center p-1 border shadow ',
             ]"
           >
-            <Icon
-              icon="material-symbols-light:report-outline-rounded"
-              width="30"
-              height="30"
-            />
+            <Icon icon="fluent:payment-20-regular" width="30" height="30" />
           </div>
           <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
             PAYMENT & REVENUE MANAGEMENT
