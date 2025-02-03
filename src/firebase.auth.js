@@ -45,7 +45,6 @@ export const useAuth = () => {
   const name = ref("");
   const role = ref("customer");
   const loginLoading = ref(false);
-  const userDetails = ref({});
 
   const signInWithGoogle = async () => {
     try {
@@ -53,22 +52,11 @@ export const useAuth = () => {
       const userDocRef = doc(usersCollection, res.user.uid);
       const userDoc = await getDoc(userDocRef);
       const userDataFromFirestore = userDoc.data();
-      // todo: fix this
+
       if (userDoc.exists()) {
         await updateDoc(userDocRef, {
           userOnline: true,
         });
-        userDetails.value = {
-          userName: userDataFromFirestore.userName,
-          userId: userDataFromFirestore.userId,
-          email: userDataFromFirestore.email,
-          userPhotoURL: userDataFromFirestore.userPhotoURL,
-          role: userDataFromFirestore.role,
-          timestamp: Date.now(),
-          accessToken: generateSecureToken(),
-        };
-        userDetails.value = userData;
-        localStorage.setItem("userData", JSON.stringify(userData));
       } else {
         await setDoc(userDocRef, {
           userName: res.user.displayName,
@@ -78,22 +66,22 @@ export const useAuth = () => {
           email: res.user.email,
           role: "customer",
         });
-        const newUserData = {
-          userName: res.user.displayName,
-          userId: res.user.uid,
-          userPhotoURL: res.user.photoURL,
-          userOnline: true,
-          email: res.user.email,
-          role: "customer",
-          lastLogin: Date.now(),
-        };
-        await setDoc(userDocRef, newUserData);
-        userDetails.value = newUserData;
-        localStorage.setItem("userData", JSON.stringify(newUserData));
       }
 
       isLoggedIn.value = true;
       user.value = res.user;
+      const newUserData = {
+        userName: res.user.displayName,
+        userId: res.user.uid,
+        userPhotoURL: res.user.photoURL,
+        userOnline: true,
+        email: res.user.email,
+        role: "customer",
+        lastLogin: Date.now(),
+      };
+
+      userData.value = newUserData;
+      localStorage.setItem("userData", JSON.stringify(newUserData));
 
       if (userDataFromFirestore.role.toLowerCase() === "admin") {
         router.push("/admin");
