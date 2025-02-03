@@ -44,7 +44,7 @@
           </p>
         </div>
       </RouterLink>
-      <RouterLink to="/products">
+      <RouterLink to="userManagement">
         <div
           class="flex sm:justify-start justify-center my-2 items-center gap-1 hover:bg-gray-700/10 transition"
         >
