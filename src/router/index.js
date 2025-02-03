@@ -124,13 +124,28 @@ const router = createRouter({
       children: [
         {
           path: "",
-          name: "adminDashboard",
+          name: "/adminDashboard",
           component: () => import("../views/AdminViews/Dashboard.vue"),
         },
         {
           path: "/userManagement",
           name: "userManagement",
           component: () => import("../views/AdminViews/userManagement.vue"),
+        },
+        {
+          path: "/productManagement",
+          name: "productManagement",
+          component: () => import("../views/AdminViews/productManagement.vue"),
+        },
+        {
+          path: "/orderManagement",
+          name: "orderManagement",
+          component: () => import("../views/AdminViews/orderManagement.vue"),
+        },
+        {
+          path: "/paymentManagement",
+          name: "paymentManagement",
+          component: () => import("../views/AdminViews/paymentManagement.vue"),
         },
       ],
     },

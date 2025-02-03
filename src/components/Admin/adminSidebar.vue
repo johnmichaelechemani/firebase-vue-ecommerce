@@ -23,13 +23,13 @@
       >
         MENU
       </p>
-      <RouterLink to="/seller">
+      <RouterLink to="admin">
         <div
           class="flex sm:justify-start my-2 justify-center items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
-              $route.path === '/seller' ? 'bg-gray-800 text-white' : '',
+              $route.path === '/admin' ? 'bg-gray-800 text-white' : '',
               'place-items-center p-1 border shadow',
             ]"
           >
@@ -44,13 +44,36 @@
           </p>
         </div>
       </RouterLink>
+      <RouterLink to="productManagement">
+        <div
+          class="flex sm:justify-start justify-center my-2 items-center gap-1 hover:bg-gray-700/10 transition"
+        >
+          <div
+            :class="[
+              $route.path === '/productManagement'
+                ? 'bg-gray-800 text-white'
+                : '',
+              'place-items-center p-1 border shadow ',
+            ]"
+          >
+            <Icon
+              icon="material-symbols-light:remove-shopping-cart-rounded"
+              width="30"
+              height="30"
+            />
+          </div>
+          <p class="text-sm font-semibold text-gray-700 hidden sm:flex">
+            PRODUCT MANAGEMENT
+          </p>
+        </div>
+      </RouterLink>
       <RouterLink to="userManagement">
         <div
           class="flex sm:justify-start justify-center my-2 items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
-              $route.path === '/products' ? 'bg-gray-800 text-white' : '',
+              $route.path === '/userManagement' ? 'bg-gray-800 text-white' : '',
               'place-items-center p-1 border shadow ',
             ]"
           >
@@ -66,13 +89,15 @@
         </div>
       </RouterLink>
 
-      <RouterLink to="/orders">
+      <RouterLink to="orderManagement">
         <div
           class="flex sm:justify-start justify-center my-1 items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
-              $route.path === '/orders' ? 'bg-gray-800 text-white ' : '',
+              $route.path === '/orderManagement'
+                ? 'bg-gray-800 text-white '
+                : '',
               'place-items-center p-1 border shadow ',
             ]"
           >
@@ -87,13 +112,15 @@
           </p>
         </div>
       </RouterLink>
-      <RouterLink to="/reports">
+      <RouterLink to="paymentManagement">
         <div
           class="flex sm:justify-start justify-center my-1 items-center gap-1 hover:bg-gray-700/10 transition"
         >
           <div
             :class="[
-              $route.path === '/reports' ? 'bg-gray-800 text-white ' : '',
+              $route.path === '/paymentManagement'
+                ? 'bg-gray-800 text-white '
+                : '',
               'place-items-center p-1 border shadow ',
             ]"
           >
