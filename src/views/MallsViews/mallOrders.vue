@@ -232,9 +232,9 @@ onMounted(() => {
               </tr>
             </tbody>
             <tbody v-if="!filteredOrders.length" class="">
-              <div class="p-2 text-sm font-semibold text-gray-500">
+              <tr class="p-2 text-sm font-semibold text-gray-500">
                 No Orders
-              </div>
+              </tr>
             </tbody>
           </table>
         </div>
